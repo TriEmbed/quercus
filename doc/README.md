@@ -6,4 +6,5 @@
 3. Docs created by the project go into the other subdirectories:
     1. minutes - main group and breakout group meeting notes
     2. whiteboards - graphics typically supporting minutes (often linked to from minutes or elsewhere)
+
 Don't put code under here: use the top level src subdirectory
