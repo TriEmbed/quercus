@@ -1,5 +1,5 @@
 # League
-The League repo pertains to the 2021 TriEmbed open source community project: a development board for the rest of us.
+The League repo pertains to theTriEmbed open source community project launched in 2021: a development board for the rest of us.
 ## This repo vs others in TriEmbed:
 ### Other repos might belong to TriEmbed individuals for their personal projects, a different community project, etc.
 ## Conventions
