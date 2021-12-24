@@ -10,7 +10,7 @@
 ## GreenPAK Designer Files: https://www.dialog-semiconductor.com/sites/default/files/2020-12/Q4%202020%20Program%20Files.zip
 ## GreenPAK Advanced Dev Platform User Manual: https://www.dialog-semiconductor.com/sites/default/files/2021-09/UM-GP-002_User_Manual_GreenPAK_Advanced_Development_Platform_2v3.pdf
 ## Go Configure Software Hub: https://www.dialog-semiconductor.com/go-configure-software-hub
-## ?? https://www.dialog-semiconductor.com/sites/default/files/gpak_online.pdf
+## GreenPAK Chip Comparison Tables: https://www.dialog-semiconductor.com/sites/default/files/gpak_online.pdf
 ## GP Designer Handout: https://www.dialog-semiconductor.com/sites/default/files/gpdesigner_handout_042015.pdf
 ## Automotive blurb: https://www.dialog-semiconductor.com/sites/default/files/configurable_mixed-signal_ics_enable_safe_flexible_low_cost_automotive_designs.pdf
 
