@@ -3,7 +3,7 @@
 ## AN1161: wireless morse keyboard: https://www.dialog-semiconductor.com/greenpak-application-notes/an-1161-greenpak-wireless-morse-code-keyboard
 ## GreenPAK brochure: https://www.dialog-semiconductor.com/sites/default/files/2021-12/GreenPAK_brochure.pdf
 ## Advanaced Analog GreenPAK Eval board user manual: https://www.dialog-semiconductor.com/sites/default/files/2021-09/UM-GP-005_User_Manual_Advanced_Analog_GreenPAK_Evaluation_Board_1v1.pdf
-## GreenPAK Designer User Guide: https://www.dialog-semiconductor.com/sites/default/files/2021-11/GreenPAK_Designer_User_Guide.pdf
+## GreenPAK Designer (aka "Go Hub") User Guide: https://www.dialog-semiconductor.com/sites/default/files/2021-11/GreenPAK_Designer_User_Guide.pdf
 ## 32 pin adaptor board user guide: https://www.dialog-semiconductor.com/sites/default/files/2021-09/GreenPAK_32pin_AdapterBoard_User_Guide_Rev.1.0.pdf
 ## https://www.dialog-semiconductor.com/sites/default/files/2021-09/UM-GP-007_User_Manual_GreenPAK_DIP_Development_Platform_1v0.pdf
 ## https://www.dialog-semiconductor.com/sites/default/files/2021-09/UM-GP-006_User_Manual_GreenPAK_Pro_Development_Platform_1v1.pdf
