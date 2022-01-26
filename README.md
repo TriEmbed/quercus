@@ -12,7 +12,7 @@ Release notes:
 
 BUGS and ECO requests
  0.60 
-1. Bug: Name on underside of board is misspelled.
+1. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
 2. Bug: Center to center distance of header pairs off slightly
 3. Bug: Silkscreen hard to read
 4. ECO: Silkscreen should include SLG47004V-DIP pin labels, but this means changing to different board form factor.
@@ -21,3 +21,4 @@ BUGS and ECO requests
 7. Bug: Switch to USB micro connector as some have already tossed their collection of mini cables!
 8. Bug: VERY difficult to decide which way to plug in the SLG47004V-DIP.
 9. Need to understand the consequences of putting the SLG47004V-DIP in backwards.
+10. Bug: Name on underside of board is misspelled.
