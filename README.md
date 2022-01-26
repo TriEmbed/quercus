@@ -11,7 +11,10 @@ Release notes:
  0.60 1/18/2022 - Initial prototype. Bare bones requiring USB to serial logic cable for initial programming and an absolute minimum of features beyond eventual support for programming a plugged in SLG47004V-DIP
 
 BUGS and ECO requests
- 0.60 
+
+Version 0.60 
+
+0. B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Ideally next design should make it physically impossible to plug the board in backwards. Arranging for interference with the C3 should make this relatively trivial.
 1. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
 2. Bug: Center to center distance of header pairs off slightly
 3. Bug: Silkscreen hard to read
@@ -23,3 +26,18 @@ BUGS and ECO requests
 9. Need to understand the consequences of putting the SLG47004V-DIP in backwards.
 10. Bug: Name on underside of board is misspelled.
 11. Bug: No license on silkscreen, only in the Eagle schematic (and that was unilateral: not the will of the FPGA Leage (working group)
+12. Bug: Schematic doesn't match build:
+    1. Reg output caps 2x68uF but cap used is 100uF
+    2. Through hole caps instead of SMD
+
+Changes for next version
+
+1. Micro USB connector replaces mini
+2. Provision for Dialog programming sockets?
+3. Make C3 pins accessible via breadboard? 
+
+Parts not in hand
+
+1. Mini USB connectors (should be in hand 1/29)
+2. SMD caps (should be in hand 
+
