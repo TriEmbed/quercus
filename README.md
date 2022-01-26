@@ -22,3 +22,4 @@ BUGS and ECO requests
 8. Bug: VERY difficult to decide which way to plug in the SLG47004V-DIP.
 9. Need to understand the consequences of putting the SLG47004V-DIP in backwards.
 10. Bug: Name on underside of board is misspelled.
+11. Bug: No license on silkscreen, only in the Eagle schematic (and that was unilateral: not the will of the FPGA Leage (working group)
