@@ -29,6 +29,10 @@ Version 0.60
 12. Bug: Schematic doesn't match build:
     1. Reg output caps 2x68uF but cap used is 100uF
     2. Through hole caps instead of SMD
+13. Bug: Need pushbutton to GP8 to support serial boot mode. Other details to do with serial boot being worked out.
+14. Bug: Need push button that grounds both enable and GP8 to reset.
+15. Bug: Need to tie EN up with pullup
+
 
 Changes for next version
 
