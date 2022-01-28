@@ -10,7 +10,7 @@
 Release notes:
  0.60 1/18/2022 - Initial prototype. Bare bones requiring USB to serial logic cable for initial programming and an absolute minimum of features beyond eventual support for programming a plugged in SLG47004V-DIP
 
-BUGS and ECO requests
+BUGS and ECO requests (could be grouped: don't need 20+ repo issues)
 
 Version 0.60 
 
@@ -32,16 +32,21 @@ Version 0.60
 13. Bug: Need pushbutton to GP8 to support serial boot mode. Other details to do with serial boot being worked out.
 14. Bug: Need push button that grounds both enable and GP8 to reset.
 15. Bug: Need to tie EN up with pullup
+16. TODO: Need a minimum of two push buttons and maybe three: reset, go into bootloader mode and ??
+17. TODO: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
+18. TODO: Need three header pins to conveniently connect a USB to serial dongle.
+19. BUG: Another bug: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
+20. Todo issue: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP
+21. TODO: Need a minimum of two push buttons. One to ground EN and GPIO8 to do a reset and the other to ground GPIO2 and GPIO0 to enter bootloader mode. Or that's the current theory.
+22. TODO: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
+23. TODO: Need some header pins to conveniently connect a USB to serial dongle. "Some" is probably four or five, as RTS must be controllable and possibly DTR too. This takes a special dongle. :-(
+24. Provision for Dialog programming sockets?
+25. Make C3 pins accessible via breadboard? 
 
-
-Changes for next version
-
-1. Micro USB connector replaces mini
-2. Provision for Dialog programming sockets?
-3. Make C3 pins accessible via breadboard? 
+(Tentative decision to stick with USB mini connector for now. Micro is a pain to solder: trying to stick to easy hand soldering. Micro requires ridiculously fine soldering iron tip, mini could probably be done with the smallest Hakko tip available without too much trouble.)
 
 Parts not in hand
 
-1. Mini USB connectors (should be in hand 1/29)
-2. SMD caps (should be in hand 
+1. Mini USB connectors (should be in hand 1/29. Harvested one off another board for first prototype)
+2. SMD caps (should be in hand 2/1. Kludged aluminum caps in place for first prototype)
 
