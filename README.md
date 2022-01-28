@@ -1,6 +1,6 @@
 # Triangle Embedded Interest Group (TriEmbed)
 ## Aardvark: Making Dialog Semiconductor mixed signal FPGA chips more accessible:
-1. A stand alone, easy to use programmer for the SLGxxxxx ICs leveraging the Espressif ESP C3 RISCV module and special chip sockets
+1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be used as a programmer for the Dialog SLGxxxxx ICs or to run applications with an onboard SLG47004V-DIP. 
 2. Additional accessibility tools like breakout boards such as the Dialog SLG47004V-DIP.
 3. Cache of Dialog info resources
    1. Pointers to Dialog web resources
@@ -42,6 +42,7 @@ Version 0.60
 23. TODO: Need some header pins to conveniently connect a USB to serial dongle. "Some" is probably four or five, as RTS must be controllable and possibly DTR too. This takes a special dongle. :-(
 24. Provision for Dialog programming sockets?
 25. Make C3 pins accessible via breadboard? 
+26. Add a 1-10uF cap from EN to ground for more reliable reset behavior.
 
 (Tentative decision to stick with USB mini connector for now. Micro is a pain to solder: trying to stick to easy hand soldering. Micro requires ridiculously fine soldering iron tip, mini could probably be done with the smallest Hakko tip available without too much trouble.)
 
