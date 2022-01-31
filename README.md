@@ -12,42 +12,41 @@ Release notes:
 
 BUGS and ECO requests (could be grouped: don't need 20+ repo issues)
 
-Version 0.60 
+Version 0.60 Bug/Todo/wish list.
 
-0. B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Ideally next design should make it physically impossible to plug the board in backwards. Arranging for interference with the C3 should make this relatively trivial.
+   Note: Many items become easy when we can go with a MUCH larger board that follows the big rule of providing a generous area for people to put their own circuitry in place in a straight forward manner. But this requires a supplier other than OSH Park for significantly lower cost. Guestimate can switch to cheaper supplier for rev 0.8x or 0.9x. So with this in mind expect the "wish" items to become "todo" with the larger board.
+   "*" means fixed/implemented for post-0.60 release (in next rev Eagle files) 
+   "^" means item to be fixed/implemented when board size increased
+
+0. U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do.
 1. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
-2. Bug: Center to center distance of header pairs off slightly
-3. Bug: Silkscreen hard to read
-4. ECO: Silkscreen should include SLG47004V-DIP pin labels, but this means changing to different board form factor.
-5. ECO: header for the I2C and power/ground for programming some Dialog elsewhere like in some other circuit
-6. Bug: Probably need to follow best practices and pull regulator output caps up closer to the regulator.
-7. Bug: Switch to USB micro connector as some have already tossed their collection of mini cables!
-8. Bug: VERY difficult to decide which way to plug in the SLG47004V-DIP.
-9. Need to understand the consequences of putting the SLG47004V-DIP in backwards.
-10. Bug: Name on underside of board is misspelled.
-11. Bug: No license on silkscreen, only in the Eagle schematic (and that was unilateral: not the will of the FPGA Leage (working group)
-12. Bug: Schematic doesn't match build:
+2. Bug: Center to center distance of header pairs off slightly. Need to line up to work well with breadboard. Wish: Consider cutouts to make use of breadboard feasible even when the board is larger such as 10x10cm. Side would be cut out from edge, then have rectangular cutouts along other side for access to the breadboard jumper sites.
+3. ^Bug: Silkscreen hard to read
+4. ^Wish: Silkscreen should include SLG47004V-DIP pin labels, not just numbers.
+5. ^Todo: Add header for the I2C and power/ground for programming some Dialog elsewhere like in some other circuit. Put a four position JST PH on one side of board as well as four position header.
+7. Todo: Switch to USB micro connector as some have already tossed their collection of mini cables!
+8. *Bug: Name on underside of board is misspelled.
+9. Bug: No license on silkscreen, only in the Eagle schematic (and that was unilateral: not the will of the FPGA working group.
+10. *Bug: Schematic doesn't match build:
     1. Reg output caps 2x68uF but cap used is 100uF
     2. Through hole caps instead of SMD
-13. Bug: Need pushbutton to GP8 to support serial boot mode. Other details to do with serial boot being worked out.
-14. Bug: Need push button that grounds both enable and GP8 to reset.
-15. Bug: Need to tie EN up with pullup
-16. TODO: Need a minimum of two push buttons and maybe three: reset, go into bootloader mode and ??
-17. TODO: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
-18. TODO: Need three header pins to conveniently connect a USB to serial dongle.
-19. BUG: Another bug: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
-20. Todo issue: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP
-21. TODO: Need a minimum of two push buttons. One to ground EN and GPIO8 to do a reset and the other to ground GPIO2 and GPIO0 to enter bootloader mode. Or that's the current theory.
-22. TODO: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
-23. TODO: Need some header pins to conveniently connect a USB to serial dongle. "Some" is probably four or five, as RTS must be controllable and possibly DTR too. This takes a special dongle. :-(
-24. Provision for Dialog programming sockets?
-25. Make C3 pins accessible via breadboard? 
-26. Add a 1-10uF cap from EN to ground for more reliable reset behavior.
-
-(Tentative decision to stick with USB mini connector for now. Micro is a pain to solder: trying to stick to easy hand soldering. Micro requires ridiculously fine soldering iron tip, mini could probably be done with the smallest Hakko tip available without too much trouble.)
+    3. Pullups not specified resistance
+11. ^Todo: Need pushbuttons for reset and boot.
+12. Bug: Need to tie EN up with pullup? Conflicting docs about this.
+13. Bug: Need to pull GPIO9 up. Be sure to document this as it creates constraints on use of the pin.
+14. Todo: The C3 slot is both too long and two wide. Measure width with microscope but only narrow it one wee skoshin. Use C3 dev board with C3 removed as a model.
+15. Todo: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
+16. Todo: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP.
+17. Todo: Need a minimum of two push buttons. One to ground EN and GPIO8 to do a reset and the other to ground GPIO2 and GPIO0 to enter bootloader mode. Or that's the current theory.
+18. Todo: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
+19. ^Todo: Provision for one Dialog programming socket.
+20. ^Todo: Provision for additional Dialog chips?
+21. *Todo: Add a 4.7uF cap from EN to ground for reliable reset behavior.
+22. Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
+23. Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
 
 Parts not in hand
 
-1. Mini USB connectors (should be in hand 1/29. Harvested one off another board for first prototype)
-2. SMD caps (should be in hand 2/1. Kludged aluminum caps in place for first prototype)
+1. SMD caps (should be in hand 2/1. Kludged aluminum caps in place for first prototype)
+2. USB chip
 
