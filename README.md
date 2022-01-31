@@ -6,6 +6,7 @@
    1. Pointers to Dialog web resources
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
+4. Eagle files for board design
 
 Release notes:
  0.60 1/18/2022 - Initial prototype. Bare bones requiring USB to serial logic cable for initial programming and an absolute minimum of features beyond eventual support for programming a plugged in SLG47004V-DIP
