@@ -19,7 +19,7 @@ Version 0.60 Bug/Todo/wish list.
    "*" means fixed/implemented for post-0.60 release (in next rev Eagle files) 
    "^" means item to be fixed/implemented when board size increased
 
-0. U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do.
+0. U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do. REMEMBER the board footprint has to be turned 180 degrees to accomplish this. The "long" end of the SLG has to point the other way so the short end can be close to the C3, making it impossible to insert the SLG the wrong way.
 1. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
 2. Bug: Center to center distance of header pairs off slightly. Need to line up to work well with breadboard. Wish: Consider cutouts to make use of breadboard feasible even when the board is larger such as 10x10cm. Side would be cut out from edge, then have rectangular cutouts along other side for access to the breadboard jumper sites.
 3. ^Bug: Silkscreen hard to read
