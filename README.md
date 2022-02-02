@@ -1,4 +1,5 @@
-# Triangle Embedded Interest Group (TriEmbed)
+﻿# Triangle Embedded Interest Group (TriEmbed)
+
 ## Aardvark: Making Dialog Semiconductor mixed signal FPGA chips more accessible:
 1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be used as a programmer for the Dialog SLGxxxxx ICs or to run applications with an onboard SLG47004V-DIP. 
 2. Additional accessibility tools like breakout boards such as the Dialog SLG47004V-DIP.
@@ -46,8 +47,9 @@ Version 0.60 Bug/Todo/wish list.
 22. *Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
 23. *Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
 24. Todo: Remap C3 pin usage to use two different pins for I2C to free up the C3's USB subsystem.
-25. Todo: Add footprint for Dialog QFN socket/programmer interface.
-
+25. *Todo: Add footprint for Dialog QFN socket/programmer interface.
+26. Todo: Tie Dialog programmer footprint to C3 pins
+27. *Todo: Add user controllable LED
 Parts not in hand
 
 1. CH340C USB chip. One in hand and four expected by 2/7.
