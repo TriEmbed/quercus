@@ -46,9 +46,9 @@ Version 0.60 Bug/Todo/wish list.
 22. Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
 23. Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
 24. Todo: Remap C3 pin usage to use two different pins for I2C to free up the C3's USB subsystem.
+25. Todo: Add footprint for Dialog QFN socket/programmer interface.
 
 Parts not in hand
 
-1. SMD caps (should be in hand 2/1. Kludged aluminum caps in place for first prototype)
-2. USB chip
+1. CH340C USB chip. One in hand and four expected by 2/7.
 
