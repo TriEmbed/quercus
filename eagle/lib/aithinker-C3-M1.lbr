@@ -194,24 +194,24 @@ by exp-lbrs.ulp</description>
 </packages>
 <symbols>
 <symbol name="ESPRESSIF_ESP32C3">
-<pin name="GP4" x="-12.7" y="2.54" length="middle"/>
-<pin name="EN" x="-12.7" y="10.16" length="middle" direction="in"/>
-<pin name="GND" x="-12.7" y="-10.16" length="middle" direction="pwr"/>
-<pin name="GP0" x="12.7" y="-5.08" length="middle" rot="R180"/>
-<pin name="GP1" x="12.7" y="-2.54" length="middle" rot="R180"/>
-<pin name="GP2" x="12.7" y="0" length="middle" rot="R180"/>
-<pin name="GP3" x="-12.7" y="0" length="middle"/>
-<pin name="GP5" x="12.7" y="2.54" length="middle" rot="R180"/>
-<pin name="GP6" x="12.7" y="5.08" length="middle" rot="R180"/>
-<pin name="GP7" x="12.7" y="7.62" length="middle" rot="R180"/>
-<pin name="GP8" x="-12.7" y="5.08" length="middle"/>
-<pin name="GP9" x="-12.7" y="7.62" length="middle"/>
-<pin name="GP10" x="12.7" y="10.16" length="middle" rot="R180"/>
-<pin name="GP18" x="12.7" y="-7.62" length="middle" rot="R180"/>
-<pin name="GP19" x="12.7" y="-10.16" length="middle" rot="R180"/>
-<pin name="RXO" x="-12.7" y="-2.54" length="middle"/>
-<pin name="TXO" x="-12.7" y="-5.08" length="middle"/>
-<pin name="VCC" x="-12.7" y="-7.62" length="middle" direction="pwr"/>
+<pin name="GP4" x="-12.7" y="2.54" visible="pin" length="middle"/>
+<pin name="EN" x="-12.7" y="10.16" visible="pin" length="middle" direction="in"/>
+<pin name="GND" x="-12.7" y="-10.16" visible="pin" length="middle" direction="pwr"/>
+<pin name="GP0" x="12.7" y="-5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="GP1" x="12.7" y="-2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="GP2" x="12.7" y="0" visible="pin" length="middle" rot="R180"/>
+<pin name="GP3" x="-12.7" y="0" visible="pin" length="middle"/>
+<pin name="GP5" x="12.7" y="2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="GP6" x="12.7" y="5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="GP7" x="12.7" y="7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="GP8" x="-12.7" y="5.08" visible="pin" length="middle"/>
+<pin name="GP9" x="-12.7" y="7.62" visible="pin" length="middle"/>
+<pin name="GP10" x="12.7" y="10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="GP18" x="12.7" y="-7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="GP19" x="12.7" y="-10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="RXO" x="-12.7" y="-2.54" visible="pin" length="middle"/>
+<pin name="TXO" x="-12.7" y="-5.08" visible="pin" length="middle"/>
+<pin name="VCC" x="-12.7" y="-7.62" visible="pin" length="middle" direction="pwr"/>
 <wire x1="-7.62" y1="12.7" x2="-7.62" y2="-12.7" width="0.254" layer="94"/>
 <wire x1="-7.62" y1="-12.7" x2="7.62" y2="-12.7" width="0.254" layer="94"/>
 <wire x1="7.62" y1="-12.7" x2="7.62" y2="12.7" width="0.254" layer="94"/>
