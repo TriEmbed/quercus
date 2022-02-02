@@ -33,18 +33,18 @@ Version 0.60 Bug/Todo/wish list.
     2. Through hole caps instead of SMD
     3. Pullups not specified resistance
 11. ^Todo: Need pushbuttons for reset and boot.
-12. Bug: Need to tie EN up with pullup? Conflicting docs about this.
-13. Bug: Need to pull GPIO9 up. Be sure to document this as it creates constraints on use of the pin.
+12. *Bug: EN DOES NOT need a pullup. Clearly shown in AI Thinker C3 module schematic, although value not shown
+13. *Bug: Pull GPIO9 up. Be sure to document this as it creates constraints on use of the pin.
 14. Todo: The C3 slot is both too long and two wide. Measure width with microscope but only narrow it one wee skoshin. Use C3 dev board with C3 removed as a model.
-15. Todo: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
-16. Todo: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP.
-17. Todo: Need a minimum of two push buttons. One to ground EN and GPIO8 to do a reset and the other to ground GPIO2 and GPIO0 to enter bootloader mode. Or that's the current theory.
+15. *Todo: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
+16. *Todo: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP.
+17. *Todo: Only need reset pushbutton. 
 18. Todo: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
 19. ^Todo: Provision for one Dialog programming socket.
 20. ^Todo: Provision for additional Dialog chips?
 21. *Todo: Add a 4.7uF cap from EN to ground for reliable reset behavior.
-22. Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
-23. Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
+22. *Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
+23. *Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
 24. Todo: Remap C3 pin usage to use two different pins for I2C to free up the C3's USB subsystem.
 25. Todo: Add footprint for Dialog QFN socket/programmer interface.
 
