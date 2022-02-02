@@ -173,7 +173,7 @@ by exp-lbrs.ulp</description>
 <smd name="PIN18" x="-6.4" y="2" dx="0.8" dy="3" layer="16"/>
 <hole x="-7.5" y="0" drill="0.9"/>
 <hole x="7.5" y="0" drill="0.9"/>
-<wire x1="7.5" y1="0" x2="-7.5" y2="0" width="1.016" layer="46"/>
+<wire x1="7.5" y1="0" x2="-7.5" y2="0" width="0.9" layer="46"/>
 <polygon width="0.127" layer="41">
 <vertex x="-8.7" y="0.9"/>
 <vertex x="-8.7" y="-0.9"/>
