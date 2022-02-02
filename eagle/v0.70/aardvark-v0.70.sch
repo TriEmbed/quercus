@@ -10045,114 +10045,6 @@ Source: http://www.osram.convergy.de/</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="aithinker-C3-M1">
-<description>Generated from &lt;b&gt;aardvark-v0.01.sch&lt;/b&gt;&lt;p&gt;
-by exp-lbrs.ulp</description>
-<packages>
-<package name="ESPRESSIF_ESP32-C3-01M">
-<smd name="PIN1" x="-6.4" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN2" x="-4.8" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN3" x="-3.2" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN4" x="-1.6" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN5" x="0" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN6" x="1.6" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN7" x="3.2" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN8" x="4.8" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN9" x="6.4" y="-2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN10" x="6.4" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN11" x="4.8" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN12" x="3.2" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN13" x="1.6" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN14" x="0" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN15" x="-1.6" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN16" x="-3.2" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN17" x="-4.8" y="2" dx="0.8" dy="3" layer="16"/>
-<smd name="PIN18" x="-6.4" y="2" dx="0.8" dy="3" layer="16"/>
-<hole x="-7.75" y="0" drill="0.9"/>
-<hole x="7.75" y="0" drill="0.9"/>
-<wire x1="7.75" y1="0" x2="-7.75" y2="0" width="1.016" layer="46"/>
-<polygon width="0.127" layer="41">
-<vertex x="-8.7" y="0.9"/>
-<vertex x="-8.7" y="-0.9"/>
-<vertex x="8.6" y="-0.9"/>
-<vertex x="8.6" y="0.9"/>
-</polygon>
-<polygon width="0.127" layer="42">
-<vertex x="-8.7" y="0.9"/>
-<vertex x="-8.7" y="-0.9"/>
-<vertex x="8.6" y="-0.9"/>
-<vertex x="8.6" y="0.9"/>
-</polygon>
-<wire x1="-8" y1="4" x2="8" y2="4" width="0.127" layer="22"/>
-<wire x1="8" y1="4" x2="8" y2="-4" width="0.127" layer="22"/>
-<wire x1="8" y1="-4" x2="-8" y2="-4" width="0.127" layer="22"/>
-<wire x1="-8" y1="-4" x2="-8" y2="4" width="0.127" layer="22"/>
-</package>
-</packages>
-<symbols>
-<symbol name="ESPRESSIF_ESP32C3">
-<pin name="GP4" x="-12.7" y="2.54" visible="pin" length="middle"/>
-<pin name="EN" x="-12.7" y="10.16" visible="pin" length="middle" direction="in"/>
-<pin name="GND" x="-12.7" y="-10.16" visible="pin" length="middle" direction="pwr"/>
-<pin name="GP0" x="12.7" y="-5.08" visible="pin" length="middle" rot="R180"/>
-<pin name="GP1" x="12.7" y="-2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="GP2" x="12.7" y="0" visible="pin" length="middle" rot="R180"/>
-<pin name="GP3" x="-12.7" y="0" visible="pin" length="middle"/>
-<pin name="GP5" x="12.7" y="2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="GP6" x="12.7" y="5.08" visible="pin" length="middle" rot="R180"/>
-<pin name="GP7" x="12.7" y="7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="GP8" x="-12.7" y="5.08" visible="pin" length="middle"/>
-<pin name="GP9" x="-12.7" y="7.62" visible="pin" length="middle"/>
-<pin name="GP10" x="12.7" y="10.16" visible="pin" length="middle" rot="R180"/>
-<pin name="GP18" x="12.7" y="-7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="GP19" x="12.7" y="-10.16" visible="pin" length="middle" rot="R180"/>
-<pin name="RXO" x="-12.7" y="-2.54" visible="pin" length="middle"/>
-<pin name="TXO" x="-12.7" y="-5.08" visible="pin" length="middle"/>
-<pin name="VCC" x="-12.7" y="-7.62" visible="pin" length="middle" direction="pwr"/>
-<wire x1="-7.62" y1="12.7" x2="-7.62" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="-7.62" y1="-12.7" x2="7.62" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="7.62" y1="-12.7" x2="7.62" y2="12.7" width="0.254" layer="94"/>
-<wire x1="7.62" y1="12.7" x2="-7.62" y2="12.7" width="0.254" layer="94"/>
-<text x="-2.54" y="15.24" size="1.27" layer="94">&lt;NAME</text>
-<text x="-5.08" y="-15.24" size="1.27" layer="94">&lt;VALUE</text>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="ESPRESSIF_ESP32C3" prefix="MOD" uservalue="yes">
-<description>ESPRESSIF ESP32 C3 M1 module from AI Thinker</description>
-<gates>
-<gate name="G$1" symbol="ESPRESSIF_ESP32C3" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="ESPRESSIF_ESP32-C3-01M">
-<connects>
-<connect gate="G$1" pin="EN" pad="PIN1"/>
-<connect gate="G$1" pin="GND" pad="PIN9"/>
-<connect gate="G$1" pin="GP0" pad="PIN12"/>
-<connect gate="G$1" pin="GP1" pad="PIN13"/>
-<connect gate="G$1" pin="GP10" pad="PIN18"/>
-<connect gate="G$1" pin="GP18" pad="PIN11"/>
-<connect gate="G$1" pin="GP19" pad="PIN10"/>
-<connect gate="G$1" pin="GP2" pad="PIN14"/>
-<connect gate="G$1" pin="GP3" pad="PIN5"/>
-<connect gate="G$1" pin="GP4" pad="PIN4"/>
-<connect gate="G$1" pin="GP5" pad="PIN15"/>
-<connect gate="G$1" pin="GP6" pad="PIN16"/>
-<connect gate="G$1" pin="GP7" pad="PIN17"/>
-<connect gate="G$1" pin="GP8" pad="PIN3"/>
-<connect gate="G$1" pin="GP9" pad="PIN2"/>
-<connect gate="G$1" pin="RXO" pad="PIN6"/>
-<connect gate="G$1" pin="TXO" pad="PIN7"/>
-<connect gate="G$1" pin="VCC" pad="PIN8"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-Switches">
 <description>&lt;h3&gt;SparkFun Switches, Buttons, Encoders&lt;/h3&gt;
 In this library you'll find switches, buttons, joysticks, and anything that moves to create or disrupt an electrical connection.
@@ -10826,216 +10718,6 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 </deviceset>
 </devicesets>
 </library>
-<library name="SparkFun-Capacitors">
-<description>&lt;h3&gt;SparkFun Capacitors&lt;/h3&gt;
-This library contains capacitors. 
-&lt;br&gt;
-&lt;br&gt;
-We've spent an enormous amount of time creating and checking these footprints and parts, but it is &lt;b&gt; the end user's responsibility&lt;/b&gt; to ensure correctness and suitablity for a given componet or application. 
-&lt;br&gt;
-&lt;br&gt;If you enjoy using this library, please buy one of our products at &lt;a href=" www.sparkfun.com"&gt;SparkFun.com&lt;/a&gt;.
-&lt;br&gt;
-&lt;br&gt;
-&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
-&lt;br&gt;
-&lt;br&gt;
-You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
-<packages>
-<package name="EIA7343">
-<description>EIA 7343 tantalum capacitor</description>
-<wire x1="-5" y1="2.5" x2="-2" y2="2.5" width="0.2032" layer="21"/>
-<wire x1="-5" y1="2.5" x2="-5" y2="-2.5" width="0.2032" layer="21"/>
-<wire x1="-5" y1="-2.5" x2="-2" y2="-2.5" width="0.2032" layer="21"/>
-<wire x1="2" y1="2.5" x2="4" y2="2.5" width="0.2032" layer="21"/>
-<wire x1="4" y1="2.5" x2="5" y2="1.5" width="0.2032" layer="21"/>
-<wire x1="5" y1="1.5" x2="5" y2="-1.5" width="0.2032" layer="21"/>
-<wire x1="5" y1="-1.5" x2="4" y2="-2.5" width="0.2032" layer="21"/>
-<wire x1="4" y1="-2.5" x2="2" y2="-2.5" width="0.2032" layer="21"/>
-<smd name="C" x="-3.17" y="0" dx="2.55" dy="2.7" layer="1" rot="R180"/>
-<smd name="A" x="3.17" y="0" dx="2.55" dy="2.7" layer="1" rot="R180"/>
-<text x="0" y="2.667" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
-<text x="0" y="-2.667" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;Value</text>
-</package>
-<package name="CPOL-RADIAL-2.5MM-6.5MM">
-<description>2.5 mm spaced PTHs with 6.5 mm diameter outline</description>
-<wire x1="-0.635" y1="1.778" x2="-1.905" y2="1.778" width="0.2032" layer="21"/>
-<circle x="0" y="0" radius="3.25" width="0.2032" layer="21"/>
-<pad name="2" x="-1.25" y="0" drill="0.7" diameter="1.651"/>
-<pad name="1" x="1.25" y="0" drill="0.7" diameter="1.651" shape="square"/>
-<text x="0" y="-3.429" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;Value</text>
-<text x="0" y="3.429" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
-<wire x1="1.905" y1="1.778" x2="0.635" y2="1.778" width="0.2032" layer="21"/>
-<wire x1="1.27" y1="2.413" x2="1.27" y2="1.143" width="0.2032" layer="21"/>
-</package>
-<package name="NIC_10X10.5_CAP">
-<description>Some old package in our library</description>
-<smd name="+" x="4.5" y="0" dx="4.5" dy="2.5" layer="1"/>
-<smd name="-" x="-4.5" y="0" dx="4.5" dy="2.5" layer="1"/>
-<wire x1="-5.5" y1="-5.5" x2="3.5" y2="-5.5" width="0.2032" layer="21"/>
-<wire x1="-5.5" y1="5.5" x2="3.5" y2="5.5" width="0.2032" layer="21"/>
-<wire x1="3.5" y1="5.5" x2="5.5" y2="3.5" width="0.2032" layer="21"/>
-<wire x1="5.5" y1="-3.5" x2="3.5" y2="-5.5" width="0.2032" layer="21"/>
-<wire x1="-4.826" y1="1.524" x2="4.826" y2="1.397" width="0.2032" layer="21" curve="-147.716211"/>
-<wire x1="-4.826" y1="-1.524" x2="4.826" y2="-1.397" width="0.2032" layer="21" curve="147.716211"/>
-<wire x1="5.5" y1="3.5" x2="5.5" y2="1.5" width="0.2032" layer="21"/>
-<wire x1="5.5" y1="-3.5" x2="5.5" y2="-1.5" width="0.2032" layer="21"/>
-<wire x1="-5.5" y1="-5.5" x2="-5.5" y2="-1.5" width="0.2032" layer="21"/>
-<wire x1="-5.5" y1="1.5" x2="-5.5" y2="5.5" width="0.2032" layer="21"/>
-<text x="0" y="5.715" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-5.715" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-</package>
-<package name="PANASONIC_D">
-<description>&lt;b&gt;Panasonic Aluminium Electrolytic Capacitor VS-Serie Package E&lt;/b&gt;</description>
-<wire x1="-3.25" y1="3.25" x2="1.55" y2="3.25" width="0.1016" layer="51"/>
-<wire x1="1.55" y1="3.25" x2="3.25" y2="1.55" width="0.1016" layer="51"/>
-<wire x1="3.25" y1="1.55" x2="3.25" y2="-1.55" width="0.1016" layer="51"/>
-<wire x1="3.25" y1="-1.55" x2="1.55" y2="-3.25" width="0.1016" layer="51"/>
-<wire x1="1.55" y1="-3.25" x2="-3.25" y2="-3.25" width="0.1016" layer="51"/>
-<wire x1="-3.25" y1="-3.25" x2="-3.25" y2="3.25" width="0.1016" layer="51"/>
-<wire x1="-3.25" y1="0.95" x2="-3.25" y2="3.25" width="0.2032" layer="21"/>
-<wire x1="-3.25" y1="3.25" x2="1.55" y2="3.25" width="0.2032" layer="21"/>
-<wire x1="1.55" y1="3.25" x2="3.25" y2="1.55" width="0.2032" layer="21"/>
-<wire x1="3.25" y1="1.55" x2="3.25" y2="0.95" width="0.2032" layer="21"/>
-<wire x1="3.25" y1="-0.95" x2="3.25" y2="-1.55" width="0.2032" layer="21"/>
-<wire x1="3.25" y1="-1.55" x2="1.55" y2="-3.25" width="0.2032" layer="21"/>
-<wire x1="1.55" y1="-3.25" x2="-3.25" y2="-3.25" width="0.2032" layer="21"/>
-<wire x1="-3.25" y1="-3.25" x2="-3.25" y2="-0.95" width="0.2032" layer="21"/>
-<wire x1="2.95" y1="0.95" x2="-2.95" y2="0.95" width="0.2032" layer="21" curve="144.299363"/>
-<wire x1="-2.95" y1="-0.95" x2="2.95" y2="-0.95" width="0.2032" layer="21" curve="144.299363"/>
-<wire x1="-2.1" y1="2.25" x2="-2.1" y2="-2.2" width="0.1016" layer="51"/>
-<circle x="0" y="0" radius="3.1" width="0.1016" layer="51"/>
-<smd name="+" x="2.4" y="0" dx="3" dy="1.4" layer="1"/>
-<smd name="-" x="-2.4" y="0" dx="3" dy="1.4" layer="1"/>
-<text x="0" y="3.429" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-3.429" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-<rectangle x1="-3.65" y1="-0.35" x2="-3.05" y2="0.35" layer="51"/>
-<rectangle x1="3.05" y1="-0.35" x2="3.65" y2="0.35" layer="51"/>
-<polygon width="0.1016" layer="51">
-<vertex x="-2.15" y="2.15"/>
-<vertex x="-2.6" y="1.6"/>
-<vertex x="-2.9" y="0.9"/>
-<vertex x="-3.05" y="0"/>
-<vertex x="-2.9" y="-0.95"/>
-<vertex x="-2.55" y="-1.65"/>
-<vertex x="-2.15" y="-2.15"/>
-<vertex x="-2.15" y="2.1"/>
-</polygon>
-</package>
-<package name="1206-POLAR">
-<wire x1="-2.4" y1="1.1" x2="2.4" y2="1.1" width="0.0508" layer="39"/>
-<wire x1="2.4" y1="-1.1" x2="-2.4" y2="-1.1" width="0.0508" layer="39"/>
-<wire x1="-2.4" y1="-1.1" x2="-2.4" y2="1.1" width="0.0508" layer="39"/>
-<wire x1="2.4" y1="1.1" x2="2.4" y2="-1.1" width="0.0508" layer="39"/>
-<wire x1="-0.965" y1="0.787" x2="0.965" y2="0.787" width="0.1016" layer="51"/>
-<wire x1="-0.965" y1="-0.787" x2="0.965" y2="-0.787" width="0.1016" layer="51"/>
-<smd name="1" x="-1.4" y="0" dx="1.6" dy="1.8" layer="1"/>
-<smd name="2" x="1.4" y="0" dx="1.6" dy="1.8" layer="1"/>
-<text x="0" y="1.143" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-1.143" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-<rectangle x1="-1.7018" y1="-0.8509" x2="-0.9517" y2="0.8491" layer="51"/>
-<rectangle x1="0.9517" y1="-0.8491" x2="1.7018" y2="0.8509" layer="51"/>
-<rectangle x1="-0.1999" y1="-0.4001" x2="0.1999" y2="0.4001" layer="35"/>
-<wire x1="-2.54" y1="0.889" x2="-2.54" y2="-0.889" width="0.254" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="CAP_POL">
-<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
-<wire x1="0" y1="-1.016" x2="0" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="-1" x2="2.4892" y2="-1.8542" width="0.254" layer="94" curve="-37.878202" cap="flat"/>
-<wire x1="-2.4669" y1="-1.8504" x2="0" y2="-1.0161" width="0.254" layer="94" curve="-37.376341" cap="flat"/>
-<text x="1.016" y="0.635" size="1.778" layer="95" font="vector">&gt;NAME</text>
-<text x="1.016" y="-4.191" size="1.778" layer="96" font="vector">&gt;VALUE</text>
-<rectangle x1="-2.253" y1="0.668" x2="-1.364" y2="0.795" layer="94"/>
-<rectangle x1="-1.872" y1="0.287" x2="-1.745" y2="1.176" layer="94"/>
-<pin name="+" x="0" y="2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
-<pin name="-" x="0" y="-5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="100UF-POLAR" prefix="C">
-<description>&lt;h3&gt;100µF polarized capacitors&lt;/h3&gt;
-&lt;p&gt;A capacitor is a passive two-terminal electrical component used to store electrical energy temporarily in an electric field.&lt;/p&gt;</description>
-<gates>
-<gate name="G$1" symbol="CAP_POL" x="0" y="0"/>
-</gates>
-<devices>
-<device name="-EIA7343-10V-10%(TANT)" package="EIA7343">
-<connects>
-<connect gate="G$1" pin="+" pad="A"/>
-<connect gate="G$1" pin="-" pad="C"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-07890"/>
-<attribute name="VALUE" value="100uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-EIA7343-16V-10%(TANT)" package="EIA7343">
-<connects>
-<connect gate="G$1" pin="+" pad="A"/>
-<connect gate="G$1" pin="-" pad="C"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-08702"/>
-<attribute name="VALUE" value="100uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-RADIAL-2.5MM-25V-20%" package="CPOL-RADIAL-2.5MM-6.5MM">
-<connects>
-<connect gate="G$1" pin="+" pad="1"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-08439"/>
-<attribute name="VALUE" value="100uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-10X10.5-63V-20%" package="NIC_10X10.5_CAP">
-<connects>
-<connect gate="G$1" pin="+" pad="+"/>
-<connect gate="G$1" pin="-" pad="-"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-08362"/>
-<attribute name="VALUE" value="100uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-25V-20%(ELEC)" package="PANASONIC_D">
-<connects>
-<connect gate="G$1" pin="+" pad="+"/>
-<connect gate="G$1" pin="-" pad="-"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-12547" constant="no"/>
-<attribute name="VALUE" value="100uF" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="-1206-6.3V-20%(TANT)" package="1206-POLAR">
-<connects>
-<connect gate="G$1" pin="+" pad="1"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-14093" constant="no"/>
-<attribute name="VALUE" value="100uF" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-IC-Comms">
 <description>&lt;h3&gt;SparkFun Communication ICs&lt;/h3&gt;
 This is the communications library, which contains things that exist on wired busses.  This includes USB to serial conversion ICs, like the FTDI line, plus high speed line drivers, level shifters, bus drivers, CAN transceivers and ethernet PHYs.
@@ -11150,149 +10832,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <technology name="">
 <attribute name="PROD_ID" value="IC-14038" constant="no"/>
 </technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="SLG47004V-DIP">
-<description>Upverter Parts Library
-
-Created by Upverter.com</description>
-<packages>
-<package name="SLG47004V-DIP">
-<description>Dialog SLG47004V-DIP Mixed Signal FPGA</description>
-<text x="-1.91" y="5.485" size="1" layer="25">&gt;NAME</text>
-<pad name="1" x="-5.08" y="-3.81" drill="1.15" diameter="1.75" shape="square" rot="R180"/>
-<pad name="2" x="-2.54" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="3" x="0" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="4" x="2.54" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="5" x="5.07365" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="6" x="7.62" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="7" x="10.16" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="8" x="12.7" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="9" x="15.24" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="10" x="17.78" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="11" x="17.78" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="12" x="15.24" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="13" x="12.7" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="14" x="10.16" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="15" x="7.62" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="16" x="5.08" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="17" x="2.54" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="18" x="0" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="19" x="-2.54" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<pad name="20" x="-5.08" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
-<wire x1="-19.05" y1="5.08" x2="23.495" y2="5.08" width="0.127" layer="21"/>
-<wire x1="23.495" y1="5.08" x2="23.495" y2="-5.08" width="0.127" layer="21"/>
-<wire x1="23.495" y1="-5.08" x2="-19.05" y2="-5.08" width="0.127" layer="21"/>
-<wire x1="-19.05" y1="-5.08" x2="-19.05" y2="5.08" width="0.127" layer="21"/>
-<circle x="-15.24" y="2.54" radius="0.635" width="0.127" layer="21"/>
-<circle x="-12.7" y="2.54" radius="0.635" width="0.127" layer="21"/>
-<circle x="-15.24" y="0" radius="0.635" width="0.127" layer="21"/>
-<circle x="-12.7" y="0" radius="0.635" width="0.127" layer="21"/>
-<circle x="-15.24" y="-2.54" radius="0.635" width="0.127" layer="21"/>
-<circle x="-12.7" y="-2.54" radius="0.635" width="0.127" layer="21"/>
-<text x="-15.875" y="3.81" size="1.27" layer="21" font="vector" ratio="12">GND</text>
-<text x="-15.875" y="-5.08" size="1.27" layer="21" font="vector" ratio="12">VDD</text>
-<text x="-11.43" y="-0.635" size="1.27" layer="21" font="vector" ratio="12">9 RH1B</text>
-<text x="-15.875" y="-0.635" size="1.27" layer="21" font="vector" ratio="12" rot="R90"> RH0A
-V 6</text>
-<circle x="21.59" y="3.81" radius="0.635" width="0.127" layer="21"/>
-<circle x="21.59" y="1.27" radius="0.635" width="0.127" layer="21"/>
-<circle x="21.59" y="-1.27" radius="0.635" width="0.127" layer="21"/>
-<circle x="21.59" y="-3.81" radius="0.635" width="0.127" layer="21"/>
-<text x="18.415" y="0.635" size="1.016" layer="21" font="vector" ratio="12">RH0A
-  7</text>
-<text x="18.415" y="-4.445" size="1.016" layer="21" font="vector" ratio="12">RH0B
-  8</text>
-<text x="-5.08" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">1</text>
-<text x="-2.54" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">21</text>
-<text x="0" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">23</text>
-<text x="2.54" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">9</text>
-<text x="5.08" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">17</text>
-<text x="7.62" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">15</text>
-<text x="10.16" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">5</text>
-<text x="12.7" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">10</text>
-<text x="15.24" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">11</text>
-<text x="17.78" y="-2.54" size="1.016" layer="21" font="vector" ratio="12" rot="R90">3</text>
-<text x="-5.08" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">19</text>
-<text x="-2.54" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">20</text>
-<text x="0" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">22</text>
-<text x="2.54" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">18</text>
-<text x="5.08" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">16</text>
-<text x="7.62" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">12</text>
-<text x="10.16" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">6</text>
-<text x="12.7" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">4</text>
-<text x="15.24" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">24</text>
-<text x="17.78" y="1.27" size="1.016" layer="21" font="vector" ratio="12" rot="R90">2</text>
-<text x="-3.18" y="-7.215" size="1" layer="25">&gt;VALUE</text>
-</package>
-</packages>
-<symbols>
-<symbol name="SLG47004-DIP">
-<description>Dialog SLG47004V-DIP
-Mixed signal FPGA</description>
-<pin name="RH0A(PIN6)" x="22.86" y="-5.08" visible="pin" length="middle" direction="pas" rot="R180"/>
-<pin name="OA0-(PIN3)" x="-22.86" y="-12.7" visible="pin" length="middle" direction="oc"/>
-<pin name="OA1+(PIN23)" x="-22.86" y="5.08" visible="pin" length="middle"/>
-<pin name="RH1B(PIN9)" x="-22.86" y="2.54" visible="pin" length="middle" direction="pas"/>
-<pin name="GPIO(PIN17)" x="-22.86" y="0" visible="pin" length="middle"/>
-<pin name="GPIO(PIN15)" x="-22.86" y="-2.54" visible="pin" length="middle"/>
-<pin name="OA0_OUT(PIN5)" x="-22.86" y="-5.08" visible="pin" length="middle"/>
-<pin name="SCL(PIN10)" x="-22.86" y="-7.62" visible="pin" length="middle"/>
-<pin name="SDA(PIN11)" x="-22.86" y="-10.16" visible="pin" length="middle"/>
-<pin name="GPI(PIN21)" x="-22.86" y="7.62" visible="pin" length="middle" direction="in"/>
-<pin name="GPIO(PIN12)" x="22.86" y="-2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="GPIO(PIN18)" x="22.86" y="2.54" visible="pin" length="middle" direction="in" rot="R180"/>
-<wire x1="-17.78" y1="12.7" x2="-17.78" y2="-15.24" width="0.254" layer="94"/>
-<wire x1="-17.78" y1="-15.24" x2="17.78" y2="-15.24" width="0.254" layer="94"/>
-<wire x1="17.78" y1="-15.24" x2="17.78" y2="12.7" width="0.254" layer="94"/>
-<wire x1="17.78" y1="12.7" x2="-17.78" y2="12.7" width="0.254" layer="94"/>
-<text x="-17.78" y="13.335" size="1.27" layer="95">&gt;NAME</text>
-<text x="-0.635" y="13.335" size="1.27" layer="96">&gt;VALUE</text>
-<pin name="GPIO(PIN16)" x="22.86" y="0" visible="pin" length="middle" rot="R180"/>
-<pin name="GPIO(PIN19)" x="22.86" y="10.16" visible="pin" length="middle" rot="R180"/>
-<pin name="GPIO(PIN20)" x="22.86" y="7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="VDD(PIN1)" x="-22.86" y="10.16" visible="pin" length="middle" direction="pwr"/>
-<pin name="GND(PIN2)" x="22.86" y="-12.7" visible="pin" length="middle" direction="pwr" rot="R180"/>
-<pin name="OA1_OUT(PIN22)" x="22.86" y="5.08" visible="pin" length="middle" rot="R180"/>
-<pin name="OA0+(PIN4)" x="22.86" y="-7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="OA1-(PIN24)" x="22.86" y="-10.16" visible="pin" length="middle" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="SLG7004V_DIP" prefix="FPGA" uservalue="yes">
-<gates>
-<gate name="G$1" symbol="SLG47004-DIP" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SLG47004V-DIP">
-<connects>
-<connect gate="G$1" pin="GND(PIN2)" pad="11"/>
-<connect gate="G$1" pin="GPI(PIN21)" pad="2"/>
-<connect gate="G$1" pin="GPIO(PIN12)" pad="15"/>
-<connect gate="G$1" pin="GPIO(PIN15)" pad="6"/>
-<connect gate="G$1" pin="GPIO(PIN16)" pad="16"/>
-<connect gate="G$1" pin="GPIO(PIN17)" pad="5"/>
-<connect gate="G$1" pin="GPIO(PIN18)" pad="17"/>
-<connect gate="G$1" pin="GPIO(PIN19)" pad="20"/>
-<connect gate="G$1" pin="GPIO(PIN20)" pad="19"/>
-<connect gate="G$1" pin="OA0+(PIN4)" pad="13"/>
-<connect gate="G$1" pin="OA0-(PIN3)" pad="10"/>
-<connect gate="G$1" pin="OA0_OUT(PIN5)" pad="7"/>
-<connect gate="G$1" pin="OA1+(PIN23)" pad="3"/>
-<connect gate="G$1" pin="OA1-(PIN24)" pad="12"/>
-<connect gate="G$1" pin="OA1_OUT(PIN22)" pad="18"/>
-<connect gate="G$1" pin="RH0A(PIN6)" pad="14"/>
-<connect gate="G$1" pin="RH1B(PIN9)" pad="4"/>
-<connect gate="G$1" pin="SCL(PIN10)" pad="8"/>
-<connect gate="G$1" pin="SDA(PIN11)" pad="9"/>
-<connect gate="G$1" pin="VDD(PIN1)" pad="1"/>
-</connects>
-<technologies>
-<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -11937,6 +11476,255 @@ This was SPECIALLY designed to be used with our Graphic LCD Backpack.  Be sure y
 </deviceset>
 </devicesets>
 </library>
+<library name="SLG47004V-DIP">
+<description>Upverter Parts Library
+
+Created by Upverter.com</description>
+<packages>
+<package name="SLG47004V-DIP">
+<description>Dialog SLG47004V-DIP Mixed Signal FPGA</description>
+<text x="-12.07" y="5.485" size="1" layer="25">&gt;NAME</text>
+<pad name="1" x="-5.08" y="-3.81" drill="1.15" diameter="1.75" shape="square" rot="R180"/>
+<pad name="2" x="-2.54" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="3" x="0" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="4" x="2.54" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="5" x="5.07365" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="6" x="7.62" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="7" x="10.16" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="8" x="12.7" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="9" x="15.24" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="10" x="17.78" y="-3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="11" x="17.78" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="12" x="15.24" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="13" x="12.7" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="14" x="10.16" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="15" x="7.62" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="16" x="5.08" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="17" x="2.54" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="18" x="0" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="19" x="-2.54" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<pad name="20" x="-5.08" y="3.81" drill="1.15" diameter="1.75" rot="R180"/>
+<wire x1="-19.05" y1="5.08" x2="23.495" y2="5.08" width="0.127" layer="21"/>
+<wire x1="23.495" y1="5.08" x2="23.495" y2="-5.08" width="0.127" layer="21"/>
+<wire x1="23.495" y1="-5.08" x2="-19.05" y2="-5.08" width="0.127" layer="21"/>
+<wire x1="-19.05" y1="-5.08" x2="-19.05" y2="5.08" width="0.127" layer="21"/>
+<circle x="-15.24" y="2.54" radius="0.635" width="0.127" layer="21"/>
+<circle x="-12.7" y="2.54" radius="0.635" width="0.127" layer="21"/>
+<circle x="-15.24" y="0" radius="0.635" width="0.127" layer="21"/>
+<circle x="-12.7" y="0" radius="0.635" width="0.127" layer="21"/>
+<circle x="-15.24" y="-2.54" radius="0.635" width="0.127" layer="21"/>
+<circle x="-12.7" y="-2.54" radius="0.635" width="0.127" layer="21"/>
+<text x="-15.875" y="5.08" size="1.27" layer="21" font="vector" ratio="12">GND</text>
+<text x="-15.875" y="-6.35" size="1.27" layer="21" font="vector" ratio="12">VDD</text>
+<text x="-11.43" y="-6.985" size="1.27" layer="21" font="vector" ratio="12">9 RH1B</text>
+<text x="-19.685" y="-0.635" size="1.27" layer="21" font="vector" ratio="12" rot="R90"> RH0A
+V 6</text>
+<circle x="21.59" y="3.81" radius="0.635" width="0.127" layer="21"/>
+<circle x="21.59" y="1.27" radius="0.635" width="0.127" layer="21"/>
+<circle x="21.59" y="-1.27" radius="0.635" width="0.127" layer="21"/>
+<circle x="21.59" y="-3.81" radius="0.635" width="0.127" layer="21"/>
+<text x="23.495" y="0.635" size="1.016" layer="21" font="vector" ratio="12">RH0A
+  7</text>
+<text x="23.495" y="-4.445" size="1.016" layer="21" font="vector" ratio="12">RH0B
+  8</text>
+<text x="-5.08" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">1</text>
+<text x="-2.54" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">21</text>
+<text x="0" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">23</text>
+<text x="2.54" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">9</text>
+<text x="5.08" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">17</text>
+<text x="7.62" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">15</text>
+<text x="10.16" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">5</text>
+<text x="12.7" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">10</text>
+<text x="15.24" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">11</text>
+<text x="17.78" y="-7.62" size="1.016" layer="21" font="vector" ratio="12" rot="R90">3</text>
+<text x="-5.08" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">19</text>
+<text x="-2.54" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">20</text>
+<text x="0" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">22</text>
+<text x="2.54" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">18</text>
+<text x="5.08" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">16</text>
+<text x="7.62" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">12</text>
+<text x="10.16" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">6</text>
+<text x="12.7" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">4</text>
+<text x="15.24" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">24</text>
+<text x="17.78" y="6.35" size="1.016" layer="21" font="vector" ratio="12" rot="R90">2</text>
+<text x="-15.88" y="-8.485" size="1" layer="25">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="SLG47004-DIP">
+<description>Dialog SLG47004V-DIP
+Mixed signal FPGA</description>
+<pin name="RH0A(PIN6)" x="22.86" y="-5.08" visible="pin" length="middle" direction="pas" rot="R180"/>
+<pin name="OA0-(PIN3)" x="-22.86" y="-12.7" visible="pin" length="middle" direction="oc"/>
+<pin name="OA1+(PIN23)" x="-22.86" y="5.08" visible="pin" length="middle"/>
+<pin name="RH1B(PIN9)" x="-22.86" y="2.54" visible="pin" length="middle" direction="pas"/>
+<pin name="GPIO(PIN17)" x="-22.86" y="0" visible="pin" length="middle"/>
+<pin name="GPIO(PIN15)" x="-22.86" y="-2.54" visible="pin" length="middle"/>
+<pin name="OA0_OUT(PIN5)" x="-22.86" y="-5.08" visible="pin" length="middle"/>
+<pin name="SCL(PIN10)" x="-22.86" y="-7.62" visible="pin" length="middle"/>
+<pin name="SDA(PIN11)" x="-22.86" y="-10.16" visible="pin" length="middle"/>
+<pin name="GPI(PIN21)" x="-22.86" y="7.62" visible="pin" length="middle" direction="in"/>
+<pin name="GPIO(PIN12)" x="22.86" y="-2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="GPIO(PIN18)" x="22.86" y="2.54" visible="pin" length="middle" direction="in" rot="R180"/>
+<wire x1="-17.78" y1="12.7" x2="-17.78" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="-17.78" y1="-15.24" x2="17.78" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="17.78" y1="-15.24" x2="17.78" y2="12.7" width="0.254" layer="94"/>
+<wire x1="17.78" y1="12.7" x2="-17.78" y2="12.7" width="0.254" layer="94"/>
+<pin name="GPIO(PIN16)" x="22.86" y="0" visible="pin" length="middle" rot="R180"/>
+<pin name="GPIO(PIN19)" x="22.86" y="10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="GPIO(PIN20)" x="22.86" y="7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="VDD(PIN1)" x="-22.86" y="10.16" visible="pin" length="middle" direction="pwr"/>
+<pin name="GND(PIN2)" x="22.86" y="-12.7" visible="pin" length="middle" direction="pwr" rot="R180"/>
+<pin name="OA1_OUT(PIN22)" x="22.86" y="5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="OA0+(PIN4)" x="22.86" y="-7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="OA1-(PIN24)" x="22.86" y="-10.16" visible="pin" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SLG7004V_DIP" prefix="FPGA" uservalue="yes">
+<gates>
+<gate name="FPGA1" symbol="SLG47004-DIP" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SLG47004V-DIP">
+<connects>
+<connect gate="FPGA1" pin="GND(PIN2)" pad="11"/>
+<connect gate="FPGA1" pin="GPI(PIN21)" pad="2"/>
+<connect gate="FPGA1" pin="GPIO(PIN12)" pad="15"/>
+<connect gate="FPGA1" pin="GPIO(PIN15)" pad="6"/>
+<connect gate="FPGA1" pin="GPIO(PIN16)" pad="16"/>
+<connect gate="FPGA1" pin="GPIO(PIN17)" pad="5"/>
+<connect gate="FPGA1" pin="GPIO(PIN18)" pad="17"/>
+<connect gate="FPGA1" pin="GPIO(PIN19)" pad="20"/>
+<connect gate="FPGA1" pin="GPIO(PIN20)" pad="19"/>
+<connect gate="FPGA1" pin="OA0+(PIN4)" pad="13"/>
+<connect gate="FPGA1" pin="OA0-(PIN3)" pad="10"/>
+<connect gate="FPGA1" pin="OA0_OUT(PIN5)" pad="7"/>
+<connect gate="FPGA1" pin="OA1+(PIN23)" pad="3"/>
+<connect gate="FPGA1" pin="OA1-(PIN24)" pad="12"/>
+<connect gate="FPGA1" pin="OA1_OUT(PIN22)" pad="18"/>
+<connect gate="FPGA1" pin="RH0A(PIN6)" pad="14"/>
+<connect gate="FPGA1" pin="RH1B(PIN9)" pad="4"/>
+<connect gate="FPGA1" pin="SCL(PIN10)" pad="8"/>
+<connect gate="FPGA1" pin="SDA(PIN11)" pad="9"/>
+<connect gate="FPGA1" pin="VDD(PIN1)" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="aithinker-C3-M1">
+<description>Generated from &lt;b&gt;aardvark-v0.01.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="ESPRESSIF_ESP32-C3-01M">
+<smd name="PIN1" x="-6.4" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN2" x="-4.8" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN3" x="-3.2" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN4" x="-1.6" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN5" x="0" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN6" x="1.6" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN7" x="3.2" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN8" x="4.8" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN9" x="6.4" y="-2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN10" x="6.4" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN11" x="4.8" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN12" x="3.2" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN13" x="1.6" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN14" x="0" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN15" x="-1.6" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN16" x="-3.2" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN17" x="-4.8" y="2" dx="0.8" dy="3" layer="16"/>
+<smd name="PIN18" x="-6.4" y="2" dx="0.8" dy="3" layer="16"/>
+<hole x="-7.5" y="0" drill="0.9"/>
+<hole x="7.5" y="0" drill="0.9"/>
+<wire x1="7.5" y1="0" x2="-7.5" y2="0" width="1.016" layer="46"/>
+<polygon width="0.127" layer="41">
+<vertex x="-8.7" y="0.9"/>
+<vertex x="-8.7" y="-0.9"/>
+<vertex x="8.6" y="-0.9"/>
+<vertex x="8.6" y="0.9"/>
+</polygon>
+<polygon width="0.127" layer="42">
+<vertex x="-8.7" y="0.9"/>
+<vertex x="-8.7" y="-0.9"/>
+<vertex x="8.6" y="-0.9"/>
+<vertex x="8.6" y="0.9"/>
+</polygon>
+<wire x1="-8" y1="4" x2="8" y2="4" width="0.127" layer="22"/>
+<wire x1="8" y1="4" x2="8" y2="-4" width="0.127" layer="22"/>
+<wire x1="8" y1="-4" x2="-8" y2="-4" width="0.127" layer="22"/>
+<wire x1="-8" y1="-4" x2="-8" y2="4" width="0.127" layer="22"/>
+</package>
+</packages>
+<symbols>
+<symbol name="ESPRESSIF_ESP32C3">
+<pin name="GP4" x="-12.7" y="2.54" visible="pin" length="middle"/>
+<pin name="EN" x="-12.7" y="10.16" visible="pin" length="middle" direction="in"/>
+<pin name="GND" x="-12.7" y="-10.16" visible="pin" length="middle" direction="pwr"/>
+<pin name="GP0" x="12.7" y="-5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="GP1" x="12.7" y="-2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="GP2" x="12.7" y="0" visible="pin" length="middle" rot="R180"/>
+<pin name="GP3" x="-12.7" y="0" visible="pin" length="middle"/>
+<pin name="GP5" x="12.7" y="2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="GP6" x="12.7" y="5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="GP7" x="12.7" y="7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="GP8" x="-12.7" y="5.08" visible="pin" length="middle"/>
+<pin name="GP9" x="-12.7" y="7.62" visible="pin" length="middle"/>
+<pin name="GP10" x="12.7" y="10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="GP18" x="12.7" y="-7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="GP19" x="12.7" y="-10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="RXO" x="-12.7" y="-2.54" visible="pin" length="middle"/>
+<pin name="TXO" x="-12.7" y="-5.08" visible="pin" length="middle"/>
+<pin name="VCC" x="-12.7" y="-7.62" visible="pin" length="middle" direction="pwr"/>
+<wire x1="-7.62" y1="12.7" x2="-7.62" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-12.7" x2="7.62" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-12.7" x2="7.62" y2="12.7" width="0.254" layer="94"/>
+<wire x1="7.62" y1="12.7" x2="-7.62" y2="12.7" width="0.254" layer="94"/>
+<text x="-2.54" y="15.24" size="1.27" layer="94">&lt;NAME</text>
+<text x="-5.08" y="-15.24" size="1.27" layer="94">&lt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="ESPRESSIF_ESP32C3" prefix="MOD" uservalue="yes">
+<description>ESPRESSIF ESP32 C3 M1 module from AI Thinker</description>
+<gates>
+<gate name="G$1" symbol="ESPRESSIF_ESP32C3" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="ESPRESSIF_ESP32-C3-01M">
+<connects>
+<connect gate="G$1" pin="EN" pad="PIN1"/>
+<connect gate="G$1" pin="GND" pad="PIN9"/>
+<connect gate="G$1" pin="GP0" pad="PIN12"/>
+<connect gate="G$1" pin="GP1" pad="PIN13"/>
+<connect gate="G$1" pin="GP10" pad="PIN18"/>
+<connect gate="G$1" pin="GP18" pad="PIN11"/>
+<connect gate="G$1" pin="GP19" pad="PIN10"/>
+<connect gate="G$1" pin="GP2" pad="PIN14"/>
+<connect gate="G$1" pin="GP3" pad="PIN5"/>
+<connect gate="G$1" pin="GP4" pad="PIN4"/>
+<connect gate="G$1" pin="GP5" pad="PIN15"/>
+<connect gate="G$1" pin="GP6" pad="PIN16"/>
+<connect gate="G$1" pin="GP7" pad="PIN17"/>
+<connect gate="G$1" pin="GP8" pad="PIN3"/>
+<connect gate="G$1" pin="GP9" pad="PIN2"/>
+<connect gate="G$1" pin="RXO" pad="PIN6"/>
+<connect gate="G$1" pin="TXO" pad="PIN7"/>
+<connect gate="G$1" pin="VCC" pad="PIN8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -11962,19 +11750,20 @@ This was SPECIALLY designed to be used with our Graphic LCD Backpack.  Be sure y
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="LED1" library="adafruit" deviceset="LED" device="CHIP-LED0805"/>
 <part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="MOD1" library="aithinker-C3-M1" deviceset="ESPRESSIF_ESP32C3" device=""/>
 <part name="FD1" library="apexprotofactory" deviceset="FIDUCIAL" device="1X2"/>
 <part name="FD2" library="apexprotofactory" deviceset="FIDUCIAL" device="1X2"/>
 <part name="S1" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-SMD-6.0X3.5MM" value="RESET"/>
-<part name="C3" library="SparkFun-Capacitors" deviceset="100UF-POLAR" device="-25V-20%(ELEC)" value="100uF"/>
 <part name="U1" library="SparkFun-IC-Comms" deviceset="CH340C" device=""/>
 <part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="100nF"/>
-<part name="FPGA1" library="SLG47004V-DIP" deviceset="SLG7004V_DIP" device=""/>
 <part name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:23553/2" value="510"/>
 <part name="GND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="LED2" library="adafruit" deviceset="LED" device="CHIP-LED0805"/>
 <part name="J1" library="SparkFun-Connectors" deviceset="CONN_10X2" device=""/>
+<part name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2"/>
+<part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="FPGA1" library="SLG47004V-DIP" deviceset="SLG7004V_DIP" device=""/>
+<part name="MOD1" library="aithinker-C3-M1" deviceset="ESPRESSIF_ESP32C3" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11990,17 +11779,10 @@ Espressif ESP32-C3-M1(4M) plus Dialog SLG47004V-DIP</text>
 <text x="35.56" y="88.9" size="2.54" layer="94">MPU PINS</text>
 <text x="30.48" y="132.08" size="2.54" layer="94">3.3V Power</text>
 <text x="134.62" y="139.7" size="2.54" layer="94" rot="R90">User LED</text>
-<text x="40.64" y="7.62" size="2.54" layer="94">Dialog Programmer</text>
-<text x="147.32" y="139.7" size="2.54" layer="94">NOTES
-1. need to absolutely confirm pullup status of EN and GPIO9
-with all the conflicting information. Since these pins are tied to
-the USB chip it would seem the issue is moot, but maybe RTS
-and DTR are open drain? 
-2. Board simply has to be a lot bigger to accomodate the
-Dialog programmer footprint. If we're going to do that then
-mounting holes are in order to allow the thing to sit on feet
-instead of wobbling around on the edige of the C3 module 
-ticking out the bottom of the board.
+<text x="149.86" y="50.8" size="2.54" layer="94">Dialog Programmer</text>
+<text x="144.78" y="139.7" size="2.54" layer="94">NOTES
+1.Need to move pin numbers for FPGA outside the bounding box.
+2. Need to fix &lt;name and &lt;value of C3.
 </text>
 </plain>
 <instances>
@@ -12055,16 +11837,11 @@ ticking out the bottom of the board.
 <instance part="GND6" gate="1" x="101.6" y="134.62" smashed="yes">
 <attribute name="VALUE" x="99.06" y="132.08" size="1.778" layer="96"/>
 </instance>
-<instance part="MOD1" gate="G$1" x="104.14" y="111.76" smashed="yes"/>
 <instance part="FD1" gate="G$1" x="147.32" y="40.64" smashed="yes"/>
 <instance part="FD2" gate="G$1" x="152.4" y="40.64" smashed="yes"/>
 <instance part="S1" gate="G$1" x="101.6" y="152.4" smashed="yes" rot="R90">
 <attribute name="NAME" x="100.076" y="152.4" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="102.108" y="152.4" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
-</instance>
-<instance part="C3" gate="G$1" x="73.66" y="154.94" smashed="yes">
-<attribute name="NAME" x="74.676" y="155.575" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="74.676" y="150.749" size="1.778" layer="96" font="vector"/>
 </instance>
 <instance part="U1" gate="U1" x="40.64" y="111.76" smashed="yes">
 <attribute name="NAME" x="33.02" y="122.555" size="1.778" layer="95"/>
@@ -12077,10 +11854,6 @@ ticking out the bottom of the board.
 <attribute name="NAME" x="11.176" y="112.395" size="1.778" layer="95"/>
 <attribute name="VALUE" x="11.176" y="107.569" size="1.778" layer="96"/>
 </instance>
-<instance part="FPGA1" gate="G$1" x="68.58" y="60.96" smashed="yes">
-<attribute name="NAME" x="50.8" y="74.295" size="1.27" layer="95"/>
-<attribute name="VALUE" x="67.945" y="74.295" size="1.27" layer="96"/>
-</instance>
 <instance part="R2" gate="G$1" x="124.46" y="144.78" smashed="yes" rot="R90">
 <attribute name="NAME" x="122.9614" y="140.97" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="127.762" y="140.97" size="1.778" layer="96" rot="R90"/>
@@ -12092,10 +11865,19 @@ ticking out the bottom of the board.
 <attribute name="NAME" x="128.016" y="152.908" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="130.175" y="152.908" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="J1" gate="G$1" x="22.86" y="20.32" smashed="yes">
-<attribute name="VALUE" x="19.05" y="2.794" size="1.778" layer="96" font="vector"/>
-<attribute name="NAME" x="19.05" y="33.528" size="1.778" layer="95" font="vector"/>
+<instance part="J1" gate="G$1" x="160.02" y="78.74" smashed="yes">
+<attribute name="VALUE" x="156.21" y="61.214" size="1.778" layer="96" font="vector"/>
+<attribute name="NAME" x="156.21" y="91.948" size="1.778" layer="95" font="vector"/>
 </instance>
+<instance part="C3" gate="G$1" x="73.66" y="154.94" smashed="yes">
+<attribute name="NAME" x="74.676" y="155.575" size="1.778" layer="95"/>
+<attribute name="VALUE" x="74.676" y="150.749" size="1.778" layer="96"/>
+</instance>
+<instance part="GND4" gate="1" x="147.32" y="58.42" smashed="yes">
+<attribute name="VALUE" x="144.78" y="55.88" size="1.778" layer="96"/>
+</instance>
+<instance part="FPGA1" gate="FPGA1" x="68.58" y="60.96" smashed="yes"/>
+<instance part="MOD1" gate="G$1" x="104.14" y="111.76" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -12104,14 +11886,14 @@ ticking out the bottom of the board.
 <segment>
 <pinref part="SV2" gate="1" pin="8"/>
 <wire x1="83.82" y1="104.14" x2="91.44" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="MOD1" gate="G$1" pin="VCC"/>
 <label x="86.36" y="104.14" size="1.778" layer="95"/>
+<pinref part="MOD1" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
 <pinref part="SV1" gate="1" pin="10"/>
 <wire x1="27.94" y1="71.12" x2="45.72" y2="71.12" width="0.1524" layer="91"/>
 <label x="27.94" y="71.12" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="VDD(PIN1)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="VDD(PIN1)"/>
 </segment>
 <segment>
 <pinref part="LED1" gate="G$1" pin="A"/>
@@ -12119,10 +11901,10 @@ ticking out the bottom of the board.
 <wire x1="71.12" y1="162.56" x2="73.66" y2="162.56" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="VOUT"/>
 <label x="76.2" y="162.56" size="1.778" layer="95"/>
-<pinref part="C3" gate="G$1" pin="+"/>
 <wire x1="73.66" y1="162.56" x2="86.36" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="157.48" x2="73.66" y2="162.56" width="0.1524" layer="91"/>
 <junction x="73.66" y="162.56"/>
+<pinref part="C3" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="U1" gate="U1" pin="VCC"/>
@@ -12136,13 +11918,18 @@ ticking out the bottom of the board.
 <pinref part="C1" gate="G$1" pin="1"/>
 <wire x1="10.16" y1="119.38" x2="10.16" y2="114.3" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="J1" gate="G$1" pin="2"/>
+<wire x1="167.64" y1="88.9" x2="172.72" y2="88.9" width="0.1524" layer="91"/>
+<label x="170.18" y="88.9" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="GND" class="1">
 <segment>
 <pinref part="SV2" gate="1" pin="9"/>
 <wire x1="83.82" y1="101.6" x2="91.44" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="MOD1" gate="G$1" pin="GND"/>
 <label x="86.36" y="101.6" size="1.778" layer="95"/>
+<pinref part="MOD1" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="IC1" gate="G$1" pin="GND"/>
@@ -12153,19 +11940,19 @@ ticking out the bottom of the board.
 <wire x1="58.42" y1="147.32" x2="38.1" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="2"/>
 <wire x1="38.1" y1="147.32" x2="38.1" y2="152.4" width="0.1524" layer="91"/>
-<pinref part="C3" gate="G$1" pin="-"/>
 <wire x1="58.42" y1="147.32" x2="73.66" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="147.32" x2="73.66" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="X1" gate="G$1" pin="5"/>
 <wire x1="22.86" y1="152.4" x2="22.86" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="147.32" x2="38.1" y2="147.32" width="0.1524" layer="91"/>
 <junction x="38.1" y="147.32"/>
+<pinref part="C3" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="SV3" gate="1" pin="10"/>
 <wire x1="109.22" y1="48.26" x2="91.44" y2="48.26" width="0.1524" layer="91"/>
 <label x="91.44" y="48.26" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GND(PIN2)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GND(PIN2)"/>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
@@ -12192,13 +11979,24 @@ ticking out the bottom of the board.
 <wire x1="124.46" y1="139.7" x2="124.46" y2="137.16" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="J1" gate="G$1" pin="19"/>
+<wire x1="152.4" y1="66.04" x2="147.32" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="147.32" y1="66.04" x2="147.32" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="GND4" gate="1" pin="GND"/>
+<pinref part="J1" gate="G$1" pin="12"/>
+<wire x1="167.64" y1="76.2" x2="170.18" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="76.2" x2="170.18" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="60.96" x2="147.32" y2="60.96" width="0.1524" layer="91"/>
+<junction x="147.32" y="60.96"/>
+</segment>
 </net>
 <net name="SCL" class="0">
 <segment>
 <pinref part="SV1" gate="1" pin="3"/>
 <wire x1="27.94" y1="53.34" x2="45.72" y2="53.34" width="0.1524" layer="91"/>
 <label x="27.94" y="53.34" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="SCL(PIN10)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="SCL(PIN10)"/>
 </segment>
 <segment>
 <pinref part="SV4" gate="1" pin="7"/>
@@ -12212,7 +12010,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="2"/>
 <wire x1="27.94" y1="50.8" x2="45.72" y2="50.8" width="0.1524" layer="91"/>
 <label x="27.94" y="50.8" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="SDA(PIN11)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="SDA(PIN11)"/>
 </segment>
 <segment>
 <pinref part="SV4" gate="1" pin="6"/>
@@ -12238,8 +12036,8 @@ ticking out the bottom of the board.
 <segment>
 <wire x1="91.44" y1="111.76" x2="83.82" y2="111.76" width="0.1524" layer="91"/>
 <label x="86.36" y="111.76" size="1.778" layer="95"/>
-<pinref part="MOD1" gate="G$1" pin="GP3"/>
 <pinref part="SV2" gate="1" pin="5"/>
+<pinref part="MOD1" gate="G$1" pin="GP3"/>
 </segment>
 </net>
 <net name="GP4" class="0">
@@ -12320,7 +12118,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="1"/>
 <wire x1="109.22" y1="71.12" x2="91.44" y2="71.12" width="0.1524" layer="91"/>
 <label x="91.44" y="71.12" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN19)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN19)"/>
 </segment>
 </net>
 <net name="GPIO(PIN16)" class="0">
@@ -12328,7 +12126,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="5"/>
 <wire x1="109.22" y1="60.96" x2="91.44" y2="60.96" width="0.1524" layer="91"/>
 <label x="91.44" y="60.96" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN16)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN16)"/>
 </segment>
 </net>
 <net name="GPIO(PIN18)" class="0">
@@ -12336,7 +12134,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="4"/>
 <wire x1="109.22" y1="63.5" x2="91.44" y2="63.5" width="0.1524" layer="91"/>
 <label x="91.44" y="63.5" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN18)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN18)"/>
 </segment>
 </net>
 <net name="OA1_OUT(PIN22)" class="0">
@@ -12344,7 +12142,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="3"/>
 <wire x1="109.22" y1="66.04" x2="91.44" y2="66.04" width="0.1524" layer="91"/>
 <label x="91.44" y="66.04" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="OA1_OUT(PIN22)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="OA1_OUT(PIN22)"/>
 </segment>
 </net>
 <net name="GPIO(PIN12)" class="0">
@@ -12352,7 +12150,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="6"/>
 <wire x1="109.22" y1="58.42" x2="91.44" y2="58.42" width="0.1524" layer="91"/>
 <label x="91.44" y="58.42" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN12)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN12)"/>
 </segment>
 </net>
 <net name="RH1B(PIN9)" class="0">
@@ -12360,7 +12158,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="7"/>
 <wire x1="27.94" y1="63.5" x2="45.72" y2="63.5" width="0.1524" layer="91"/>
 <label x="27.94" y="63.5" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="RH1B(PIN9)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="RH1B(PIN9)"/>
 </segment>
 </net>
 <net name="GPIO(PIN20)" class="0">
@@ -12368,7 +12166,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="2"/>
 <wire x1="109.22" y1="68.58" x2="91.44" y2="68.58" width="0.1524" layer="91"/>
 <label x="91.44" y="68.58" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN20)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN20)"/>
 </segment>
 </net>
 <net name="GPIO(PIN17)" class="0">
@@ -12376,7 +12174,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="6"/>
 <wire x1="27.94" y1="60.96" x2="45.72" y2="60.96" width="0.1524" layer="91"/>
 <label x="27.94" y="60.96" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN17)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN17)"/>
 </segment>
 </net>
 <net name="GPIO(PIN15)" class="0">
@@ -12384,7 +12182,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="5"/>
 <wire x1="27.94" y1="58.42" x2="45.72" y2="58.42" width="0.1524" layer="91"/>
 <label x="27.94" y="58.42" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPIO(PIN15)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPIO(PIN15)"/>
 </segment>
 </net>
 <net name="OA0_OUT(PIN5)" class="0">
@@ -12392,7 +12190,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="4"/>
 <wire x1="27.94" y1="55.88" x2="45.72" y2="55.88" width="0.1524" layer="91"/>
 <label x="27.94" y="55.88" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="OA0_OUT(PIN5)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="OA0_OUT(PIN5)"/>
 </segment>
 </net>
 <net name="OA0-(PIN3)" class="0">
@@ -12400,7 +12198,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="1"/>
 <wire x1="27.94" y1="48.26" x2="45.72" y2="48.26" width="0.1524" layer="91"/>
 <label x="27.94" y="48.26" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="OA0-(PIN3)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="OA0-(PIN3)"/>
 </segment>
 </net>
 <net name="GPI(PIN21)" class="0">
@@ -12408,7 +12206,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="9"/>
 <wire x1="27.94" y1="68.58" x2="45.72" y2="68.58" width="0.1524" layer="91"/>
 <label x="27.94" y="68.58" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="GPI(PIN21)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="GPI(PIN21)"/>
 </segment>
 </net>
 <net name="OA1+(PIN23)" class="0">
@@ -12416,7 +12214,7 @@ ticking out the bottom of the board.
 <pinref part="SV1" gate="1" pin="8"/>
 <wire x1="27.94" y1="66.04" x2="45.72" y2="66.04" width="0.1524" layer="91"/>
 <label x="27.94" y="66.04" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="OA1+(PIN23)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="OA1+(PIN23)"/>
 </segment>
 </net>
 <net name="OA0+(PIN4)" class="0">
@@ -12424,7 +12222,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="8"/>
 <wire x1="109.22" y1="53.34" x2="91.44" y2="53.34" width="0.1524" layer="91"/>
 <label x="91.44" y="53.34" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="OA0+(PIN4)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="OA0+(PIN4)"/>
 </segment>
 </net>
 <net name="OA1-(PIN24)" class="0">
@@ -12432,7 +12230,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="9"/>
 <wire x1="109.22" y1="50.8" x2="91.44" y2="50.8" width="0.1524" layer="91"/>
 <label x="91.44" y="50.8" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="OA1-(PIN24)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="OA1-(PIN24)"/>
 </segment>
 </net>
 <net name="RH0A(PIN6)" class="0">
@@ -12440,7 +12238,7 @@ ticking out the bottom of the board.
 <pinref part="SV3" gate="1" pin="7"/>
 <wire x1="109.22" y1="55.88" x2="91.44" y2="55.88" width="0.1524" layer="91"/>
 <label x="91.44" y="55.88" size="1.778" layer="95"/>
-<pinref part="FPGA1" gate="G$1" pin="RH0A(PIN6)"/>
+<pinref part="FPGA1" gate="FPGA1" pin="RH0A(PIN6)"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -12462,8 +12260,8 @@ ticking out the bottom of the board.
 <segment>
 <wire x1="83.82" y1="109.22" x2="91.44" y2="109.22" width="0.1524" layer="91"/>
 <label x="86.36" y="109.22" size="1.778" layer="95"/>
-<pinref part="MOD1" gate="G$1" pin="RXO"/>
 <pinref part="SV2" gate="1" pin="6"/>
+<pinref part="MOD1" gate="G$1" pin="RXO"/>
 </segment>
 <segment>
 <pinref part="U1" gate="U1" pin="RXI"/>
@@ -12475,8 +12273,8 @@ ticking out the bottom of the board.
 <segment>
 <wire x1="83.82" y1="106.68" x2="91.44" y2="106.68" width="0.1524" layer="91"/>
 <label x="86.36" y="106.68" size="1.778" layer="95"/>
-<pinref part="MOD1" gate="G$1" pin="TXO"/>
 <pinref part="SV2" gate="1" pin="7"/>
+<pinref part="MOD1" gate="G$1" pin="TXO"/>
 </segment>
 <segment>
 <pinref part="U1" gate="U1" pin="TXO"/>
