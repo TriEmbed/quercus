@@ -20,9 +20,9 @@ Version 0.60 Bug/Todo/wish list.
    "*" means fixed/implemented for post-0.60 release (in next rev Eagle files) 
    "^" means item to be fixed/implemented when board size increased
 
-0. U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do. REMEMBER the board footprint has to be turned 180 degrees to accomplish this. The "long" end of the SLG has to point the other way so the short end can be close to the C3, making it impossible to insert the SLG the wrong way.
+0. *U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do. REMEMBER the board footprint has to be turned 180 degrees to accomplish this. The "long" end of the SLG has to point the other way so the short end can be close to the C3, making it impossible to insert the SLG the wrong way.
 1. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
-2. Bug: Center to center distance of header pairs off slightly. Need to line up to work well with breadboard. Wish: Consider cutouts to make use of breadboard feasible even when the board is larger such as 10x10cm. Side would be cut out from edge, then have rectangular cutouts along other side for access to the breadboard jumper sites.
+2. *Bug: Center to center distance of header pairs off slightly. Need to line up to work well with breadboard. Wish: Consider cutouts to make use of breadboard feasible even when the board is larger such as 10x10cm. Side would be cut out from edge, then have rectangular cutouts along other side for access to the breadboard jumper sites.
 3. ^Bug: Silkscreen hard to read
 4. ^Wish: Silkscreen should include SLG47004V-DIP pin labels, not just numbers.
 5. ^Todo: Add header for the I2C and power/ground for programming some Dialog elsewhere like in some other circuit. Put a four position JST PH on one side of board as well as four position header.
@@ -36,7 +36,7 @@ Version 0.60 Bug/Todo/wish list.
 11. ^Todo: Need pushbuttons for reset and boot.
 12. *Bug: EN DOES NOT need a pullup. Clearly shown in AI Thinker C3 module schematic, although value not shown
 13. *Bug: Pull GPIO9 up. Be sure to document this as it creates constraints on use of the pin.
-14. Todo: The C3 slot is both too long and two wide. Measure width with microscope but only narrow it one wee skoshin. Use C3 dev board with C3 removed as a model.
+14. *Todo: The C3 slot is both too long and two wide. Measure width with microscope but only narrow it one wee skoshin. Use C3 dev board with C3 removed as a model.
 15. *Todo: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
 16. *Todo: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP.
 17. *Todo: Only need reset pushbutton. 
@@ -46,10 +46,11 @@ Version 0.60 Bug/Todo/wish list.
 21. *Todo: Add a 4.7uF cap from EN to ground for reliable reset behavior.
 22. *Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
 23. *Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
-24. Todo: Remap C3 pin usage to use two different pins for I2C to free up the C3's USB subsystem.
+24. *Todo: Remap C3 pin usage to use two different pins for I2C to free up the C3's USB subsystem.
 25. *Todo: Add footprint for Dialog QFN socket/programmer interface.
-26. Todo: Tie Dialog programmer footprint to C3 pins
+26. *Todo: Tie Dialog programmer footprint to C3 pins
 27. *Todo: Add user controllable LED
+28. Todo: Make sure Dialog programmer will plug in without interfering with C3 module
 Parts not in hand
 
 1. CH340C USB chip. One in hand and four expected by 2/7.
