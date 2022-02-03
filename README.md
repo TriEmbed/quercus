@@ -51,6 +51,8 @@ Version 0.60 Bug/Todo/wish list.
 26. *Todo: Tie Dialog programmer footprint to C3 pins
 27. *Todo: Add user controllable LED
 28. Todo: Make sure Dialog programmer will plug in without interfering with C3 module
+29. *Todo: Shorten the slot to .9x14.9mm *rectangle* (last bit of each end narrows down. If C3 has rounded edges it will still have a lot of "slop", but wanting to sneak up on the right fit vs being unable to insert C3.)
+
 Parts not in hand
 
 1. CH340C USB chip. One in hand and four expected by 2/7.
