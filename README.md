@@ -40,7 +40,7 @@ Version 0.60 Bug/Todo/wish list.
 15. *Todo: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
 16. *Todo: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP.
 17. *Todo: Only need reset pushbutton. 
-18. Todo: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
+18. *Todo: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
 19. ^Todo: Provision for one Dialog programming socket.
 20. ^Todo: Provision for additional Dialog chips?
 21. *Todo: Add a 4.7uF cap from EN to ground for reliable reset behavior.
@@ -50,7 +50,7 @@ Version 0.60 Bug/Todo/wish list.
 25. *Todo: Add footprint for Dialog QFN socket/programmer interface.
 26. *Todo: Tie Dialog programmer footprint to C3 pins
 27. *Todo: Add user controllable LED
-28. Todo: Make sure Dialog programmer will plug in without interfering with C3 module
+28. *Todo: Make sure Dialog programmer will plug in without interfering with C3 module
 29. *Todo: Shorten the slot to .9x14.9mm *rectangle* (last bit of each end narrows down. If C3 has rounded edges it will still have a lot of "slop", but wanting to sneak up on the right fit vs being unable to insert C3.)
 
 Parts not in hand
