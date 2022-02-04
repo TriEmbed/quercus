@@ -16841,14 +16841,14 @@ Espressif ESP32-C3-M1(4M) plus Dialog SLG47004V-DIP</text>
 <pinref part="MOD1" gate="G$1" pin="GP0"/>
 </segment>
 <segment>
-<pinref part="SV2" gate="1" pin="3"/>
-<wire x1="58.42" y1="22.86" x2="63.5" y2="22.86" width="0.1524" layer="91"/>
-<label x="58.42" y="22.86" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="DIALOG-PGM" gate="G$1" pin="8"/>
 <wire x1="167.64" y1="81.28" x2="172.72" y2="81.28" width="0.1524" layer="91"/>
 <label x="170.18" y="81.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="SV2" gate="1" pin="4"/>
+<wire x1="58.42" y1="25.4" x2="63.5" y2="25.4" width="0.1524" layer="91"/>
+<label x="58.42" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SDA" class="0">
@@ -16865,14 +16865,14 @@ Espressif ESP32-C3-M1(4M) plus Dialog SLG47004V-DIP</text>
 <pinref part="MOD1" gate="G$1" pin="GP1"/>
 </segment>
 <segment>
-<pinref part="SV2" gate="1" pin="4"/>
-<wire x1="58.42" y1="25.4" x2="63.5" y2="25.4" width="0.1524" layer="91"/>
-<label x="58.42" y="25.4" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="DIALOG-PGM" gate="G$1" pin="9"/>
 <wire x1="152.4" y1="78.74" x2="144.78" y2="78.74" width="0.1524" layer="91"/>
 <label x="144.78" y="78.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="SV2" gate="1" pin="3"/>
+<wire x1="58.42" y1="22.86" x2="63.5" y2="22.86" width="0.1524" layer="91"/>
+<label x="58.42" y="22.86" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GP2" class="0">
