@@ -15,3 +15,4 @@
 ## GP Designer Handout: https://www.dialog-semiconductor.com/sites/default/files/gpdesigner_handout_042015.pdf
 ## Automotive blurb: https://www.dialog-semiconductor.com/sites/default/files/configurable_mixed-signal_ics_enable_safe_flexible_low_cost_automotive_designs.pdf
 ## GreenPAK brochure: https://www.dialog-semiconductor.com/sites/default/files/2021-12/GreenPAK_brochure.pdf
+## GreenPAK web index by function: https://www.dialog-semiconductor.com/products#programmable-mixed-signal-devices
