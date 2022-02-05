@@ -7,6 +7,7 @@
 5. 10 LM1117 3.3 v regulator chips
 6. N MINI USB sockets for prototype board
 7. One version 0.60 Aardvark board (unpopulated)
+8. Several "plexiglas ESP32 module carrier boards"
 ## @ Apex Proto Factory (Pete Soper)
 1. One version 0.60 Aardvark board (unpopulated)
 2. One version 0.60 Aardvark board (populated) ECOS:
@@ -20,6 +21,9 @@
 8. ESP32 related resources
 9. Three version 0.60 C3+SLG47004V-DIP project boards
 10. 12 LM1117 3.3 v regulator chips
-11. 3 "plexiglas ESP32 module carrier boards"
+11. 1 (misplaced) "plexiglas ESP32 module carrier boards"
+12. 43 mini USB sockets suitable for SMT
 ## @ Rob Mackie
 1. 40 SLG47004V-DIP breakouts
+## @ Paul MacDougal
+1. More USB mini sockets to barter for stuff
