@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="10" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -152,7 +152,7 @@
 <description>Generated from &lt;b&gt;aardvark-v0.01.sch&lt;/b&gt;&lt;p&gt;
 by exp-lbrs.ulp</description>
 <packages>
-<package name="ESPRESSIF_ESP32-C3-01M">
+<package name="AITHINKER-C3-M1">
 <smd name="PIN1" x="-6.4" y="-2" dx="0.8" dy="3" layer="16"/>
 <smd name="PIN2" x="-4.8" y="-2" dx="0.8" dy="3" layer="16"/>
 <smd name="PIN3" x="-3.2" y="-2" dx="0.8" dy="3" layer="16"/>
@@ -193,7 +193,7 @@ by exp-lbrs.ulp</description>
 </package>
 </packages>
 <symbols>
-<symbol name="ESPRESSIF_ESP32C3">
+<symbol name="AITHINKER-C3-M1">
 <pin name="GP4" x="-12.7" y="2.54" visible="pin" length="middle"/>
 <pin name="EN" x="-12.7" y="10.16" visible="pin" length="middle" direction="in"/>
 <pin name="GND" x="-12.7" y="-10.16" visible="pin" length="middle" direction="pwr"/>
@@ -216,18 +216,18 @@ by exp-lbrs.ulp</description>
 <wire x1="-7.62" y1="-12.7" x2="7.62" y2="-12.7" width="0.254" layer="94"/>
 <wire x1="7.62" y1="-12.7" x2="7.62" y2="12.7" width="0.254" layer="94"/>
 <wire x1="7.62" y1="12.7" x2="-7.62" y2="12.7" width="0.254" layer="94"/>
-<text x="-2.54" y="15.24" size="1.27" layer="94">&lt;NAME</text>
-<text x="-5.08" y="-15.24" size="1.27" layer="94">&lt;VALUE</text>
+<text x="-2.54" y="15.24" size="1.27" layer="94">&gt;NAME</text>
+<text x="-5.08" y="-15.24" size="1.27" layer="94">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="ESPRESSIF_ESP32C3" prefix="MOD" uservalue="yes">
+<deviceset name="AITHINKER-C3-M1" prefix="MOD" uservalue="yes">
 <description>ESPRESSIF ESP32 C3 M1 module from AI Thinker</description>
 <gates>
-<gate name="G$1" symbol="ESPRESSIF_ESP32C3" x="0" y="0"/>
+<gate name="G$1" symbol="AITHINKER-C3-M1" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="ESPRESSIF_ESP32-C3-01M">
+<device name="" package="AITHINKER-C3-M1">
 <connects>
 <connect gate="G$1" pin="EN" pad="PIN1"/>
 <connect gate="G$1" pin="GND" pad="PIN9"/>
