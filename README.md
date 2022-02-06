@@ -1,59 +1,81 @@
 ﻿# Triangle Embedded Interest Group (TriEmbed)
 
-## Aardvark: Making Dialog Semiconductor mixed signal FPGA chips more accessible:
-1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be used as a programmer for the Dialog SLGxxxxx ICs or to run applications with an onboard SLG47004V-DIP. 
-2. Additional accessibility tools like breakout boards such as the Dialog SLG47004V-DIP.
-3. Cache of Dialog info resources
+## Aardvark: Making Dialog Semiconductor mixed signal FPGA chips more accessible
+
+1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be a programmer for the Dialog SLGxxxxx ICs and also run applications with an onboard SLG47004V-DIP. 
+2. Cache of Dialog info resources
    1. Pointers to Dialog web resources
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
-4. Eagle files for board design
+3. Firmware for ESP32 to present a WIFI access point, allowing web-based programing of the Dialog FPGA from any WIFI client. There will be a password mechanism for security.
 
-Release notes:
- 0.60 1/18/2022 - Initial prototype. Bare bones requiring USB to serial logic cable for initial programming and an absolute minimum of features beyond eventual support for programming a plugged in SLG47004V-DIP
 
-BUGS and ECO requests (could be grouped: don't need 20+ repo issues)
+## Project Status
 
-Version 0.60 Bug/Todo/wish list.
+Aardvark is just starting its second release cycle with version 0.70 hardware at the PCB fab as this is being written. Version 0.70 board assembly expected to commence by 2/14/2022. Firmware for a web-based FPGA programming appliance is in alpha test. The second and third 0.60 boards are being assembled with outboard circuitry on a solderless breadboard to match the first example.
 
-   Note: Many items become easy when we can go with a MUCH larger board that follows the big rule of providing a generous area for people to put their own circuitry in place in a straight forward manner. But this requires a supplier other than OSH Park for significantly lower cost. Guestimate can switch to cheaper supplier for rev 0.8x or 0.9x. So with this in mind expect the "wish" items to become "todo" with the larger board.
-   "*" means fixed/implemented for post-0.60 release (in next rev Eagle files) 
+## Release notes:
+
+**0.80** ETA TBD - third prototype
+
+1. 10x10cm PCB
+2. Expecting review, changes and additions from community input
+3. Lots of room for forks with additional circuitry
+
+**0.70** ETA 2/14/2022 - Second prototype. Pure superset of 0.60:
+
+1. Set of female headers to accept a Dialog programming adapter. The adapter and the SLG4704V-DIP cannot be on the board at the same time.
+2. CH340C USB interface chip that obviates the need for a dongle for programming via USB.
+3. User-controlled LED connected to GPIO2 (pin 14?)
+4. Reset pushbutton with a 4.7uF cap across it to stretch time it takes enable to return to a high level
+5. Aluminum electrolytic cap for regulator output
+6. Four position header for connecting ESP32's I2C bus to an outboard Dialog chip for programming. 
+7. C3 module firmware creating access point to provide a wireless web interface for uploading and programming a Dialog synthesis file.
+8. Shorter and narrower slot for C3 board to fit more tightly
+9. Dialog board cannot be plugged in backwards
+
+**0.60 Initial prototype 1/24/2022
+
+1. 3.3v regulated supply with power on LED, 
+2. AI Thinker ESP32-C3-M1 single RISCV core + WIFI + Bluetooth
+3. Socket for Dialog SLG47004V-DIP for programming purposes and/or to combine with the ESP32 for applications
+4. Requires USB to serial logic cable with both RTS and DTR control for programming
+5. Designed to work with firmware that makes the system a general purpose Dialog chip programmer
+
+## Bug/Todo/Wish Lists
+
+   Note: Many items become easy when we can go with a MUCH larger board that follows the big rule of providing a generous area for people to put their own circuitry in place in a straight forward manner. But this requires a supplier other than OSH Park for significantly lower cost. Guestimate can switch to cheaper supplier for rev 0.80 assuming no major problems with 0.70. So with this in mind expect the "wish" items to become "todo" with the larger board.
+   "*" means fixed/implemented for next release (in next rev Eagle files) 
    "^" means item to be fixed/implemented when board size increased
 
-0. *U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do. REMEMBER the board footprint has to be turned 180 degrees to accomplish this. The "long" end of the SLG has to point the other way so the short end can be close to the C3, making it impossible to insert the SLG the wrong way.
-1. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
-2. *Bug: Center to center distance of header pairs off slightly. Need to line up to work well with breadboard. Wish: Consider cutouts to make use of breadboard feasible even when the board is larger such as 10x10cm. Side would be cut out from edge, then have rectangular cutouts along other side for access to the breadboard jumper sites.
-3. ^Bug: Silkscreen hard to read
-4. ^Wish: Silkscreen should include SLG47004V-DIP pin labels, not just numbers.
-5. ^Todo: Add header for the I2C and power/ground for programming some Dialog elsewhere like in some other circuit. Put a four position JST PH on one side of board as well as four position header.
-7. Todo: Switch to USB micro connector as some have already tossed their collection of mini cables!
-8. *Bug: Name on underside of board is misspelled.
-9. Bug: No license on silkscreen, only in the Eagle schematic (and that was unilateral: not the will of the FPGA working group.
-10. *Bug: Schematic doesn't match build:
+### Version 0.80 Bug/Todo/wish list.
+
+1. Thorough design review(s)
+2. Switch to USB micro connector? This needs group discussion. There is an inexpensive supply of USB mini sockets in hand while getting inexpensive micros is on the wrong side of Chinese New Year. Need to hash this out for version 0.80.
+2. Bug: Silkscreen hard to read. Need booth library and board layout changes.
+3. Wish: Silkscreen should include SLG47004V-DIP pin labels, not just numbers.
+4. Todo: Need pushbutton for boot? 
+5. Todo: Provision for additional Dialog chips?
+6. Wish: Pet peripheral footprints
+7. Bug: No consensus about licensing. 0.70 board has "CC By-SA 2.00" on underside but we need concensus for 0.80 as it will be released to the public unless it requires a lot of bodge wires. 
+### Version 0.70 bug/todo list: 
+
+1. Decoupling/bypass cap for CH340C overlooked: 100nF cap has to be added on top of the USB chip manually as part of assembly.
+
+### Version 0.60 Bug/Todo/wish list.
+
+1. *U G H  B U G: Not clear which way to plug in the SLG47004V-DIP. Plugging it in backwards might be very bad. Make it physically impossible to plug the board in backwards. Arranging for interference with the C3 or other tall part if backwards should make this relatively trivial to do. REMEMBER the board footprint has to be turned 180 degrees to accomplish this. The "long" end of the SLG has to point the other way so the short end can be close to the C3, making it impossible to insert the SLG the wrong way.
+2. Bug: No review process for this board version. Could have avoided some mistakes and gotten some ideas for improvement. Let's not send an update to fab without a couple days open for peer review.
+3. *Bug: Center to center distance of header pairs off slightly. Need to line up to work well with breadboard. Wish: Consider cutouts to make use of breadboard feasible even when the board is larger such as 10x10cm. Side would be cut out from edge, then have rectangular cutouts along other side for access to the breadboard jumper sites.
+4. *Bug: Name on underside of board is misspelled.
+5. Bug: No license on silkscreen, only in the Eagle schematic (and that was unilateral: not the will of the FPGA working group.
+6. *Bug: Schematic doesn't match build:
     1. Reg output caps 2x68uF but cap used is 100uF
     2. Through hole caps instead of SMD
     3. Pullups not specified resistance
-11. ^Todo: Need pushbuttons for reset and boot.
-12. *Bug: EN DOES NOT need a pullup. Clearly shown in AI Thinker C3 module schematic, although value not shown
-13. *Bug: Pull GPIO9 up. Be sure to document this as it creates constraints on use of the pin.
-14. *Todo: The C3 slot is both too long and two wide. Measure width with microscope but only narrow it one wee skoshin. Use C3 dev board with C3 removed as a model.
-15. *Todo: Need an updated C3 Eagle library. At a minimum change DP4 to GP4 and put the schematic inside a box. Ideal would be to have nine things on each side corresponding to the mini C3 module's connections. That is, make the schematic look like the C3 module as much as possible.
-16. *Todo: There are two special Eagle CAD lib components to get into the repo. First is the above C3 module and second is a lib component for the Dialog SLG47004V-DIP.
-17. *Todo: Only need reset pushbutton. 
-18. *Todo: Need a four position header for I2C connection so the board can be more conveniently used as a progammer.
-19. ^Todo: Provision for one Dialog programming socket.
-20. ^Todo: Provision for additional Dialog chips?
-21. *Todo: Add a 4.7uF cap from EN to ground for reliable reset behavior.
-22. *Todo: Consult Kevin about regulator decoupling. May need Tantulum or aluminimum electrolytics for LM1117 regulator. Placement of output cap seems too far away.
-23. *Todo: Add USB slave chip to make it straight forward to flash C3. Using USB to serial dongle may not be onerous but inappropriate for target users.
-24. *Todo: Remap C3 pin usage to use two different pins for I2C to free up the C3's USB subsystem.
-25. *Todo: Add footprint for Dialog QFN socket/programmer interface.
-26. *Todo: Tie Dialog programmer footprint to C3 pins
-27. *Todo: Add user controllable LED
-28. *Todo: Make sure Dialog programmer will plug in without interfering with C3 module
-29. *Todo: Shorten the slot to .9x14.9mm *rectangle* (last bit of each end narrows down. If C3 has rounded edges it will still have a lot of "slop", but wanting to sneak up on the right fit vs being unable to insert C3.)
 
-Parts not in hand
+## Parts issues
 
-1. CH340C USB chip. One in hand and four expected by 2/7.
+1. CH340C USB chips One in hand and four expected by 2/7 by stripping from Arduino Nano boards. Need many more.
+2. 1x10 female headers: None. Soldering Dialog board into the main board.
 
