@@ -18,6 +18,9 @@
 ## Automotive blurb: https://www.dialog-semiconductor.com/sites/default/files/configurable_mixed-signal_ics_enable_safe_flexible_low_cost_automotive_designs.pdf
 ## GreenPAK brochure: https://www.dialog-semiconductor.com/sites/default/files/2021-12/GreenPAK_brochure.pdf
 ## GreenPAK web index by function: https://www.dialog-semiconductor.com/products#programmable-mixed-signal-devices
-## Anlog GreenPAK webinar: https://www.youtube.com/watch?v=AafVKsnI33o
-## Hands on guide to the resources inside a GreenPak device: https://www.youtube.com/watch?v=XY1_1cUew6g
-## Go Configure video: https://www.youtube.com/watch?v=j2J4Jivz8JE
+## VIDEO Analog GreenPAK webinar: https://www.youtube.com/watch?v=AafVKsnI33o
+## VIDEO Hands on guide to the resources inside a GreenPak device: https://www.youtube.com/watch?v=XY1_1cUew6g
+## VIDEO Go Configure 1: https://www.youtube.com/watch?v=j2J4Jivz8JE
+## VIDEO Go Configure 2: https://www.youtube.com/watch?v=26JJuzazqKs
+## VIDEO How to use the GreenPak delay block: https://www.youtube.com/watch?v=v2UkDWRUh9U
+
