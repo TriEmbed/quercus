@@ -3,6 +3,7 @@
 ## GreenPak Cookbook: https://www.dialog-semiconductor.com/sites/default/files/2020-12/The%20GreenPAK%20Cookbook_4Q2020pdf.pdf
 ## GreenPack designer download page (toward bottom): https://www.dialog-semiconductor.com/go-configure-software-hub#webform-submission-downloadgreenpakdesigner-2854-node-2854-add-form
 ## GreenPAK Designer (aka "Go Hub") User Guide: https://www.dialog-semiconductor.com/sites/default/files/2022-02/GreenPAK_Designer_User_Guide.pdf
+## GreenPak Products https://www.dialog-semiconductor.com/products/greenpak
 ## GreenPak Support Forum: https://www.dialog-semiconductor.com/products/greenpak#tab-support_tab_content
 ## GreenPak Application Notes: https://www.dialog-semiconductor.com/greenpak-application-notes
 ## Advanaced Analog GreenPAK Eval board user manual: https://www.dialog-semiconductor.com/sites/default/files/2021-09/UM-GP-005_User_Manual_Advanced_Analog_GreenPAK_Evaluation_Board_1v1.pdf
@@ -17,3 +18,6 @@
 ## Automotive blurb: https://www.dialog-semiconductor.com/sites/default/files/configurable_mixed-signal_ics_enable_safe_flexible_low_cost_automotive_designs.pdf
 ## GreenPAK brochure: https://www.dialog-semiconductor.com/sites/default/files/2021-12/GreenPAK_brochure.pdf
 ## GreenPAK web index by function: https://www.dialog-semiconductor.com/products#programmable-mixed-signal-devices
+## Anlog GreenPAK webinar: https://www.youtube.com/watch?v=AafVKsnI33o
+## Hands on guide to the resources inside a GreenPak device: https://www.youtube.com/watch?v=XY1_1cUew6g
+## Go Configure video: https://www.youtube.com/watch?v=j2J4Jivz8JE
