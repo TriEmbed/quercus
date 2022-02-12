@@ -1,6 +1,7 @@
 # Dialog Publications
 ## GreenPak Overview: https://www.dialog-semiconductor.com/products#programmable-mixed-signal-devices
 ## GreenPak Cookbook: https://www.dialog-semiconductor.com/sites/default/files/2020-12/The%20GreenPAK%20Cookbook_4Q2020pdf.pdf
+## GreenPak Training Videos: https://www.dialog-semiconductor.com/greenpak-training-video-library
 ## GreenPack designer download page (toward bottom): https://www.dialog-semiconductor.com/go-configure-software-hub#webform-submission-downloadgreenpakdesigner-2854-node-2854-add-form
 ## GreenPAK Designer (aka "Go Hub") User Guide: https://www.dialog-semiconductor.com/sites/default/files/2022-02/GreenPAK_Designer_User_Guide.pdf
 ## GreenPak Products https://www.dialog-semiconductor.com/products/greenpak
