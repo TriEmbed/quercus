@@ -19325,10 +19325,8 @@ different MPU pins.</text>
 <text x="104.14" y="48.26" size="2.54" layer="94" rot="R180">DIP PIN 1</text>
 <circle x="93.98" y="50.8" radius="1.27" width="0.1524" layer="94"/>
 <text x="182.88" y="58.42" size="2.54" layer="94">TODO
-1) Update SLG47004V-DIP library or use
-Dialog? 
-2) Esthetics
-3) Shorten C3 slot</text>
+1) Switch pushbutton switches
+2) Shorten C3 slot?</text>
 </plain>
 <instances>
 <instance part="IC1" gate="G$1" x="38.1" y="162.56" smashed="yes">
