@@ -19254,7 +19254,7 @@ Mixed signal FPGA</description>
 <part name="IC1" library="burr-brown" library_urn="urn:adsk.eagle:library:111" deviceset="REG1117" device="" package3d_urn="urn:adsk.eagle:package:4940/1" value="LM1117-3.3"/>
 <part name="GND1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="FRAME1" library="apexprotofactory" deviceset="LETTER_L" device=""/>
-<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF 399-6674-1-ND"/>
 <part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:23553/2" value="510"/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -19326,7 +19326,8 @@ different MPU pins.</text>
 <circle x="93.98" y="50.8" radius="1.27" width="0.1524" layer="94"/>
 <text x="182.88" y="58.42" size="2.54" layer="94">TODO
 1) Switch pushbutton switches
-2) Shorten C3 slot?</text>
+2) Shorten C3 slot?
+3) Hole for USB connector tie wrap</text>
 </plain>
 <instances>
 <instance part="IC1" gate="G$1" x="38.1" y="162.56" smashed="yes">
