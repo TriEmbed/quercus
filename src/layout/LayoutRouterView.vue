@@ -86,22 +86,22 @@ export default {
       targetIndex: -1,
       menus: [
         {
-          title: '关闭选中标签',
+          title: 'Close the selected tab',
           icon: 'keyboard_arrow_down',
           click: () => this.handleClose(this.targetIndex),
         },
         {
-          title: '关闭右侧标签',
+          title: 'Close right label',
           icon: 'keyboard_arrow_right',
           click: () => this.handleCloseRight(this.targetIndex),
         },
         {
-          title: '关闭左侧标签',
+          title: 'Close left tab',
           icon: 'keyboard_arrow_left',
           click: () => this.handleCloseLeft(this.targetIndex),
         },
         {
-          title: '关闭其他标签',
+          title: 'Close other tabs',
           icon: 'keyboard_arrow_up',
           click: () => this.handleCLoseOthers(this.targetIndex),
         },

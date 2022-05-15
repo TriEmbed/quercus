@@ -15,7 +15,7 @@
         slot="prepend"
         color="primary lighten-1"
       >
-        <v-toolbar-title>个性化设置</v-toolbar-title>
+        <v-toolbar-title>Personalize</v-toolbar-title>
       </v-toolbar>
 
       <!-- / Content -->
@@ -23,43 +23,43 @@
         <v-layout column>
           <v-flex>
             <v-subheader class="px-1 my-2">
-              导航栏设置
+              Navigation bar settings
             </v-subheader>
             <v-switch
               color="primary"
               :input-value="appPermanentNavigation"
-              label="导航栏固定左侧"
+              label="Navigation bar fixed left"
               @change="toggleAppPermanentNavigation"
             />
           </v-flex>
 
           <v-flex>
             <v-subheader class="px-1 my-2">
-              外观
+              Exterior
             </v-subheader>
             <v-switch
               color="primary"
               :input-value="appThemeDark"
-              label="暗黑模式"
+              label="Dark Mode"
               @change="toggleAppThemeDark"
             />
           </v-flex>
 
           <v-flex>
             <v-subheader class="px-1 my-2">
-              页签模式
+              Tab Mode
             </v-subheader>
             <v-switch
               color="primary"
               :input-value="appMultipleTabs"
-              label="多页签"
+              label="Multiple tabs"
               @change="toggleAppMultipleTabs"
             />
           </v-flex>
 
           <v-flex>
             <v-subheader class="px-1 my-2">
-              主题色设置
+              Theme color settings
             </v-subheader>
             <div class="color-option">
               <v-layout wrap>

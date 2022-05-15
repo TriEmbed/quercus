@@ -13,14 +13,14 @@
       <template #search>
         <v-row class="px-4">
           <v-col class="py-0" cols="12">
-            <v-text-field autofocus placeholder="请输入关键字查询" v-model="query.name" clearable />
+            <v-text-field autofocus placeholder="Please enter a keyword query" v-model="query.name" clearable />
           </v-col>
         </v-row>
       </template>
 
       <template #actions>
         <v-btn class="mr-2" depressed tile @click="handleAdd">
-          新增项目
+          Add item
         </v-btn>
       </template>
 
@@ -35,7 +35,7 @@
       </template>
 
       <template #[`item.occupy`]="{ item }">
-        {{ item.occupy ? '是' : '否' }}
+        {{ item.occupy ? 'Yes' : 'No' }}
       </template>
 
       <template #[`item.actions`]="{ item }">
@@ -45,7 +45,7 @@
               edit
             </v-icon>
           </template>
-          <span>编辑</span>
+          <span>edit</span>
         </v-tooltip>
 
         <v-tooltip top>
@@ -54,7 +54,7 @@
               delete
             </v-icon>
           </template>
-          <span>删除</span>
+          <span>delete</span>
         </v-tooltip>
       </template>
     </DataTable>
@@ -86,7 +86,7 @@ export default {
     headers () {
       return [
         {
-          text: '编号',
+          text: 'Number',
           align: 'center',
           sortable: false,
           value: 'number',
@@ -94,57 +94,57 @@ export default {
           fixed: true,
         },
         {
-          text: '项目名称',
+          text: 'Project name',
           align: 'center',
           sortable: false,
           value: 'name',
         },
         {
-          text: '总时长（分钟）',
+          text: 'Total duration (minutes)',
           align: 'center',
           value: 'time',
           width: 100,
         },
         {
-          text: '项目类别',
+          text: 'item category',
           align: 'center',
           sortable: false,
           value: 'category',
           width: 120,
         },
         {
-          text: '展示价格（¥）',
+          text: 'Display price (¥)',
           align: 'center',
           value: 'price',
           width: 120,
         },
         {
-          text: '项目类型',
+          text: 'item type',
           align: 'center',
           sortable: false,
           value: 'type',
           width: 120,
         },
         {
-          text: '独享房间',
+          text: 'Exclusive room',
           align: 'center',
           value: 'occupy',
           width: 100,
         },
         {
-          text: '成本比例（%）',
+          text: 'Cost ratio (%)',
           align: 'center',
           value: 'percent',
           width: 100,
         },
         {
-          text: '更新时间',
+          text: 'Update time',
           align: 'center',
           value: 'lastModifyTime',
           width: 150,
         },
         {
-          text: '操作',
+          text: 'Operation',
           align: 'center',
           sortable: false,
           value: 'actions',
@@ -156,52 +156,52 @@ export default {
   },
   methods: {
     /**
-     * 调取接口数据并初始化表格
+     * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
       return getProjectList({ ...this.query, ...options }).then(r => r.data)
     },
     /**
-     * 新增项目
+     * Added items
      * @return {Undefined}
      */
     handleAdd () {
       this.$refs['projectSchema'].open()
     },
     /**
-     * 新增项目成功
+     * Added project successfully
      * @return {Undefined}
      */
     handleAddSuccess () {
-      toast.success({ message: '新增项目成功' })
+      toast.success({ message: 'Add item successfully' })
       this.query = this.$options.data.apply(this).query
       this.$refs['table'].refresh(true)
     },
     /**
-     * 编辑项目
-     * @param {Number | String} id 项目id
+     * Edit item
+     * @param {Number | String} id item id
      * @return {Undefined}
      */
     handleEdit (id) {
       this.$refs['projectSchema'].open(id)
     },
     /**
-     * 编辑项目成功
+     * Edit project success
      * @return {Undefined}
      */
     handleEditSuccess () {
-      toast.success({ message: '编辑项目成功' })
+      toast.success({ message: 'Editing project successful' })
       this.$refs['table'].refresh()
     },
     /**
-     * 删除项目
-     * @param {Number | String} id 项目id
+     * delete item
+     * @param {Number | String} id item id
      * @return {Promise<Undefined>}
      */
     async handleDelete (id) {
       await deleteProject(id)
-      toast.success({ message: '删除项目成功' })
+      toast.success({ message: 'Delete the item successfully' })
       await this.$refs.table.refresh()
     },
   },

@@ -21,7 +21,7 @@
             v-bind="attrs"
             v-if="items.length > 1"
           >
-            下一条 （{{ items.length - 1 }} +）
+            next （{{ items.length - 1 }} +）
           </v-btn>
           <v-btn
             color="white"

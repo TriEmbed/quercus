@@ -10,9 +10,9 @@ export const hiddenClsName = 'permission_forbidden';
   head.append(style)
 })()
 
-// TODO: 代码复用
+// TODO: code reuse
 
-// 必须包含列出的所有权限，元素才显示
+// All permissions listed must be included for the element to display
 const hasPermission = {
   install (Vue) {
     Vue.directive('hasPermission', function (el, binding, vNode) {
@@ -34,7 +34,7 @@ const hasPermission = {
   },
 }
 
-// 只要包含列出的任意一个权限，元素就会显示
+// The element displays as long as any of the listed permissions are included
 const hasAnyPermission = {
   install (Vue) {
     Vue.directive('hasAnyPermission', function (el, binding, vNode) {
@@ -56,7 +56,7 @@ const hasAnyPermission = {
   },
 }
 
-// 必须包含列出的所有角色，元素才显示
+// All roles listed must be included for the element to display
 const hasRole = {
   install (Vue) {
     Vue.directive('hasRole', function (el, binding, vNode) {
@@ -78,7 +78,7 @@ const hasRole = {
   },
 }
 
-// 只要包含列出的任意一个角色，元素就会显示
+// The element will display as long as it contains any of the listed roles
 const hasAnyRole = {
   install (Vue) {
     Vue.directive('hasAnyRole', function (el, binding, vNode) {

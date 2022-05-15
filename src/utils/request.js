@@ -28,24 +28,24 @@ request.interceptors.response.use(
   error => {
     let message = ''
     if (error.response) {
-      switch (error.response.status) {
+      switch(error.response.status) {
         case 404:
-          message = '资源未找到'
+          message = 'Resource not found'
           break
         case 403:
-          message = '操作被禁止'
+          message = 'Operation forbidden'
           break
         case 401:
-          message = '暂无权限'
+          message = 'No permission for now'
           break
         case 500:
-          message = '服务器异常'
+          message = 'Server exception'
           break
         default:
           break
       }
     } else {
-      message = error.message === 'Network Error' ? '网络异常' : error.message
+      message = error.message === 'Network Error' ? 'Network Anomaly' : error.message
     }
     toast.error({ message })
     return Promise.reject(error)

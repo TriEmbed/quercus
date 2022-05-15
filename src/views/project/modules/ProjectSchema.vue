@@ -2,7 +2,7 @@
   <FormDrawer
     flat
     :loading="loading"
-    title="编辑项目"
+    title="Edit item"
     v-model="visible"
     :width="680"
   >
@@ -13,84 +13,67 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.name"
-                label="项目名称"
-                :rules="[v => !!v || '请输入项目名称']"
+                label="Project name"
+                :rules="[v => !!v || 'Please enter a project name']"
               />
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="6">
               <v-select
                 v-model="formData.type"
-                :items="['足道', '全身按摩', '中医调理', 'SPA', '套餐']"
-                :rules="[v => !!v || '请选择项目类型']"
-                label="项目类型"
+                :items="['Foot Dao', 'Body Massage', 'Traditional Chinese Medicine', 'SPA', 'Package']"
+                :rules="[v => !!v || 'Please select an item type']"
+                label="Item Type"
               />
             </v-col>
             <v-col cols="6">
               <v-radio-group
                 v-model="formData.category"
-                :items="['公共项目', '其他项目']"
-                :rules="[v => !!v || '请选择项目类别']"
-                label="项目类别"
+                :items="['Public Items', 'Other Items']"
+                :rules="[v => !!v || 'Please select an item category']"
+                label="Item Category"
                 row
               >
-                <v-radio
-                  color="primary"
-                  label="公共项目"
-                  value="公共项目"
-                />
-                <v-radio
-                  color="primary"
-                  label="其他项目"
-                  value="其他项目"
-                />
+                <v-radio color="primary" label="Public Items" value="Public Items" />
+                <v-radio color="primary" label="Other items" value="Other items" />
               </v-radio-group>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="6">
-              <v-text-field
-                v-model.number="formData.price"
-                :rules="[v => !!v || '请输入展示价格']"
-                label="展示价格（¥）"
-              />
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                v-model.number="formData.time"
-                :rules="[v => !!v || '请输入总时长']"
-                label="总时长（分钟）"
-              />
-            </v-col>
-          </v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model.number="formData.price"
+              :rules="[v => !!v || 'Please enter a display price']"
+              label="Display price (¥)"
+            />
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model.number="formData.time"
+              :rules="[v => !!v || 'Please enter the total duration']"
+              label="Total duration (minutes)"
+            />
+          </v-col>
           <v-row>
             <v-col cols="6">
               <v-text-field
                 v-model.number="formData.percent"
                 type="number"
-                :rules="[v => !!v || '请输入成本比例']"
-                label="成本比例（%）"
+                :rules="[v => !!v || 'Please enter the cost ratio']"
+                label="Cost ratio (%)"
               />
             </v-col>
             <v-col cols="6">
               <v-radio-group
                 v-model="formData.occupy"
                 color="primary"
-                :rules="[v => typeof v === 'boolean' || '请选择独享房间']"
-                label="独享房间"
+                :rules="[v => typeof v === 'boolean' || 'Please choose an exclusive room']"
+                label="Exclusive room"
                 row
               >
-                <v-radio
-                  color="primary"
-                  label="否"
-                  :value="false"
-                />
-                <v-radio
-                  color="primary"
-                  label="是"
-                  :value="true"
-                />
+                <v-radio color="primary" label="No" :value="false" />
+                <v-radio color="primary" label="yes" :value="true" />
               </v-radio-group>
             </v-col>
           </v-row>
@@ -102,10 +85,10 @@
               <v-text-field
                 v-model="formData.tags"
                 counter="12"
-                label="功效标签"
+                label="Efficacy label"
                 :rules="[
-                  v => !!v || '请输入功效标签',
-                  v => v && v.length <= 12 || '最多输入12个字符'
+                  v => !!v || 'Please enter the efficacy label',
+                  v => v && v.length <= 12 || 'Enter up to 12 characters'
                 ]"
               />
             </v-col>
@@ -126,7 +109,7 @@
         text
         @click="close"
       >
-        取消
+        Cancel
       </v-btn>
       <v-btn
         x-large
@@ -134,7 +117,7 @@
         type="submit"
         @click.stop.prevent="submit"
       >
-        保存
+        save
       </v-btn>
     </template>
   </FormDrawer>

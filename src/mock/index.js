@@ -12,7 +12,7 @@ adaptor.onPost(/api\/login/).reply(config => {
     permissions: [],
     menus: [
       {
-        text: '首页',
+        text: 'Home',
         icon: 'home',
         hidden: false,
         to: '/home',
@@ -21,7 +21,16 @@ adaptor.onPost(/api\/login/).reply(config => {
         resource: 'home/index',
       },
       {
-        text: '项目管理',
+        text: 'Esp',
+        icon: 'Esp',
+        hidden: false,
+        to: '/eps',
+        permissions: [],
+        type: 'VIEW',
+        resource: 'home/index',
+      },
+      {
+        text: 'Project Management',
         icon: 'apps',
         hidden: false,
         to: '/project',
@@ -30,7 +39,7 @@ adaptor.onPost(/api\/login/).reply(config => {
         resource: '',
         children: [
           {
-            text: '项目列表',
+            text: 'item list',
             hidden: false,
             to: '/project/list',
             permissions: [],
@@ -40,7 +49,7 @@ adaptor.onPost(/api\/login/).reply(config => {
         ],
       },
       {
-        text: '腾讯地图',
+        text: 'Tencent Map',
         icon: 'place',
         hidden: false,
         to: '/map',
@@ -59,6 +68,7 @@ adaptor.onPost(/api\/login/).reply(config => {
         resource: '',
       },
     ],
+  
   }]
 })
 
@@ -66,12 +76,12 @@ const item = (id = 1) => ({
   id,
   name: Math.random().toString(36).substring(7),
   time: (Math.random() * 30 + 40).toFixed(0),
-  category: Math.random() > 0.5 ? '公共项目' : '其他项目',
+  category: Math.random() > 0.5 ? 'Public Projects' : 'Other Projects',
   percent: (Math.random() * 30 + 40).toFixed(0),
   price: (Math.random() * 400 + 100).toFixed(0),
   occupy: Math.random() > 0.5,
-  type: ['足道', '全身按摩', '中医调理', 'SPA', '套餐'][`${Math.abs(Math.random() - 0.5)}`[2]],
-  tags: ['除湿', '活血', '助眠', '通气', '养颜'][`${Math.abs(Math.random() - 0.5)}`[2]],
+  type: ['Foot Dao', 'Body Massage', 'Traditional Chinese Medicine', 'SPA', 'Package'][`${Math.abs(Math.random() - 0.5)}`[2]],
+  tags: ['dehumidification', 'blood circulation', 'sleep aid', 'ventilation', 'beauty'][`${Math.abs(Math.random() - 0.5)}`[2]],
   lastModifyTime: (function (d) {
     const Y = d.getFullYear()
     const M = d.getMonth() + 1

@@ -5,10 +5,10 @@
     <h2>{{ config.desc }}</h2>
     <div class="mt-6">
       <v-btn type="primary" depressed class="primary mr-4" @click="$router.push('/home')">
-        返回首页
+        back to front page
       </v-btn>
       <v-btn type="primary" depressed class="primary" @click="logout">
-        重新登录
+        Log in again
       </v-btn>
     </div>
   </div>

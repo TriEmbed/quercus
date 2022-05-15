@@ -17,7 +17,7 @@ const lazyLoad = (path) => (resolve) => {
 
 const DEFAULT_ROUTE = {
   path: '/login',
-  name: '登录',
+  name: 'Log in',
   component: lazyLoad('login/index'),
 }
 
@@ -83,6 +83,8 @@ const buildDynamicRoutes = (menus = [], userPermissions = []) => {
       return route
     })
   }
+
+
   router.matcher = createRouter().matcher
   router.addRoute({
     path: '/',

@@ -32,7 +32,7 @@
           <span>{{ username }}</span>
         </v-btn>
       </template>
-      <span>注销</span>
+      <span>log out</span>
     </v-tooltip>
 
     <v-tooltip bottom>
@@ -48,7 +48,7 @@
           </v-icon>
         </v-btn>
       </template>
-      <span>个性化设置</span>
+      <span>Personalize </span>
     </v-tooltip>
 
     <v-tooltip bottom>

@@ -19,7 +19,7 @@
         maxWidth: 350,
         transition: 'slide-y-transition',
       }"
-      placeholder="输入地址搜索"
+      placeholder="Enter address to search"
       return-object
       solo
       v-model="state.place"

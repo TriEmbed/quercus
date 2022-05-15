@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 新增项目
+ * Added items
  * @param {Object} data
  * @return {Promise<any>}
  */
@@ -10,7 +10,7 @@ export const addProject = function (data = {}) {
 }
 
 /**
- * 编辑项目
+ * Edit item
  * @param {Object} data
  * @return {Promise<any>}
  */
@@ -19,7 +19,7 @@ export const editProject = function (data = {}) {
 }
 
 /**
- * 删除一个项目
+ * delete an item
  * @param {Number | String} id
  * @return {Promise<any>}
  */
@@ -28,7 +28,7 @@ export const deleteProject = function (id) {
 }
 
 /**
- * 根据id查询项目详情
+ * Query item details by id
  * @param {Number | String} id
  * @return {Promise<any>}
  */
@@ -37,7 +37,7 @@ export const getProject = function (id) {
 }
 
 /**
- * 查询项目列表
+ * Query item list
  * @param {Object} query
  * @return {Promise<any>}
  */

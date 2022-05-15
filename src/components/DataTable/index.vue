@@ -9,10 +9,10 @@
         <slot name="actions" />
         <v-spacer />
         <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">
-          查询
+          Inquire
         </v-btn>
         <v-btn depressed tile @click="refresh()">
-          刷新
+          refresh
         </v-btn>
       </div>
     </v-form>
@@ -24,7 +24,7 @@
         :headers="headers"
         :hide-default-footer="false"
         :footer-props="{
-          itemsPerPageText: '每页条数',
+          itemsPerPageText: 'Number of items per page',
           itemsPerPageOptions: [15, 20, 30, 50],
           showCurrentPage: true,
           showFirstLastPage: true,
@@ -36,7 +36,7 @@
         :options="options"
         ref="table"
         :server-items-length="total || 0"
-        :no-data-text="loading ? '加载中...' : '暂无数据'"
+        :no-data-text="loading ? 'Loading...' : 'No data'"
         @update:options="fetch($event)"
       >
         <template v-for="(_, slot) of $scopedSlots" #[slot]="scope">

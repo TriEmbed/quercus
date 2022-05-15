@@ -15,7 +15,7 @@ export default class TMapService {
         ...options,
         pageIndex: 1,
         pageCapacity: 10,
-        location: "北京",
+        location: "Beijing",
       })
       service.search(query)
     })

@@ -1,19 +1,19 @@
 const config = {
   401: {
     title: '401',
-    desc: '抱歉，请先登录获取权限',
+    desc: 'Sorry, please log in to get permission',
   },
   403: {
     title: '403',
-    desc: '抱歉，您无权访问该页面',
+    desc: 'Sorry, you do not have permission to access this page',
   },
   404: {
     title: '404',
-    desc: '抱歉，您访问的页面不存在或仍在开发中',
+    desc: 'Sorry, the page you visited does not exist or is still under development',
   },
   500: {
     title: '500',
-    desc: '抱歉，服务器出错了',
+    desc: 'Sorry, there was an error on the server',
   },
 }
 

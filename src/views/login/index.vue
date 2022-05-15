@@ -15,7 +15,7 @@
                 label="Login"
                 name="login"
                 prepend-icon="person"
-                :rules="[v => !!v || '请输入用户名']"
+                :rules="[v => !!v || 'please enter user name']"
                 type="text"
                 validate-on-blur
                 v-model="formData.username"
@@ -25,7 +25,7 @@
                 label="Password"
                 name="password"
                 prepend-icon="lock"
-                :rules="[v => !!v || '请输入密码']"
+                :rules="[v => !!v || 'Please enter password']"
                 type="password"
                 validate-on-blur
                 v-model="formData.password"
@@ -40,7 +40,7 @@
                 type="submit"
                 @click.prevent="handleSubmit"
               >
-                登录
+                Log in
               </v-btn>
             </v-card-actions>
           </v-card>

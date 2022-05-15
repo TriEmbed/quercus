@@ -1,7 +1,7 @@
 const props = {
   position: {
     type: Array,
-    default: () =>[39.916527,116.397128],
+    default: () =>[35.7327,78.8503],
   },
 
   zoom: {

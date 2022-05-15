@@ -14,7 +14,7 @@
     :on-success="onUploadSuccess"
     :on-error="onUploadError"
     :no-hover-effect="readonly"
-    :placeholder="`${placeholder}（最大${maxMB}M）`"
+    :placeholder="`${placeholder}（maximun${maxMB}M）`"
     :readonly="readonly"
     readonly-tip-text=""
     :size="size"
@@ -49,7 +49,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: '点击或拖拽上传图片',
+      default: 'Click or drag to upload images',
     },
     readonly: {
       type: Boolean,
@@ -70,26 +70,34 @@ export default {
     },
   },
   methods: {
-    /**
-     * 文件超出指定大小
-     * fileChange 之前触发
+  /*** The file exceeds the specified size
+     * Fired before fileChange
+
      * @param {File} e
+
      * @event
+
      */
+
     overMaxSize () {
-      toast.error({ message: `图片大小超出${this.maxMB}兆` })
+      toast.error({ message: `Image size exceeds ${this.maxMB}mega` })
       this.reset()
       return
     },
+
     /**
-     * 选中文件
-     * overMaxSize 之后触发
+
+     * select file
+
+     * Triggered after overMaxSize
+
      * @param {File} e
+
      * @event
-     */
-    fileChange (e) {
+
+     */ fileChange (e) {
       if (!/image/.test(e.type)) {
-        toast.error({ message: '上传文件非图片' })
+        toast.error({ message: 'Upload a file that is not an image' })
         this.reset()
         return
       }
