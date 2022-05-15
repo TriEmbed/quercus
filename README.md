@@ -1,3 +1,5 @@
+This version has been converted to English
+
 # @tanghongxin/VuetifyBoilerplate
 
 
