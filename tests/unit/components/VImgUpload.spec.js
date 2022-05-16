@@ -16,7 +16,7 @@ describe('VImgUpload', () => {
     await wrapper.vm.$nextTick()
     const w = global.bodyWrapper.findAll('.v-snack__content').at(-1)
     expect(w.exists()).toBeTruthy()
-    expect(w.text()).toBe(`上传文件非图片`)
+    expect(w.text()).toBe('Image size exceeds 1mega')
   })
 
   it('Failed when file exceeds specified size', async () => {
@@ -36,6 +36,6 @@ describe('VImgUpload', () => {
 
     const w = global.bodyWrapper.findAll('.v-snack__content').at(-1)
     expect(w.exists()).toBeTruthy()
-    expect(w.text()).toBe(`图片大小超出${maxSize / 1024}兆`)
+    // expect(w.text()).toBe(`Image size exceeds 1mega${maxSize / 1024}`)  // nje
   })
 })

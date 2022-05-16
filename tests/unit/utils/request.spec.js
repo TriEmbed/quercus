@@ -27,10 +27,10 @@ describe('request', () => {
   it('Show toast according to error code', (done) => {
     Promise.all(
       [
-        [404, '资源未找到'],
-        [403, '操作被禁止'],
-        [401, '暂无权限'],
-        [500, '服务器异常'],
+        [404, 'Resource not found'],
+        [403, 'Operation forbidden'],
+        [401, 'No permission for now'],
+        [500, 'Server exception'],
       ].map(
         async ([code, message]) => {
           adaptor.onPost(new RegExp(code)).reply(() => [code])
