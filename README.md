@@ -1,6 +1,6 @@
 This version has been converted to English
 
-# @tanghongxin/VuetifyBoilerplate
+# @outofturn/VuetifyBoilerplate
 
 
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
@@ -37,7 +37,7 @@ An out of box boilerplate based on vuetify with multiple preset enhancement.
 ## Usage
 
 ```bash
-git clone https://github.com/tanghongxin/VuetifyBoilerplate.git
+git clone https://github.com/outofturn/VuetifyBoilerplate.git
 cd VuetifyBoilerplate
 npm i
 npm run serve
