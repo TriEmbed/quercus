@@ -1,6 +1,6 @@
 <template>
   <div class="fill-height fill-width overflow-hidden">
-    <DataTable
+    <EmptyDataTable
       :default-options="{
         sortBy: ['lastModifyTime'],
         sortDesc: [true],
@@ -10,19 +10,19 @@
       :load-data="loadData"
       ref="table"
     >
-      <template #search>
-        <v-row class="px-4">
-          <v-col class="py-0" cols="12">
-            <v-text-field autofocus placeholder="Please enter a keyword query" v-model="query.name" clearable />
-          </v-col>
-        </v-row>
-      </template>
+      <!--      <template #search>-->
+      <!--        <v-row class="px-4">-->
+      <!--          <v-col class="py-0" cols="12">-->
+      <!--            <v-text-field autofocus placeholder="Please enter a keyword query" v-model="query.name" clearable />-->
+      <!--          </v-col>-->
+      <!--        </v-row>-->
+      <!--      </template>-->
 
-      <template #actions>
-        <v-btn class="mr-2" depressed tile @click="handleAdd">
-          Add item
-        </v-btn>
-      </template>
+      <!--      <template #actions>-->
+      <!--        <v-btn class="mr-2" depressed tile @click="handleAdd">-->
+      <!--          Add item-->
+      <!--        </v-btn>-->
+      <!--      </template>-->
 
       <template #[`item.number`]="{ index }">
         {{ index + 1 }}
@@ -48,16 +48,16 @@
           <span>edit</span>
         </v-tooltip>
 
-        <v-tooltip top>
-          <template #activator="{ on, attrs }">
-            <v-icon v-bind="attrs" v-on="on" color="red" @click="handleDelete(item.id)">
-              delete
-            </v-icon>
-          </template>
-          <span>delete</span>
-        </v-tooltip>
+        <!--        <v-tooltip top>-->
+        <!--          <template #activator="{ on, attrs }">-->
+        <!--            <v-icon v-bind="attrs" v-on="on" color="red" @click="handleDelete(item.id)">-->
+        <!--              delete-->
+        <!--            </v-icon>-->
+        <!--          </template>-->
+        <!--          <span>delete</span>-->
+        <!--        </v-tooltip>-->
       </template>
-    </DataTable>
+    </EmptyDataTable>
 
     <ProjectSchema
       ref="projectSchema"
@@ -170,7 +170,7 @@ export default {
       this.$refs['projectSchema'].open()
     },
     /**
-     * Added project successfully
+     * Added esp successfully
      * @return {Undefined}
      */
     handleAddSuccess () {
@@ -183,15 +183,16 @@ export default {
      * @param {Number | String} id item id
      * @return {Undefined}
      */
-    handleEdit (id) {
+    handleEdit (id){
+      debugger
       this.$refs['projectSchema'].open(id)
     },
     /**
-     * Edit project success
+     * Edit esp success
      * @return {Undefined}
      */
     handleEditSuccess () {
-      toast.success({ message: 'Editing project successful' })
+      toast.success({ message: 'Editing esp successful' })
       this.$refs['table'].refresh()
     },
     /**

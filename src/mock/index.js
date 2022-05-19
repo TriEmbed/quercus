@@ -15,36 +15,93 @@ adaptor.onPost(/api\/login/).reply(config => {
         text: 'Home',
         icon: 'home',
         hidden: false,
-        to: '/home',
+        to: '/home', // this is the name of link
         permissions: [],
         type: 'VIEW',
         resource: 'home/index',
       },
       {
-        text: 'Esp',
-        icon: 'Esp',
-        hidden: false,
-        to: '/eps',
-        permissions: [],
-        type: 'VIEW',
-        resource: 'home/index',
-      },
-      {
-        text: 'Project Management',
+        text: 'ESP',
         icon: 'apps',
         hidden: false,
-        to: '/project',
+        to: '/esp',
         permissions: [],
         type: 'MENU',
         resource: '',
         children: [
           {
-            text: 'item list',
+            text: 'Info',
             hidden: false,
-            to: '/project/list',
+            to: '/esp/info',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/index',
+            resource: 'esp/espinfo', // here we have the location of the stuff to be run
+          },
+          {
+            text: 'Setting',
+            hidden: false,
+            to: '/esp/setting',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/setting',
+          },
+          {
+            text: 'SSID',
+            hidden: false,
+            to: '/esp/ssid',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/ssid',
+          },
+          {
+            text: 'I2C',
+            hidden: false,
+            to: '/esp/list',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/i2c',
+          },
+        ],
+      }, {
+        text: 'Dialog',
+        icon: 'apps',
+        hidden: false,
+        to: '/esp',
+        permissions: [],
+        type: 'MENU',
+        resource: '',
+        children: [
+          {
+            text: 'Info',
+            hidden: false,
+            to: '/esp/info',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/espinfo', // here we have the location of the stuff to be run
+          },
+          {
+            text: 'Setting',
+            hidden: false,
+            to: '/esp/setting',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/setting',
+          },
+          {
+            text: 'SSID',
+            hidden: false,
+            to: '/esp/ssid',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/ssid',
+          },
+          {
+            text: 'I2C',
+            hidden: false,
+            to: '/esp/list',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'esp/i2c',
           },
         ],
       },
@@ -68,7 +125,7 @@ adaptor.onPost(/api\/login/).reply(config => {
         resource: '',
       },
     ],
-  
+
   }]
 })
 

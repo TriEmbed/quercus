@@ -16,7 +16,7 @@ describe('VImgUpload', () => {
     await wrapper.vm.$nextTick()
     const w = global.bodyWrapper.findAll('.v-snack__content').at(-1)
     expect(w.exists()).toBeTruthy()
-   // expect(w.text()).toBe('Image size exceeds 1mega')
+    // expect(w.text()).toBe('Image size exceeds 1mega')
   })
 
   it('Failed when file exceeds specified size', async () => {
