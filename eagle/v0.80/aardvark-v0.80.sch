@@ -19468,12 +19468,6 @@ different MPU pins.</text>
 <pinref part="J4" gate="J1" pin="8"/>
 </segment>
 <segment>
-<wire x1="114.3" y1="53.34" x2="96.52" y2="53.34" width="0.1524" layer="91"/>
-<label x="114.3" y="53.34" size="1.778" layer="95" rot="R180"/>
-<pinref part="MOD2" gate="FPGA1" pin="GND(PIN2)"/>
-<pinref part="J7" gate="J1" pin="1"/>
-</segment>
-<segment>
 <wire x1="63.5" y1="162.56" x2="63.5" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="162.56" x2="53.34" y2="162.56" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="VOUT"/>
@@ -19493,6 +19487,12 @@ different MPU pins.</text>
 <wire x1="58.42" y1="20.32" x2="66.04" y2="20.32" width="0.1524" layer="91"/>
 <label x="58.42" y="20.32" size="1.778" layer="95"/>
 <pinref part="J8" gate="J1" pin="2"/>
+</segment>
+<segment>
+<pinref part="J6" gate="J1" pin="10"/>
+<pinref part="MOD2" gate="FPGA1" pin="VDD(PIN1)"/>
+<wire x1="33.02" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
+<label x="45.72" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GND" class="1">
@@ -19519,12 +19519,6 @@ different MPU pins.</text>
 <wire x1="20.32" y1="152.4" x2="10.16" y2="152.4" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="-"/>
 <pinref part="J1" gate="G$1" pin="GND"/>
-</segment>
-<segment>
-<wire x1="33.02" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
-<label x="50.8" y="76.2" size="1.778" layer="95" rot="R180"/>
-<pinref part="MOD2" gate="FPGA1" pin="VDD(PIN1)"/>
-<pinref part="J6" gate="J1" pin="10"/>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
@@ -19582,11 +19576,17 @@ different MPU pins.</text>
 <wire x1="127" y1="139.7" x2="116.84" y2="139.7" width="0.1524" layer="91"/>
 <junction x="116.84" y="139.7"/>
 </segment>
+<segment>
+<pinref part="MOD2" gate="FPGA1" pin="GND(PIN2)"/>
+<pinref part="J7" gate="J1" pin="1"/>
+<wire x1="96.52" y1="53.34" x2="114.3" y2="53.34" width="0.1524" layer="91"/>
+<label x="109.22" y="53.34" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="SCL" class="0">
 <segment>
 <wire x1="114.3" y1="71.12" x2="96.52" y2="71.12" width="0.1524" layer="91"/>
-<label x="114.3" y="71.12" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="73.66" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="OA1_OUT(PIN22)"/>
 <pinref part="J7" gate="J1" pin="8"/>
 </segment>
@@ -19610,7 +19610,7 @@ different MPU pins.</text>
 <net name="SDA" class="0">
 <segment>
 <wire x1="114.3" y1="73.66" x2="96.52" y2="73.66" width="0.1524" layer="91"/>
-<label x="114.3" y="73.66" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="76.2" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN20)"/>
 <pinref part="J7" gate="J1" pin="9"/>
 </segment>
@@ -19761,7 +19761,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN19)" class="0">
 <segment>
 <wire x1="33.02" y1="53.34" x2="50.8" y2="53.34" width="0.1524" layer="91"/>
-<label x="50.8" y="53.34" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="55.88" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="OA0-(PIN3)"/>
 <pinref part="J6" gate="J1" pin="1"/>
 </segment>
@@ -19769,7 +19769,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN16)" class="0">
 <segment>
 <wire x1="33.02" y1="63.5" x2="50.8" y2="63.5" width="0.1524" layer="91"/>
-<label x="50.8" y="63.5" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="66.04" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN15)"/>
 <pinref part="J6" gate="J1" pin="5"/>
 </segment>
@@ -19777,7 +19777,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN18)" class="0">
 <segment>
 <wire x1="33.02" y1="60.96" x2="50.8" y2="60.96" width="0.1524" layer="91"/>
-<label x="50.8" y="60.96" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="63.5" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="OA0_OUT(PIN5)"/>
 <pinref part="J6" gate="J1" pin="4"/>
 </segment>
@@ -19785,7 +19785,7 @@ different MPU pins.</text>
 <net name="OA1_OUT(PIN22)" class="0">
 <segment>
 <wire x1="33.02" y1="58.42" x2="50.8" y2="58.42" width="0.1524" layer="91"/>
-<label x="50.8" y="58.42" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="60.96" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="SCL(PIN10)"/>
 <pinref part="J6" gate="J1" pin="3"/>
 </segment>
@@ -19793,7 +19793,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN12)" class="0">
 <segment>
 <wire x1="33.02" y1="66.04" x2="50.8" y2="66.04" width="0.1524" layer="91"/>
-<label x="50.8" y="66.04" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="68.58" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN17)"/>
 <pinref part="J6" gate="J1" pin="6"/>
 </segment>
@@ -19801,7 +19801,7 @@ different MPU pins.</text>
 <net name="RH1B(PIN9)" class="0">
 <segment>
 <wire x1="114.3" y1="60.96" x2="96.52" y2="60.96" width="0.1524" layer="91"/>
-<label x="114.3" y="60.96" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="63.5" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="RH0A(PIN6)"/>
 <pinref part="J7" gate="J1" pin="4"/>
 </segment>
@@ -19809,7 +19809,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN20)" class="0">
 <segment>
 <wire x1="33.02" y1="55.88" x2="50.8" y2="55.88" width="0.1524" layer="91"/>
-<label x="50.8" y="55.88" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="58.42" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="SDA(PIN11)"/>
 <pinref part="J6" gate="J1" pin="2"/>
 </segment>
@@ -19817,7 +19817,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN17)" class="0">
 <segment>
 <wire x1="114.3" y1="63.5" x2="96.52" y2="63.5" width="0.1524" layer="91"/>
-<label x="114.3" y="63.5" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="66.04" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN12)"/>
 <pinref part="J7" gate="J1" pin="5"/>
 </segment>
@@ -19825,7 +19825,7 @@ different MPU pins.</text>
 <net name="GPIO(PIN15)" class="0">
 <segment>
 <wire x1="114.3" y1="66.04" x2="96.52" y2="66.04" width="0.1524" layer="91"/>
-<label x="114.3" y="66.04" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="68.58" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN16)"/>
 <pinref part="J7" gate="J1" pin="6"/>
 </segment>
@@ -19833,7 +19833,7 @@ different MPU pins.</text>
 <net name="OA0_OUT(PIN5)" class="0">
 <segment>
 <wire x1="114.3" y1="68.58" x2="96.52" y2="68.58" width="0.1524" layer="91"/>
-<label x="114.3" y="68.58" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="71.12" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN18)"/>
 <pinref part="J7" gate="J1" pin="7"/>
 </segment>
@@ -19841,7 +19841,7 @@ different MPU pins.</text>
 <net name="OA0-(PIN3)" class="0">
 <segment>
 <wire x1="114.3" y1="76.2" x2="96.52" y2="76.2" width="0.1524" layer="91"/>
-<label x="114.3" y="76.2" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="78.74" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPIO(PIN19)"/>
 <pinref part="J7" gate="J1" pin="10"/>
 </segment>
@@ -19849,7 +19849,7 @@ different MPU pins.</text>
 <net name="GPI(PIN21)" class="0">
 <segment>
 <wire x1="114.3" y1="55.88" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
-<label x="114.3" y="55.88" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="58.42" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="OA1-(PIN24)"/>
 <pinref part="J7" gate="J1" pin="2"/>
 </segment>
@@ -19857,7 +19857,7 @@ different MPU pins.</text>
 <net name="OA1+(PIN23)" class="0">
 <segment>
 <wire x1="114.3" y1="58.42" x2="96.52" y2="58.42" width="0.1524" layer="91"/>
-<label x="114.3" y="58.42" size="1.778" layer="95" rot="R180"/>
+<label x="114.3" y="60.96" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="OA0+(PIN4)"/>
 <pinref part="J7" gate="J1" pin="3"/>
 </segment>
@@ -19865,7 +19865,7 @@ different MPU pins.</text>
 <net name="OA0+(PIN4)" class="0">
 <segment>
 <wire x1="33.02" y1="71.12" x2="50.8" y2="71.12" width="0.1524" layer="91"/>
-<label x="50.8" y="71.12" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="73.66" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="OA1+(PIN23)"/>
 <pinref part="J6" gate="J1" pin="8"/>
 </segment>
@@ -19873,7 +19873,7 @@ different MPU pins.</text>
 <net name="OA1-(PIN24)" class="0">
 <segment>
 <wire x1="33.02" y1="73.66" x2="50.8" y2="73.66" width="0.1524" layer="91"/>
-<label x="50.8" y="73.66" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="76.2" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="GPI(PIN21)"/>
 <pinref part="J6" gate="J1" pin="9"/>
 </segment>
@@ -19881,7 +19881,7 @@ different MPU pins.</text>
 <net name="RH0A(PIN6)" class="0">
 <segment>
 <wire x1="33.02" y1="68.58" x2="50.8" y2="68.58" width="0.1524" layer="91"/>
-<label x="50.8" y="68.58" size="1.778" layer="95" rot="R180"/>
+<label x="50.8" y="71.12" size="1.778" layer="95" rot="R180"/>
 <pinref part="MOD2" gate="FPGA1" pin="RH1B(PIN9)"/>
 <pinref part="J6" gate="J1" pin="7"/>
 </segment>
