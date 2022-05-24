@@ -1,6 +1,6 @@
 <template>
   <div class="fill-height fill-width overflow-hidden">
-    <EmptyDataTable
+    <DataTable
       :default-options="{
         sortBy: ['lastModifyTime'],
         sortDesc: [true],
@@ -10,19 +10,19 @@
       :load-data="loadData"
       ref="table"
     >
-      <!--      <template #search>-->
-      <!--        <v-row class="px-4">-->
-      <!--          <v-col class="py-0" cols="12">-->
-      <!--            <v-text-field autofocus placeholder="Please enter a keyword query" v-model="query.name" clearable />-->
-      <!--          </v-col>-->
-      <!--        </v-row>-->
-      <!--      </template>-->
+      <template #search>
+        <v-row class="px-4">
+          <v-col class="py-0" cols="12">
+            <v-text-field autofocus placeholder="Please enter a keyword query" v-model="query.name" clearable />
+          </v-col>
+        </v-row>
+      </template>
 
-      <!--      <template #actions>-->
-      <!--        <v-btn class="mr-2" depressed tile @click="handleAdd">-->
-      <!--          Add item-->
-      <!--        </v-btn>-->
-      <!--      </template>-->
+      <template #actions>
+        <v-btn class="mr-2" depressed tile @click="handleAdd">
+          Add item
+        </v-btn>
+      </template>
 
       <template #[`item.number`]="{ index }">
         {{ index + 1 }}
@@ -48,16 +48,16 @@
           <span>edit</span>
         </v-tooltip>
 
-        <!--        <v-tooltip top>-->
-        <!--          <template #activator="{ on, attrs }">-->
-        <!--            <v-icon v-bind="attrs" v-on="on" color="red" @click="handleDelete(item.id)">-->
-        <!--              delete-->
-        <!--            </v-icon>-->
-        <!--          </template>-->
-        <!--          <span>delete</span>-->
-        <!--        </v-tooltip>-->
+        <v-tooltip top>
+          <template #activator="{ on, attrs }">
+            <v-icon v-bind="attrs" v-on="on" color="red" @click="handleDelete(item.id)">
+              delete
+            </v-icon>
+          </template>
+          <span>delete</span>
+        </v-tooltip>
       </template>
-    </EmptyDataTable>
+    </DataTable>
 
     <ProjectSchema
       ref="projectSchema"
@@ -69,11 +69,15 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import { deleteProject, getProjectList } from '@/api/project'
+import { deleteProject, getESPInfo } from '@/api/project'
 import toast from '@/utils/toast'
-
+const item = (id = 1,a,b) => ({
+  id: id,
+  name: a,
+  type: b,
+})
 export default {
-  name: 'ProjectList',
+  name: 'status',
   components: {
     ProjectSchema,
   },
@@ -94,54 +98,16 @@ export default {
           fixed: true,
         },
         {
-          text: 'Project name',
-          align: 'center',
+          text: 'Name',
+          align: 'left',
           sortable: false,
           value: 'name',
         },
         {
-          text: 'Total duration (minutes)',
+          text: 'data',
           align: 'center',
-          value: 'time',
-          width: 100,
-        },
-        {
-          text: 'item category',
-          align: 'center',
-          sortable: false,
-          value: 'category',
-          width: 120,
-        },
-        {
-          text: 'Display price (¥)',
-          align: 'center',
-          value: 'price',
-          width: 120,
-        },
-        {
-          text: 'item type',
-          align: 'center',
-          sortable: false,
           value: 'type',
-          width: 120,
-        },
-        {
-          text: 'Exclusive room',
-          align: 'center',
-          value: 'occupy',
           width: 100,
-        },
-        {
-          text: 'Cost ratio (%)',
-          align: 'center',
-          value: 'percent',
-          width: 100,
-        },
-        {
-          text: 'Update time',
-          align: 'center',
-          value: 'lastModifyTime',
-          width: 150,
         },
         {
           text: 'Operation',
@@ -155,12 +121,17 @@ export default {
     },
   },
   methods: {
+    format(a)
+    {
+      let total= 0
+      return { total : total ,items: [{}]}
+    },
     /**
      * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
-      return getProjectList({ ...this.query, ...options }).then(r => r.data)
+      return getESPInfo({ ...this.query, ...options }).then(r =>this.format (r.data))
     },
     /**
      * Added items
@@ -170,7 +141,7 @@ export default {
       this.$refs['projectSchema'].open()
     },
     /**
-     * Added esp successfully
+     * Added project successfully
      * @return {Undefined}
      */
     handleAddSuccess () {
@@ -183,16 +154,15 @@ export default {
      * @param {Number | String} id item id
      * @return {Undefined}
      */
-    handleEdit (id){
-      debugger
+    handleEdit (id) {
       this.$refs['projectSchema'].open(id)
     },
     /**
-     * Edit esp success
+     * Edit project success
      * @return {Undefined}
      */
     handleEditSuccess () {
-      toast.success({ message: 'Editing esp successful' })
+      toast.success({ message: 'Editing project successful' })
       this.$refs['table'].refresh()
     },
     /**

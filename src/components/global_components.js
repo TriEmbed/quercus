@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import { DataTable } from './DataTable'
-import { EmptyDataTable } from './EmptyDataTable'
+import { NumberTable} from "@/components/NumberTable"
 import { FormDrawer } from './FormDrawer'
 import { Toast } from './Toast'
 import { TMap, TMarker, TSearch } from './TMap'
 import { VFollowMenu, VImgUpload, VLoading } from './VImplements'
 import { CssStyle } from './CssStyle'
 
+Vue.component(NumberTable.name, NumberTable)
 Vue.component(DataTable.name, DataTable)
-Vue.component(EmptyDataTable.name, EmptyDataTable)
 Vue.component(FormDrawer.name, FormDrawer)
 Vue.component(VFollowMenu.name, VFollowMenu)
 Vue.component(VImgUpload.name, VImgUpload)

@@ -1,21 +1,21 @@
 <template>
   <div class="data-table fill-width fill-height d-flex flex-column">
     <CssStyle :content="fixedColumnsStyle" />
-    <div><h1>Hello</h1></div>
-    <!--    <v-form>-->
-    <!--      <slot name="search" />-->
 
-    <!--      <div class="d-flex flex-row pb-1 px-2">-->
-    <!--        <slot name="actions" />-->
-    <!--        <v-spacer />-->
-    <!--        <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">-->
-    <!--          Inquire-->
-    <!--        </v-btn>-->
-    <!--        <v-btn depressed tile @click="refresh()">-->
-    <!--          refresh-->
-    <!--        </v-btn>-->
-    <!--      </div>-->
-    <!--    </v-form>-->
+    <v-form v-show="false" >
+      <slot name="search" />
+
+      <div class="d-flex flex-row pb-1 px-2">
+        <slot name="actions" />
+        <v-spacer />
+        <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">
+          Inquire
+        </v-btn>
+        <v-btn depressed tile @click="refresh()">
+          refresh
+        </v-btn>
+      </div>
+    </v-form>
 
     <div class="flex-grow-1 overflow-hidden" :style="{ position: 'relative' }">
       <v-data-table
@@ -29,6 +29,7 @@
           showCurrentPage: true,
           showFirstLastPage: true,
         }"
+        :show-menu=false
         :items="items"
         :item-key="itemKey"
         locale="zh-cn"
@@ -53,7 +54,7 @@ import VLoading from '@/components/VImplements/VLoading.vue'
 import CssStyle from '@/components/CssStyle/index.vue'
 
 export default {
-  name: 'EmptyDataTable',
+  name: 'NumberTable',
   components: {
     VLoading,
     CssStyle,
@@ -160,9 +161,11 @@ export default {
           ${left ? 'left' : 'right'}: 0;
           z-index: 2;
         }
+
         ${rootSelector} tbody tr:hover > td:${nth(col)} {
           background: inherit;
         }
+
         ${rootSelector} thead > tr > th:${nth(col)} {
           z-index: 3;
         }

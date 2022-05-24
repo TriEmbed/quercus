@@ -69,11 +69,15 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import { deleteProject, getProjectList } from '@/api/project'
+import { deleteProject, getESPInfo } from '@/api/project'
 import toast from '@/utils/toast'
-
+const item = (id = 1,a,b) => ({
+  id: id,
+  name: a,
+  type: b,
+})
 export default {
-  name: 'ProjectList',
+  name: 'status',
   components: {
     ProjectSchema,
   },
@@ -84,7 +88,6 @@ export default {
   }),
   computed: {
     headers () {
-      console.log("her")
       return [
         {
           text: 'Number',
@@ -95,54 +98,16 @@ export default {
           fixed: true,
         },
         {
-          text: 'Project name',
-          align: 'center',
+          text: 'Name',
+          align: 'left',
           sortable: false,
           value: 'name',
         },
         {
-          text: 'Total duration (minutes)',
+          text: 'data',
           align: 'center',
-          value: 'time',
-          width: 100,
-        },
-        {
-          text: 'item category',
-          align: 'center',
-          sortable: false,
-          value: 'category',
-          width: 120,
-        },
-        {
-          text: 'Display price (¥)',
-          align: 'center',
-          value: 'price',
-          width: 120,
-        },
-        {
-          text: 'item type',
-          align: 'center',
-          sortable: false,
           value: 'type',
-          width: 120,
-        },
-        {
-          text: 'Exclusive room',
-          align: 'center',
-          value: 'occupy',
           width: 100,
-        },
-        {
-          text: 'Cost ratio (%)',
-          align: 'center',
-          value: 'percent',
-          width: 100,
-        },
-        {
-          text: 'Update time',
-          align: 'center',
-          value: 'lastModifyTime',
-          width: 150,
         },
         {
           text: 'Operation',
@@ -156,23 +121,33 @@ export default {
     },
   },
   methods: {
+    format(a)
+    {
+      let keys = Object.keys(a);
+      let total = keys.length
+      let   items =
+          Array(total).fill(null).map((__, i) => item(i, keys[i], a[keys[i]]))
+      console.log("format",total,items)
+      return { total : total ,items: items}
+    },
     /**
      * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
-      return getProjectList({ ...this.query, ...options }).then(r => r.data)
+      return getESPInfo({ ...this.query, ...options }).then(r =>this.format (r.data))
     },
     /**
      * Added items
      * @return {Undefined}
      */
     handleAdd () {
-      debugger
       this.$refs['projectSchema'].open()
+
+
     },
     /**
-     * Added esp successfully
+     * Added project successfully
      * @return {Undefined}
      */
     handleAddSuccess () {
@@ -189,11 +164,11 @@ export default {
       this.$refs['projectSchema'].open(id)
     },
     /**
-     * Edit esp success
+     * Edit project success
      * @return {Undefined}
      */
     handleEditSuccess () {
-      toast.success({ message: 'Editing esp successful' })
+      toast.success({ message: 'Editing project successful' })
       this.$refs['table'].refresh()
     },
     /**

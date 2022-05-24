@@ -2,7 +2,7 @@
   <div class="data-table fill-width fill-height d-flex flex-column">
     <CssStyle :content="fixedColumnsStyle" />
 
-    <v-form>
+    <v-form v-show="false" >
       <slot name="search" />
 
       <div class="d-flex flex-row pb-1 px-2">
@@ -29,6 +29,7 @@
           showCurrentPage: true,
           showFirstLastPage: true,
         }"
+        :show-menu=false
         :items="items"
         :item-key="itemKey"
         locale="zh-cn"

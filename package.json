@@ -1,5 +1,5 @@
 {
-  "name": "@tanghongxin/VuetifyBoilerplate",
+  "name": "Aardvark",
   "version": "0.0.1",
   "private": false,
   "license": "MIT",
@@ -34,6 +34,8 @@
   },
   "dependencies": {
     "@vue/composition-api": "^1.4.0",
+    "ajax": "^0.0.4",
+    "axion": "^0.1.0",
     "axios": "^0.24.0",
     "core-js": "^3.19.1",
     "lodash-es": "^4.17.21",
@@ -48,7 +50,7 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.5",
-    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-babel": "^4.5.17",
     "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-plugin-unit-jest": "^4.5.15",
     "@vue/cli-service": "^4.5.15",

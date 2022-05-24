@@ -1,5 +1,6 @@
 import request from '@/utils/request'
-
+import axios from "axios"
+import {method} from "lodash-es";
 /**
  * Added items
  * @param {Object} data
@@ -44,3 +45,21 @@ export const getProject = function (id) {
 export const getProjectList = function (query = {}) {
   return request.get('/project/list', { params: query })
 }
+
+let BaseURL ='http://192.168.100.150/api/v1'
+
+export const getESPInfo = function (query = {}) {
+  console.log("project called", BaseURL)
+
+  const k= axios({method: 'get',
+    url: '/system/info',
+    baseURL: BaseURL,
+    responseText: 'json',
+    // `timeout` specifies the number of milliseconds before the request times out.
+    // If the request takes longer than `timeout`, the request will be aborted.
+    timeout: 1000, // default is `0` (no timeout)
+  })
+
+  return k;
+}
+
