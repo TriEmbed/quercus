@@ -1,5 +1,9 @@
 ﻿# Triangle Embedded Interest Group (TriEmbed)
 
+![v0.70 Prototype with FPGA DIP Adapter](/images/v0.70-DIP-adapter.jpg)
+![v0.70 Prototype with SMD Adapter](/images/v0.70-SMD-adapter.jpg)
+
+
 ## Aardvark: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
 1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be a programmer for the Dialog SLGxxxxx ICs and also run applications with an onboard SLG47004V-DIP. 
@@ -12,7 +16,7 @@
 
 ## Project Status
 
-Aardvark is just starting its second release cycle with version 0.70 hardware at the PCB fab as this is being written. Version 0.70 board assembly expected to commence by 2/14/2022. Firmware for a web-based FPGA programming appliance is in alpha test. The second and third 0.60 boards are being assembled with outboard circuitry on a solderless breadboard to match the first example.
+Aardvark is just starting its second release cycle with version 0.70 hardware at the PCB fab as this is being written. Version 0.70 board assembly expected to commence by 2/12/2022. Firmware for a web-based FPGA programming appliance is approaching alpha test. The second and third 0.60 boards were assembled with outboard circuitry on a solderless breadboard to match the first example. Nick has #1, Rob has #2, and Pete has #3. The USB breakout of the 3rd system will be sacrificed to provide a third chip for the 0.70 boards
 
 ## Release notes:
 
@@ -20,9 +24,9 @@ Aardvark is just starting its second release cycle with version 0.70 hardware at
 
 1. 10x10cm PCB
 2. Expecting review, changes and additions from community input
-3. Lots of room for forks with additional circuitry
+3. Lots of room for additional circuitry
 
-**0.70** ETA 2/14/2022 - Second prototype. Pure superset of 0.60:
+**0.70** ETA 2/11/2022 - Second prototype. Pure superset of 0.60:
 
 1. Set of female headers to accept a Dialog programming adapter. The adapter and the SLG4704V-DIP cannot be on the board at the same time.
 2. CH340C USB interface chip that obviates the need for a dongle for programming via USB.
@@ -58,9 +62,11 @@ Aardvark is just starting its second release cycle with version 0.70 hardware at
 5. Todo: Provision for additional Dialog chips?
 6. Wish: Pet peripheral footprints
 7. Bug: No consensus about licensing. 0.70 board has "CC By-SA 2.00" on underside but we need concensus for 0.80 as it will be released to the public unless it requires a lot of bodge wires. 
+
 ### Version 0.70 bug/todo list: 
 
-1. Decoupling/bypass cap for CH340C overlooked: 100nF cap has to be added on top of the USB chip manually as part of assembly.
+1. Bug: Decoupling/bypass cap for CH340C overlooked: 100nF cap has to be added on top of the USB chip manually as part of assembly.
+2. Todo: The reset circuit is incomplete. Have to cut the traces from !DTR (pin 14) and !RTS (pin 13) under the chip them through a pair of NPN resistors to EN and GP9. A boot switch will be added by gluing it to the board.
 
 ### Version 0.60 Bug/Todo/wish list.
 
