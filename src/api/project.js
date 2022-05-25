@@ -6,7 +6,8 @@ import {method} from "lodash-es";
  * @param {Object} data
  * @return {Promise<any>}
  */
-export const addProject = function (data = {}) {
+// eslint-disable-next-line no-unused-vars
+export const addProject = function (data = {}, _data) {
   return request.post('/project', data)
 }
 
@@ -15,6 +16,7 @@ export const addProject = function (data = {}) {
  * @param {Object} data
  * @return {Promise<any>}
  */
+// eslint-disable-next-line no-unused-vars
 export const editProject = function (data = {}) {
   return request.put('/project', data)
 }
@@ -24,7 +26,8 @@ export const editProject = function (data = {}) {
  * @param {Number | String} id
  * @return {Promise<any>}
  */
-export const deleteProject = function (id) {
+// eslint-disable-next-line no-unused-vars
+export const deleteProject = function (id, _data) {
   return request.delete(`/project/${id}`)
 }
 
@@ -33,7 +36,8 @@ export const deleteProject = function (id) {
  * @param {Number | String} id
  * @return {Promise<any>}
  */
-export const getProject = function (id) {
+// eslint-disable-next-line no-unused-vars
+export const getProject = function (id, _data) {
   return request.get(`/project/${id}`)
 }
 
@@ -42,13 +46,14 @@ export const getProject = function (id) {
  * @param {Object} query
  * @return {Promise<any>}
  */
-export const getProjectList = function (query = {}) {
+// eslint-disable-next-line no-unused-vars
+export const getProjectList = function (query = {}, _data) {
   return request.get('/project/list', { params: query })
 }
 
 let BaseURL ='http://192.168.100.150/api/v1'
-
-export const getESPInfo = function (query = {}) {
+// eslint-disable-next-line no-unused-vars
+export const getESPInfo = function (query = {} ,_data) {
   console.log("project called", BaseURL)
 
   const k= axios({method: 'get',
@@ -62,4 +67,31 @@ export const getESPInfo = function (query = {}) {
 
   return k;
 }
+
+
+// eslint-disable-next-line no-unused-vars
+export const getI2C = function (query = {}, _data) {
+  console.log("project called", BaseURL)
+
+  const k= axios({method: 'patch',
+    url: '/i2c',
+    baseURL: BaseURL,
+    responseText: 'json',
+    // `timeout` specifies the number of milliseconds before the request times out.
+    // If the request takes longer than `timeout`, the request will be aborted.
+    timeout: 2000, // default is `0` (no timeout)
+    params: {
+      ID: 12345,
+    },
+    data: { "i2cscan": [] },
+    headers: {
+      'Access-Control-Allow-Origin': 'GET, PUT, POST, DELETE, OPTIONS',
+      'Content-Type': 'application/json',
+    },
+  })
+
+  return k;
+}
+
+
 

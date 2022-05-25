@@ -77,7 +77,7 @@ const item = (id = 1,a,b) => ({
   type: b,
 })
 export default {
-  name: 'status',
+  name: 'Status',
   components: {
     ProjectSchema,
   },
@@ -121,14 +121,14 @@ export default {
     },
   },
   methods: {
-    format(a)
+    format (a)
     {
       let keys = Object.keys(a);
       let total = keys.length
-      let   items =
+      let items =
           Array(total).fill(null).map((__, i) => item(i, keys[i], a[keys[i]]))
       console.log("format",total,items)
-      return { total : total ,items: items}
+      return { total: total ,items: items}
     },
     /**
      * Call the interface data and initialize the table

@@ -69,7 +69,7 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import { deleteProject, getESPInfo } from '@/api/project'
+import { deleteProject, getI2C } from '@/api/project'
 import toast from '@/utils/toast'
 const item = (id = 1,a,b) => ({
   id: id,
@@ -77,7 +77,7 @@ const item = (id = 1,a,b) => ({
   type: b,
 })
 export default {
-  name: 'status',
+  name: 'Status',
   components: {
     ProjectSchema,
   },
@@ -121,17 +121,18 @@ export default {
     },
   },
   methods: {
-    format(a)
+    format (a)
     {
+      console.log("r.data",a)
       let total= 0
-      return { total : total ,items: [{}]}
+      return { total: total ,items: [{}]}
     },
     /**
      * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
-      return getESPInfo({ ...this.query, ...options }).then(r =>this.format (r.data))
+      return getI2C({ ...this.query, ...options }).then(r => this.format (r.data))
     },
     /**
      * Added items
