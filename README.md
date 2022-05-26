@@ -1,10 +1,9 @@
 ﻿# Triangle Embedded Interest Group (TriEmbed)
+![Repo logo](/images/m80.png)
+## m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
 ![v0.70 Prototype with FPGA DIP Adapter](/images/v0.70-DIP-adapter.jpg)
 ![v0.70 Prototype with SMD Adapter](/images/v0.70-SMD-adapter.jpg)
-
-
-## Aardvark: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
 1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be a programmer for the Dialog SLGxxxxx ICs and also run applications with an onboard SLG47004V-DIP. 
 2. Cache of Dialog info resources
