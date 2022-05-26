@@ -1,11 +1,10 @@
 <template>
   <div class="fill-height fill-width overflow-hidden">
-    <DataTable
+    <NumberTable
       :default-options="{
         sortBy: ['lastModifyTime'],
         sortDesc: [true],
       }"
-      :headers="headers"
       item-key="id"
       :load-data="loadData"
       ref="table"
@@ -57,7 +56,7 @@
           <span>delete</span>
         </v-tooltip>
       </template>
-    </DataTable>
+    </NumberTable>
 
     <ProjectSchema
       ref="projectSchema"
@@ -70,12 +69,14 @@
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
 import { deleteProject, getI2C } from '@/api/project'
+
 import toast from '@/utils/toast'
 const item = (id = 1,a,b) => ({
   id: id,
   name: a,
   type: b,
 })
+
 export default {
   name: 'Status',
   components: {
@@ -86,6 +87,8 @@ export default {
       name: '',
     },
   }),
+
+
   computed: {
     headers () {
       return [
@@ -124,8 +127,7 @@ export default {
     format (a)
     {
       console.log("r.data",a)
-      let total= 0
-      return { total: total ,items: [{}]}
+      return { total: 0 ,items: []}
     },
     /**
      * Call the interface data and initialize the table

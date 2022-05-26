@@ -1,26 +1,52 @@
 <template>
   <div class="data-table fill-width fill-height d-flex flex-column">
-    <CssStyle :content="fixedColumnsStyle" />
+    <!--    <CssStyle :content="fixedColumnsStyle" />-->
 
-    <v-form v-show="false">
-      <slot name="search" />
+    <!--    <v-form v-show=showSorts>-->
+    <!--      <slot name="search"/>-->
 
-      <div class="d-flex flex-row pb-1 px-2">
-        <slot name="actions" />
-        <v-spacer />
-        <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">
-          Inquire
-        </v-btn>
-        <v-btn depressed tile @click="refresh()">
-          refresh
-        </v-btn>
-      </div>
-    </v-form>
-
-    <div id="myDynamicTable" class="flex-grow-1 overflow-hidden" :style="{ position: 'relative' }">
-
-      <VLoading absolute :value="loading" />
+    <!--      <div class="d-flex flex-row pb-1 px-2">-->
+    <!--        <slot name="actions"/>-->
+    <!--        <v-spacer/>-->
+    <!--        <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">-->
+    <!--          Inquire-->
+    <!--        </v-btn>-->
+    <!--        <v-btn depressed tile @click="refresh()">-->
+    <!--          refresh-->
+    <!--        </v-btn>-->
+    <!--      </div>-->
+    <!--    </v-form>-->
+    <div name="myDynamicTable">
+      Hello
     </div>
+    <!--    <div class="flex-grow-1 overflow-hidden" :style="{ position: 'relative' }">-->
+    <!--      <v-data-table-->
+    <!--        class="elevation-0 fill-width fill-height d-flex flex-column overflow-x-hidden"-->
+    <!--        fixed-header-->
+    <!--        :headers="headers"-->
+    <!--        :hide-default-footer="false"-->
+    <!--        :footer-props="{-->
+    <!--          itemsPerPageText: 'Number of items per page',-->
+    <!--          itemsPerPageOptions: [15, 20, 30, 50],-->
+    <!--          showCurrentPage: true,-->
+    <!--          showFirstLastPage: true,-->
+    <!--        }"-->
+    <!--        :show-menu="false"-->
+    <!--        :items="items"-->
+    <!--        :item-key="itemKey"-->
+    <!--        locale="zh-cn"-->
+    <!--        :multi-sort="multiSort"-->
+    <!--        :options="options"-->
+    <!--        ref="table"-->
+    <!--        :server-items-length="total || 0"-->
+    <!--        :no-data-text="loading ? 'Loading...' : 'No data'"-->
+    <!--        @update:options="fetch($event)"-->
+    <!--      >-->
+    <!--        <template v-for="(_, slot) of $scopedSlots" #[slot]="scope">-->
+    <!--          <slot :name="slot" v-bind="scope" />-->
+    <!--        </template>-->
+    <!--      </v-data-table>-->
+    <VLoading absolute :value="loading" />
   </div>
 </template>
 
@@ -50,7 +76,10 @@ export default {
       default: 'id',
       required: true,
     },
-    multiSort: {
+    showSorts: {
+      type: Boolean,
+      default: false,
+    }, multiSort: {
       type: Boolean,
       default: false,
     },
@@ -75,7 +104,7 @@ export default {
   },
   computed: {
     fixedColumnsStyle () {
-      const { left = [], right = [] } = this.pickFixedColumns()
+      const {left = [], right = []} = this.pickFixedColumns()
       return [
         ...this.calcFixedColumnCls(left, true),
         ...this.calcFixedColumnCls(right, false),
@@ -122,34 +151,39 @@ export default {
           td.width = '40'
           td.style.textAlign = 'center'
 
-            //if (this.$store.state.i2cScan[cur] === (i * 16 + j)) {
-            //  const child = document.createTextNode(this.$store.state.i2cScan[cur++])
-            // td.addEventListener('click', function () {
-            //   alert('click')
-            // })
-            // td.addEventListener('contextmenu', function (event) {
-            //   event.preventDefault()
-            //   const ctxMenu = document.getElementById('ctxMenu')
-            //   ctxMenu.style.display = 'block'
-            //   ctxMenu.style.width = '100px'
-            //   ctxMenu.style.height = '100px'
-            //   ctxMenu.style.left = (event.pageX) + 'px'
-            //   ctxMenu.style.top = (event.pageY) + 'px'
-            // })
-            // td.appendChild(child)
-         // } else {
+          if (this.$store.state.i2cScan[cur] === (i * 16 + j)) {
+            const child = document.createTextNode(this.$store.state.i2cScan[cur++])
+            td.addEventListener('click', function () {
+              alert('click')
+            })
+            td.addEventListener('contextmenu', function (event) {
+              event.preventDefault()
+              const ctxMenu = document.getElementById('ctxMenu')
+              ctxMenu.style.display = 'block'
+              ctxMenu.style.width = '100px'
+              ctxMenu.style.height = '100px'
+              ctxMenu.style.left = (event.pageX) + 'px'
+              ctxMenu.style.top = (event.pageY) + 'px'
+            })
+            td.appendChild(child)
+          } else {
             td.appendChild(document.createTextNode('.'))
-         // }
+          }
           tr.appendChild(td)
         }
       }
       myTableDiv.appendChild(table)
     },
+    updateData: function () {
+      // console.log(this.$store.state.i2cScan) // -> 1
+      // this.$store.dispatch('activei2c')
+
+    },
     async fetch (payload = {}) {
       try {
         this.loading = true
-        const { items, total } = await this.loadData(Object.assign(this.options, payload))
-        Object.assign(this, { items, total })
+        const {items, total} = await this.loadData(Object.assign(this.options, payload))
+        Object.assign(this, {items, total})
         await this.$nextTick()
         await this.scrollToTop()
       } catch (e) {
@@ -208,7 +242,8 @@ export default {
         }
       `)
     },
-  },
+  }
+  ,
 }
 </script>
 
