@@ -99,6 +99,8 @@ const buildDynamicRoutes = (menus = [], userPermissions = []) => {
     },
     children: recursive(menus),
   })
+
+
   router.addRoute({
     name: 'Exception',
     path: '/exception/:type',

@@ -48,6 +48,7 @@ export const getProject = function (id, _data) {
  */
 // eslint-disable-next-line no-unused-vars
 export const getProjectList = function (query = {}, _data) {
+
   return request.get('/project/list', { params: query })
 }
 
@@ -71,7 +72,7 @@ export const getESPInfo = function (query = {} ,_data) {
 
 // eslint-disable-next-line no-unused-vars
 export const getI2C = function (query = {}, _data) {
-  console.log("project called", BaseURL)
+  console.log("project called", BaseURL,_data)
 
   const k= axios({method: 'patch',
     url: '/i2c',

@@ -10,6 +10,7 @@ adaptor.onPost(/api\/login/).reply(config => {
     username,
     token: 'ac21ebab-bddc-41a3-bef5-4ecf3325c888',
     permissions: [],
+    // this is handled in router/index.js
     menus: [
       {
         text: 'Home',
@@ -65,9 +66,18 @@ adaptor.onPost(/api\/login/).reply(config => {
             resource: 'project/index',
           },
           {
-            text: 'i2c',
+            text: 'i2cScan',
             hidden: false,
-            to: '/project/i2c',
+            to: '/project/i2c/i2cscan',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'project/i2c',
+          },
+
+          {
+            text: 'i2cRead',
+            hidden: false,
+            to: '/project/i2c/i2cread',
             permissions: [],
             type: 'VIEW',
             resource: 'project/i2c',
@@ -75,6 +85,13 @@ adaptor.onPost(/api\/login/).reply(config => {
           {
             text: 'Status',
             hidden: false,
+            to: '/project/status',
+            permissions: [],
+            type: 'VIEW',
+            resource: 'project/status',
+          }, {
+            text: 'more',
+            hidden: true,
             to: '/project/status',
             permissions: [],
             type: 'VIEW',

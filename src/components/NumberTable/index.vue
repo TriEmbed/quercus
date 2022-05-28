@@ -17,8 +17,21 @@
       </div>
     </v-form>
 
-    <div id="myDynamicTable" class="flex-grow-1 overflow-hidden" :style="{ position: 'relative' }">
-
+    <div
+      id="myDynamicTable"
+      class="flex-grow-1 overflow-hidden"
+      :style="{ position: 'relative' }"
+      :show-menu="false"
+      :items="items"
+      :item-key="itemKey"
+      locale="zh-cn"
+      :multi-sort="multiSort"
+      :options="options"
+      ref="table"
+      :server-items-length="total || 0"
+      :no-data-text="loading ? 'Loading...' : 'No data'"
+      @update:options="fetch($event)"
+    >
       <VLoading absolute :value="loading" />
     </div>
   </div>
@@ -27,7 +40,7 @@
 <script>
 import VLoading from '@/components/VImplements/VLoading.vue'
 import CssStyle from '@/components/CssStyle/index.vue'
-
+// this is handle by router index.js
 export default {
   name: 'NumberTable',
   components: {
@@ -43,7 +56,7 @@ export default {
     headers: {
       type: Array,
       default: () => [],
-      required: true,
+      required: false,
     },
     itemKey: {
       type: String,
@@ -61,7 +74,7 @@ export default {
   },
   data () {
     return {
-      items: [],
+      items: [1, 2],
       loading: false,
       options: Object.assign({
         itemsPerPage: 20,
@@ -75,7 +88,7 @@ export default {
   },
   computed: {
     fixedColumnsStyle () {
-      const { left = [], right = [] } = this.pickFixedColumns()
+      const {left = [], right = []} = this.pickFixedColumns()
       return [
         ...this.calcFixedColumnCls(left, true),
         ...this.calcFixedColumnCls(right, false),
@@ -83,12 +96,22 @@ export default {
     },
   },
   mounted () {
-    this.addTable([])
+    this.fetch(
+    )
   },
   methods: {
 
     /** @param { i2cScan: any[] } val**/
-    addTable: function (val) {
+    addTable: function (stuff) {
+      let val
+      const key = Object.keys(stuff)[0]
+      let rows=8;
+      if (key === 'i2cscan') {
+        console.log("found")
+        console.log("vals", stuff, key);
+        val = stuff.i2cscan
+      }
+
       const width = 16
       const myTableDiv = document.getElementById('myDynamicTable')
       while (myTableDiv.firstChild) {
@@ -99,6 +122,7 @@ export default {
       const tableBody = document.createElement('TBODY')
       table.appendChild(tableBody)
       tableBody.appendChild(document.createElement('th'))
+
       for (let j = 0; j < width; j++) {
         const th = document.createElement('th')
         th.style.fontWeight = 'bolder'
@@ -110,8 +134,8 @@ export default {
         tableBody.appendChild(th)
       }
       let cur = 0
-      console.log(this.$store.state.i2cScan)
-      for (let i = 0; i < 8; i++) {
+
+      for (let i = 0; i < rows; i++) {
         const tr = document.createElement('TR')
         tr.innerText = '0x' + (i * 16).toString(16)
 
@@ -122,8 +146,8 @@ export default {
           td.width = '40'
           td.style.textAlign = 'center'
 
-            //if (this.$store.state.i2cScan[cur] === (i * 16 + j)) {
-            //  const child = document.createTextNode(this.$store.state.i2cScan[cur++])
+          if (val[cur] === (i * 16 + j)) {
+            //  const child = val[cur++]
             // td.addEventListener('click', function () {
             //   alert('click')
             // })
@@ -136,27 +160,31 @@ export default {
             //   ctxMenu.style.left = (event.pageX) + 'px'
             //   ctxMenu.style.top = (event.pageY) + 'px'
             // })
-            // td.appendChild(child)
-         // } else {
+            td.appendChild(document.createTextNode(val[cur++]))
+          } else {
             td.appendChild(document.createTextNode('.'))
-         // }
+          }
           tr.appendChild(td)
         }
       }
       myTableDiv.appendChild(table)
     },
     async fetch (payload = {}) {
+
       try {
         this.loading = true
-        const { items, total } = await this.loadData(Object.assign(this.options, payload))
-        Object.assign(this, { items, total })
+        const {items, total} = await this.loadData(Object.assign(this.options, payload))
+        Object.assign(this, {items, total})
         await this.$nextTick()
-        await this.scrollToTop()
+        // await this.scrollToTop()
+
+
       } catch (e) {
         this.items = []
         this.total = 0
         throw e
       } finally {
+        this.addTable(this.items)
         this.loading = false
       }
     },

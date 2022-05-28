@@ -161,11 +161,9 @@ export default {
           ${left ? 'left' : 'right'}: 0;
           z-index: 2;
         }
-
         ${rootSelector} tbody tr:hover > td:${nth(col)} {
           background: inherit;
         }
-
         ${rootSelector} thead > tr > th:${nth(col)} {
           z-index: 3;
         }

@@ -124,17 +124,21 @@ export default {
     },
   },
   methods: {
-    format (a)
+    format (r)
     {
-      console.log("r.data",a)
-      return { total: 0 ,items: []}
+      console.log("r.data",r)
+      return { total: 0 ,items: r}
     },
     /**
      * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
-      return getI2C({ ...this.query, ...options }).then(r => this.format (r.data))
+      const pos = location.hash.lastIndexOf("/");
+      const page =location.hash.slice(pos+1);
+      console.log("location:",pos,page,location.hash)
+
+      return getI2C({ ...this.query, ...options },page).then(r => this.format (r.data))
     },
     /**
      * Added items
@@ -170,7 +174,13 @@ export default {
     },
     /**
      * delete item
-     * @param {Number | String} id item id
+     * @param {Number | String} id i
+     *
+     *
+     *
+     *
+     *
+     * tem id
      * @return {Promise<Undefined>}
      */
     async handleDelete (id) {
