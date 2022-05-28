@@ -143,8 +143,6 @@ export default {
      */
     handleAdd () {
       this.$refs['projectSchema'].open()
-
-
     },
     /**
      * Added project successfully

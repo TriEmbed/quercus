@@ -22,4 +22,16 @@ export default new Vuex.Store({
     persistence.plugin,
   ],
   modules,
+  state () {
+    return {
+      dialogAddresses: [8,16],
+      dialogAddress: 8,
+    }
+  },
+  mutations: {
+    address (state,payload) {
+      console.log("mutation",payload)
+      state.dialogAddress=payload
+    },
+  },
 })

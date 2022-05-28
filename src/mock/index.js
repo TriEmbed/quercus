@@ -2,10 +2,10 @@ import Adaptor from 'axios-mock-adapter'
 import request from '@/utils/request'
 import _ from 'lodash-es'
 
-const adaptor = new Adaptor(request, { delayResponse: 300 })
+const adaptor = new Adaptor(request, {delayResponse: 300})
 
 adaptor.onPost(/api\/login/).reply(config => {
-  const { username } = JSON.parse(config.data)
+  const {username} = JSON.parse(config.data)
   return [200, {
     username,
     token: 'ac21ebab-bddc-41a3-bef5-4ecf3325c888',
@@ -22,34 +22,7 @@ adaptor.onPost(/api\/login/).reply(config => {
         resource: 'home/index',
       },
       {
-        text: 'Esp',
-        icon: 'Esp',
-        hidden: false,
-        to: '/eps',
-        permissions: [],
-        type: 'VIEW',
-        resource: 'home/index',
-        children: [
-          {
-            text: 'project list',
-            hidden: false,
-            to: '/project/list',
-            permissions: [],
-            type: 'VIEW',
-            resource: 'project/index',
-          },
-          {
-            text: 'Status',
-            hidden: false,
-            to: '/project/status',
-            permissions: [],
-            type: 'VIEW',
-            resource: 'project/status',
-          },
-        ],
-      },
-      {
-        text: 'Project Management',
+        text: 'ESP',
         icon: 'apps',
         hidden: false,
         to: '/project',
@@ -73,7 +46,6 @@ adaptor.onPost(/api\/login/).reply(config => {
             type: 'VIEW',
             resource: 'project/i2c',
           },
-
           {
             text: 'i2cRead',
             hidden: false,
@@ -97,6 +69,7 @@ adaptor.onPost(/api\/login/).reply(config => {
             type: 'VIEW',
             resource: 'project/status',
           },
+
         ],
       },
       {
@@ -142,7 +115,7 @@ const item = (id = 1) => ({
     const s = d.getSeconds()
     const pad = num => num.toString().padStart(2, '0')
     return `${Y}-${pad(M)}-${pad(D)} ${pad(H)}:${pad(m)}:${pad(s)}`
-  })(new Date(+(new Date()) - Math.floor(Math.random()*10000000000))),
+  })(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000))),
 })
 
 adaptor.onPost(/\/api\/project/).reply(200)
@@ -150,7 +123,7 @@ adaptor.onPut(/\/api\/project/).reply(200)
 adaptor.onDelete(/\/api\/project\/\d+/).reply(200)
 adaptor.onGet(/\/api\/project\/\d+/).reply(200, item())
 adaptor.onGet(/\/api\/project\/list/).reply(config => {
-  const { sortBy = [], sortDesc = [], itemsPerPage = 15 } = config.params
+  const {sortBy = [], sortDesc = [], itemsPerPage = 15} = config.params
 
   const items = _.orderBy(
     Array(itemsPerPage).fill(null).map((__, i) => item(i)),
@@ -158,5 +131,5 @@ adaptor.onGet(/\/api\/project\/list/).reply(config => {
     sortDesc.map(desc => desc ? 'desc' : 'asc'),
   )
 
-  return [200, { total: itemsPerPage * 3 + 3, items }]
+  return [200, {total: itemsPerPage * 3 + 3, items}]
 })

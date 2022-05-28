@@ -2,12 +2,18 @@
   <div class="data-table fill-width fill-height d-flex flex-column">
     <CssStyle :content="fixedColumnsStyle" />
 
-    <v-form v-show="false">
-      <slot name="search" />
+    <v-form v-show="true">
+      <!--      <slot name="search" />-->
 
       <div class="d-flex flex-row pb-1 px-2">
-        <slot name="actions" />
-        <v-spacer />
+        <!--        <slot name="actions" />-->
+        <!--        <v-spacer />-->
+        <v-select
+          id="i2cActive"
+          @change="changeRoute"
+          :value="address"
+          :items="addresses"
+        />
         <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">
           Inquire
         </v-btn>
@@ -40,7 +46,9 @@
 <script>
 import VLoading from '@/components/VImplements/VLoading.vue'
 import CssStyle from '@/components/CssStyle/index.vue'
+import store from '@/store/index.js'
 // this is handle by router index.js
+
 export default {
   name: 'NumberTable',
   components: {
@@ -74,6 +82,7 @@ export default {
   },
   data () {
     return {
+      selection: store.state.dialogAddress,
       items: [1, 2],
       loading: false,
       options: Object.assign({
@@ -87,7 +96,16 @@ export default {
     }
   },
   computed: {
+    address () {
+      console.log("computed")
+      return store.state.dialogAddress
+    },
+
+    addresses () {
+      return store.state.dialogAddresses
+    },
     fixedColumnsStyle () {
+
       const {left = [], right = []} = this.pickFixedColumns()
       return [
         ...this.calcFixedColumnCls(left, true),
@@ -96,11 +114,17 @@ export default {
     },
   },
   mounted () {
+    console.log("store.state.address",store.state.dialogAddress)
     this.fetch(
     )
   },
   methods: {
+    changeRoute (selectObj=store.state.dialogAddresses[0] ) {
+      if (selectObj )
+        store.commit('address', selectObj)
+      console.log("select :",selectObj)ls+
 
+    },
     /** @param { i2cScan: any[] } val**/
     addTable: function (stuff) {
       let val
