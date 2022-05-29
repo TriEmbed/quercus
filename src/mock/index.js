@@ -62,12 +62,12 @@ adaptor.onPost(/api\/login/).reply(config => {
             type: 'VIEW',
             resource: 'project/status',
           }, {
-            text: 'more',
-            hidden: true,
-            to: '/project/status',
+            text: 'Test',
+            hidden: false,
+            to: '/project/i2cTest',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/status',
+            resource: 'project/i2cTest',
           },
 
         ],

@@ -71,6 +71,10 @@ export default {
       default: 'id',
       required: true,
     },
+    hash: {
+      type: String,
+      required: true,
+    },
     multiSort: {
       type: Boolean,
       default: false,
@@ -100,12 +104,10 @@ export default {
       console.log("computed")
       return store.state.dialogAddress
     },
-
     addresses () {
       return store.state.dialogAddresses
     },
     fixedColumnsStyle () {
-
       const {left = [], right = []} = this.pickFixedColumns()
       return [
         ...this.calcFixedColumnCls(left, true),
@@ -115,6 +117,7 @@ export default {
   },
   mounted () {
     console.log("store.state.address",store.state.dialogAddress)
+    console.log("hash",this.hash)
     this.fetch(
     )
   },
@@ -122,7 +125,7 @@ export default {
     changeRoute (selectObj=store.state.dialogAddresses[0] ) {
       if (selectObj )
         store.commit('address', selectObj)
-      console.log("select :",selectObj)ls+
+      console.log("select :",selectObj)
 
     },
     /** @param { i2cScan: any[] } val**/

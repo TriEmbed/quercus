@@ -70,7 +70,7 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import { deleteProject, getI2C } from '@/api/project'
+import {deleteProject, getI2C, testI2C} from '@/api/project'
 
 import toast from '@/utils/toast'
 const item = (id = 1,a,b) => ({
@@ -140,7 +140,7 @@ export default {
       const page =location.hash.slice(pos+1);
       console.log("location:",pos,page,location.hash)
 
-      return getI2C({ ...this.query, ...options },page).then(r => this.format (r.data))
+      return testI2C({ ...this.query, ...options },page).then(r => this.format (r.data))
     },
     /**
      * Added items

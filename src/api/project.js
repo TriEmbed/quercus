@@ -96,3 +96,28 @@ export const getI2C = function (query = {}, _data) {
 
 
 
+export const testI2C = function (query = {}, _data) {
+  console.log("project called test", BaseURL,_data)
+
+  const k= axios({method: 'patch',
+    url: '/i2c',
+    baseURL: BaseURL,
+    responseText: 'json',
+    // `timeout` specifies the number of milliseconds before the request times out.
+    // If the request takes longer than `timeout`, the request will be aborted.
+    timeout: 2000, // default is `0` (no timeout)
+    params: {
+      ID: 12345,
+    },
+    data: { "dump": [8 ,4], "dump": [9 ,4], },
+    headers: {
+      'Access-Control-Allow-Origin': 'GET, PUT, POST, DELETE, OPTIONS',
+      'Content-Type': 'application/json',
+    },
+  })
+
+  return k;
+}
+
+
+
