@@ -96,8 +96,8 @@ export const getI2C = function (query = {}, _data) {
 
 
 
-export const testI2C = function (query = {}, _data) {
-  console.log("project called test", BaseURL,_data)
+export const testI2C = function (query = {},_command_slot , _data) {
+  console.log("project called test", BaseURL,_command_slot, _data)
 
   const k= axios({method: 'patch',
     url: '/i2c',
@@ -109,7 +109,7 @@ export const testI2C = function (query = {}, _data) {
     params: {
       ID: 12345,
     },
-    data: { "dump": [8 ,4], "dump": [9 ,4], },
+    data: { [_command_slot]: _data },
     headers: {
       'Access-Control-Allow-Origin': 'GET, PUT, POST, DELETE, OPTIONS',
       'Content-Type': 'application/json',

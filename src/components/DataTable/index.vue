@@ -52,7 +52,7 @@
 <script>
 import VLoading from '@/components/VImplements/VLoading.vue'
 import CssStyle from '@/components/CssStyle/index.vue'
-import testI2C from '@/api/project.js'
+
 export default {
   name: 'DataTable',
   components: {
@@ -127,10 +127,10 @@ export default {
       // if (firstPage && this.options.page !== 1) {
       //   this.options.page = 1
       // } else {
-      //   this.fetch(this.options)
+      this.fetch(this.options)
       // }
-      console.log("test--------------------------------")
-      testI2C()
+      //console.log("test--------------------------------")
+      //testI2C()
     },
     scrollToTop () {
       this.$tableWrapper = this.$tableWrapper || this.$refs['table'].$el.getElementsByClassName('v-data-table__wrapper')[0]

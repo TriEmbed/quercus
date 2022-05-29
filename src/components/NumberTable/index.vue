@@ -132,12 +132,23 @@ export default {
     addTable: function (stuff) {
       let val
       const key = Object.keys(stuff)[0]
-      let rows=8;
-      if (key === 'i2cscan') {
-        console.log("found")
-        console.log("vals", stuff, key);
-        val = stuff.i2cscan
+      let rows
+
+      console.log("found")
+      console.log("vals", stuff, key);
+      switch(key.toString()){
+        case 'i2cscan':
+          val = stuff.i2cscan
+          rows=8
+          break;
+        case 'dump':
+          rows=16
+          val = stuff.dump
+          break;
+        default:
+          break
       }
+
 
       const width = 16
       const myTableDiv = document.getElementById('myDynamicTable')
@@ -169,28 +180,38 @@ export default {
         tableBody.appendChild(tr)
 
         for (let j = 0; j < width; j++) {
-          const td = document.createElement('TD')
+          let td = document.createElement('TD')
+
+          switch(key.toString()) {
+            case "i2cscan" :
+              if (val[cur] === (i * 16 + j)) {
+                //  const child = val[cur++]
+                // td.addEventListener('click', function () {
+                //   alert('click')
+                // })
+                // td.addEventListener('contextmenu', function (event) {
+                //   event.preventDefault()
+                //   const ctxMenu = document.getElementById('ctxMenu')
+                //   ctxMenu.style.display = 'block'
+                //   ctxMenu.style.width = '100px'
+                //   ctxMenu.style.height = '100px'
+                //   ctxMenu.style.left = (event.pageX) + 'px'
+                //   ctxMenu.style.top = (event.pageY) + 'px'
+                // })
+                td.appendChild(document.createTextNode(val[cur++]))
+              } else {
+                td.appendChild(document.createTextNode('.'))
+              }
+              break;
+            case "dump" :
+              td.appendChild(document.createTextNode(val[i * 16 + j].toString( 16).toUpperCase() ))
+              break;
+            default:
+              break
+
+          }
           td.width = '40'
           td.style.textAlign = 'center'
-
-          if (val[cur] === (i * 16 + j)) {
-            //  const child = val[cur++]
-            // td.addEventListener('click', function () {
-            //   alert('click')
-            // })
-            // td.addEventListener('contextmenu', function (event) {
-            //   event.preventDefault()
-            //   const ctxMenu = document.getElementById('ctxMenu')
-            //   ctxMenu.style.display = 'block'
-            //   ctxMenu.style.width = '100px'
-            //   ctxMenu.style.height = '100px'
-            //   ctxMenu.style.left = (event.pageX) + 'px'
-            //   ctxMenu.style.top = (event.pageY) + 'px'
-            // })
-            td.appendChild(document.createTextNode(val[cur++]))
-          } else {
-            td.appendChild(document.createTextNode('.'))
-          }
           tr.appendChild(td)
         }
       }
@@ -204,13 +225,12 @@ export default {
         Object.assign(this, {items, total})
         await this.$nextTick()
         // await this.scrollToTop()
-
-
       } catch (e) {
         this.items = []
         this.total = 0
         throw e
       } finally {
+        console.log("fetch",this.items,this.total)
         this.addTable(this.items)
         this.loading = false
       }

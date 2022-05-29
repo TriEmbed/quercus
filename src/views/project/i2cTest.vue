@@ -140,7 +140,7 @@ export default {
       const page =location.hash.slice(pos+1);
       console.log("location:",pos,page,location.hash)
 
-      return testI2C({ ...this.query, ...options },page).then(r => this.format (r.data))
+      return testI2C({ ...this.query, ...options },'dump',[8,4]).then(r => this.format (r.data))
     },
     /**
      * Added items
