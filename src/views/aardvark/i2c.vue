@@ -1,13 +1,14 @@
 <template>
   <div class="fill-height fill-width overflow-hidden">
-    <DataTable
+    <NumberTable
       :default-options="{
         sortBy: ['lastModifyTime'],
         sortDesc: [true],
       }"
-      :headers="headers"
+      hash="scan"
       item-key="id"
       :load-data="loadData"
+
       ref="table"
     >
       <template #search>
@@ -57,7 +58,7 @@
           <span>delete</span>
         </v-tooltip>
       </template>
-    </DataTable>
+    </NumberTable>
 
     <ProjectSchema
       ref="projectSchema"
@@ -69,11 +70,17 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import { deleteProject, getProjectList } from '@/api/project'
+import { deleteProject, getI2C } from '@/api/project'
+
 import toast from '@/utils/toast'
+const item = (id = 1,a,b) => ({
+  id: id,
+  name: a,
+  type: b,
+})
 
 export default {
-  name: 'ProjectList',
+  name: 'Status',
   components: {
     ProjectSchema,
   },
@@ -82,6 +89,8 @@ export default {
       name: '',
     },
   }),
+
+
   computed: {
     headers () {
       return [
@@ -94,54 +103,16 @@ export default {
           fixed: true,
         },
         {
-          text: 'Project name',
-          align: 'center',
+          text: 'Name',
+          align: 'left',
           sortable: false,
           value: 'name',
         },
         {
-          text: 'Total duration (minutes)',
+          text: 'data',
           align: 'center',
-          value: 'time',
-          width: 100,
-        },
-        {
-          text: 'item category',
-          align: 'center',
-          sortable: false,
-          value: 'category',
-          width: 120,
-        },
-        {
-          text: 'Display price (¥)',
-          align: 'center',
-          value: 'price',
-          width: 120,
-        },
-        {
-          text: 'item type',
-          align: 'center',
-          sortable: false,
           value: 'type',
-          width: 120,
-        },
-        {
-          text: 'Exclusive room',
-          align: 'center',
-          value: 'occupy',
           width: 100,
-        },
-        {
-          text: 'Cost ratio (%)',
-          align: 'center',
-          value: 'percent',
-          width: 100,
-        },
-        {
-          text: 'Update time',
-          align: 'center',
-          value: 'lastModifyTime',
-          width: 150,
         },
         {
           text: 'Operation',
@@ -155,12 +126,21 @@ export default {
     },
   },
   methods: {
+    format (r)
+    {
+      console.log("r.data",r)
+      return { total: 0 ,items: r}
+    },
     /**
      * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
-      return getProjectList({ ...this.query, ...options }).then(r => {console.log(r.data);return r.data})
+      const pos = location.hash.lastIndexOf("/");
+      const page =location.hash.slice(pos+1);
+      console.log("location:",pos,page,location.hash)
+
+      return getI2C({ ...this.query, ...options },page).then(r => this.format (r.data))
     },
     /**
      * Added items
@@ -170,7 +150,7 @@ export default {
       this.$refs['projectSchema'].open()
     },
     /**
-     * Added project successfully
+     * Added aardvark successfully
      * @return {Undefined}
      */
     handleAddSuccess () {
@@ -187,16 +167,16 @@ export default {
       this.$refs['projectSchema'].open(id)
     },
     /**
-     * Edit project success
+     * Edit aardvark success
      * @return {Undefined}
      */
     handleEditSuccess () {
-      toast.success({ message: 'Editing project successful' })
+      toast.success({ message: 'Editing aardvark successful' })
       this.$refs['table'].refresh()
     },
     /**
      * delete item
-     * @param {Number | String} id item id
+     * @param {Number | String} id
      * @return {Promise<Undefined>}
      */
     async handleDelete (id) {

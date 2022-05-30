@@ -25,7 +25,7 @@ adaptor.onPost(/api\/login/).reply(config => {
         text: 'ESP',
         icon: 'apps',
         hidden: false,
-        to: '/project',
+        to: '/aardvark',
         permissions: [],
         type: 'MENU',
         resource: '',
@@ -33,41 +33,41 @@ adaptor.onPost(/api\/login/).reply(config => {
           {
             text: 'item list',
             hidden: false,
-            to: '/project/list',
+            to: '/aardvark/list',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/index',
+            resource: 'aardvark/index',
           },
           {
             text: 'i2cScan',
             hidden: false,
-            to: '/project/i2c/i2cscan',
+            to: '/aardvark/i2c/i2cscan',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/i2c',
+            resource: 'aardvark/i2c',
           },
           {
             text: 'i2cRead',
             hidden: false,
-            to: '/project/i2c/i2cread',
+            to: '/aardvark/i2c/i2cread',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/i2c',
+            resource: 'aardvark/i2c',
           },
           {
             text: 'Status',
             hidden: false,
-            to: '/project/status',
+            to: '/aardvark/status',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/status',
+            resource: 'aardvark/status',
           }, {
             text: 'Test',
             hidden: false,
-            to: '/project/i2cTest',
+            to: '/aardvark/i2cTest',
             permissions: [],
             type: 'VIEW',
-            resource: 'project/i2cTest',
+            resource: 'aardvark/i2cTest',
           },
 
         ],
@@ -118,8 +118,8 @@ const item = (id = 1) => ({
   })(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000))),
 })
 
-adaptor.onPost(/\/api\/project/).reply(200)
-adaptor.onPut(/\/api\/project/).reply(200)
+adaptor.onPost(/\/api\/aardvark/).reply(200)
+adaptor.onPut(/\/api\/aardvark/).reply(200)
 adaptor.onDelete(/\/api\/project\/\d+/).reply(200)
 adaptor.onGet(/\/api\/project\/\d+/).reply(200, item())
 adaptor.onGet(/\/api\/project\/list/).reply(config => {

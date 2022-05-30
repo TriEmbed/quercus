@@ -4,7 +4,7 @@ pipeline {
         timestamps()
     }
     environment {
-        ONLINE_SITE = 'https://vuetify-boilerplate.abyssal.site'
+        ONLINE_SITE = ''
     }
     stages {
         stage('Build') { 
@@ -14,14 +14,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                dir('/usr/share/nginx') {
-                    sh 'rm -rf vuetify-boilerplate.back'
-                    sh 'mv vuetify-boilerplate vuetify-boilerplate.back' 
-                    sh 'mv ${WORKSPACE}/dist .'
-                    sh 'mv dist vuetify-boilerplate'
-                }
-            }
         }
     }
     post {
@@ -29,7 +21,7 @@ pipeline {
             emailext body: "View on ${ONLINE_SITE}, See detail at ${BUILD_URL}",
                     recipientProviders: [developers(), requestor()],
                     subject: "Jenkins: ${JOB_NAME} ${GIT_BRANCH} build ${currentBuild.result}",
-                    to: 'hongxin.tang@hotmail.com'
+                    to: 'NickEdgington@gmail.com'
         }
     }
 }

@@ -1,13 +1,14 @@
 <template>
   <div class="fill-height fill-width overflow-hidden">
-    <DataTable
+    <NumberTable
       :default-options="{
         sortBy: ['lastModifyTime'],
         sortDesc: [true],
       }"
-      :headers="headers"
+      hash="scan"
       item-key="id"
       :load-data="loadData"
+
       ref="table"
     >
       <template #search>
@@ -57,7 +58,7 @@
           <span>delete</span>
         </v-tooltip>
       </template>
-    </DataTable>
+    </NumberTable>
 
     <ProjectSchema
       ref="projectSchema"
@@ -69,13 +70,15 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import { deleteProject, getESPInfo } from '@/api/project'
+import {deleteProject, getI2C, testI2C} from '@/api/project'
+
 import toast from '@/utils/toast'
 const item = (id = 1,a,b) => ({
   id: id,
   name: a,
   type: b,
 })
+
 export default {
   name: 'Status',
   components: {
@@ -86,6 +89,8 @@ export default {
       name: '',
     },
   }),
+
+
   computed: {
     headers () {
       return [
@@ -121,21 +126,21 @@ export default {
     },
   },
   methods: {
-    format (a)
+    format (r)
     {
-      let keys = Object.keys(a);
-      let total = keys.length
-      let items =
-          Array(total).fill(null).map((__, i) => item(i, keys[i], a[keys[i]]))
-      console.log("format",total,items)
-      return { total: total ,items: items}
+      console.log("r.data",r)
+      return { total: 0 ,items: r}
     },
     /**
      * Call the interface data and initialize the table
      * @return {Promise<Undefined>}
      */
     async loadData (options = {}) {
-      return getESPInfo({ ...this.query, ...options }).then(r =>this.format (r.data))
+      const pos = location.hash.lastIndexOf("/");
+      const page =location.hash.slice(pos+1);
+      console.log("location:",pos,page,location.hash)
+
+      return testI2C({ ...this.query, ...options },'dump',[8,4]).then(r => this.format (r.data))
     },
     /**
      * Added items
@@ -145,7 +150,7 @@ export default {
       this.$refs['projectSchema'].open()
     },
     /**
-     * Added project successfully
+     * Added aardvark successfully
      * @return {Undefined}
      */
     handleAddSuccess () {
@@ -162,16 +167,16 @@ export default {
       this.$refs['projectSchema'].open(id)
     },
     /**
-     * Edit project success
+     * Edit aardvark success
      * @return {Undefined}
      */
     handleEditSuccess () {
-      toast.success({ message: 'Editing project successful' })
+      toast.success({ message: 'Editing aardvark successful' })
       this.$refs['table'].refresh()
     },
     /**
      * delete item
-     * @param {Number | String} id item id
+     * @param {Number | String} id
      * @return {Promise<Undefined>}
      */
     async handleDelete (id) {

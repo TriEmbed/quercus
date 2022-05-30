@@ -14,7 +14,7 @@
               <v-text-field
                 v-model="formData.name"
                 label="Project name"
-                :rules="[v => !!v || 'Please enter a project name']"
+                :rules="[v => !!v || 'Please enter a aardvark name']"
               />
             </v-col>
           </v-row>

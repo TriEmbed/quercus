@@ -28,7 +28,7 @@ export const editProject = function (data = {}) {
  */
 // eslint-disable-next-line no-unused-vars
 export const deleteProject = function (id, _data) {
-  return request.delete(`/project/${id}`)
+  return request.delete(`/aardvark/${id}`)
 }
 
 /**
@@ -38,7 +38,7 @@ export const deleteProject = function (id, _data) {
  */
 // eslint-disable-next-line no-unused-vars
 export const getProject = function (id, _data) {
-  return request.get(`/project/${id}`)
+  return request.get(`/aardvark/${id}`)
 }
 
 /**
@@ -49,13 +49,13 @@ export const getProject = function (id, _data) {
 // eslint-disable-next-line no-unused-vars
 export const getProjectList = function (query = {}, _data) {
 
-  return request.get('/project/list', { params: query })
+  return request.get('/aardvark/list', { params: query })
 }
 
 let BaseURL ='http://192.168.100.150/api/v1'
 // eslint-disable-next-line no-unused-vars
 export const getESPInfo = function (query = {} ,_data) {
-  console.log("project called", BaseURL)
+  console.log("aardvark called", BaseURL)
 
   const k= axios({method: 'get',
     url: '/system/info',
@@ -72,7 +72,7 @@ export const getESPInfo = function (query = {} ,_data) {
 
 // eslint-disable-next-line no-unused-vars
 export const getI2C = function (query = {}, _data) {
-  console.log("project called", BaseURL,_data)
+  console.log("aardvark called", BaseURL,_data)
 
   const k= axios({method: 'patch',
     url: '/i2c',
@@ -97,7 +97,7 @@ export const getI2C = function (query = {}, _data) {
 
 
 export const testI2C = function (query = {},_command_slot , _data) {
-  console.log("project called test", BaseURL,_command_slot, _data)
+  console.log("aardvark called test", BaseURL,_command_slot, _data)
 
   const k= axios({method: 'patch',
     url: '/i2c',
