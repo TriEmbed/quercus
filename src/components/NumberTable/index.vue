@@ -4,20 +4,39 @@
 
     <v-form v-show="true">
       <!--      <slot name="search" />-->
-
       <div class="d-flex flex-row pb-1 px-2">
-        <!--        <slot name="actions" />-->
-        <!--        <v-spacer />-->
         <v-select
+          style="max-width: 120px;"
           id="i2cActive"
+          filled
           @change="changeRoute"
           :value="address"
           :items="addresses"
         />
-        <v-btn class="mr-2" depressed tile type="submit" @click.stop.prevent="refresh(true)">
+
+        <div style="padding-top: 12px; margin-left: 10px;">
+          <input type="file" ref="file" @change="readFile()">
+          <div />
+        </div>
+
+
+        <v-btn style="margin-top: 12px;" depressed tile @click="refresh()">
+          load
+        </v-btn>
+        <!--        <slot name="actions" />-->
+        <!--        <v-spacer />-->
+
+        <v-btn
+          style="margin-top: 12px;"
+          class="mr-2"
+          depressed
+          tile
+          type="submit"
+          @click.stop.prevent="refresh(true)"
+        >
           Inquire
         </v-btn>
-        <v-btn depressed tile @click="refresh()">
+        <v-btn depressed tile @click="refresh()" style="margin-top: 12px;">
           refresh
         </v-btn>
       </div>
@@ -116,16 +135,61 @@ export default {
     },
   },
   mounted () {
-    console.log("store.state.address",store.state.dialogAddress)
-    console.log("hash",this.hash)
+    console.log("store.state.address", store.state.dialogAddress)
+    console.log("hash", this.hash)
     this.fetch(
     )
   },
   methods: {
-    changeRoute (selectObj=store.state.dialogAddresses[0] ) {
-      if (selectObj )
+    readTextFile (file) {
+      debugger
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", file, false);
+      rawFile.onreadystatechange = function ()
+      {
+        if(rawFile.readyState === 4)
+        {
+          if(rawFile.status === 200 || rawFile.status == 0)
+          {
+            var allText = rawFile.responseText;
+            alert(allText);
+          }
+        }
+      }
+    },
+
+
+    readFile () {
+      var getStuff= function (xml,sub){
+        let start = xml.indexOf("<" + sub)
+        let end = xml.indexOf(sub + ">")
+        let nvmData = xml.slice(start,end)
+        start= nvmData.indexOf('>')+1
+        nvmData = nvmData.slice(start)
+        end = nvmData.indexOf(">")-1
+        nvmData = nvmData.slice(0,end)
+        const myArray=nvmData.split(" ")
+        console.log(myArray.map(a=> parseInt(a,16)))
+
+      }
+
+      this.example = this.$refs.file.files[0];
+      console.log("file", this.example)
+      this.image = true;
+      this.preview = URL.createObjectURL(this.example);
+      // var xhr = new XMLHttpRequest()
+      let reader = new FileReader();
+
+      reader.onload = function () {
+        getStuff( reader.result,"nvmData")
+        getStuff( reader.result,"eepromData")
+      }
+      reader.readAsText(this.example)
+    },
+    changeRoute (selectObj = store.state.dialogAddresses[0]) {
+      if (selectObj)
         store.commit('address', selectObj)
-      console.log("select :",selectObj)
+      console.log("select :", selectObj)
 
     },
     /** @param { i2cScan: any[] } val**/
@@ -136,13 +200,13 @@ export default {
 
       console.log("found")
       console.log("vals", stuff, key);
-      switch(key.toString()){
+      switch (key.toString()) {
         case 'i2cscan':
           val = stuff.i2cscan
-          rows=8
+          rows = 8
           break;
         case 'dump':
-          rows=16
+          rows = 16
           val = stuff.dump
           break;
         default:
@@ -182,7 +246,7 @@ export default {
         for (let j = 0; j < width; j++) {
           let td = document.createElement('TD')
 
-          switch(key.toString()) {
+          switch (key.toString()) {
             case "i2cscan" :
               if (val[cur] === (i * 16 + j)) {
                 //  const child = val[cur++]
@@ -204,7 +268,7 @@ export default {
               }
               break;
             case "dump" :
-              td.appendChild(document.createTextNode(val[i * 16 + j].toString( 16).toUpperCase() ))
+              td.appendChild(document.createTextNode(val[i * 16 + j].toString(16).toUpperCase()))
               break;
             default:
               break
@@ -230,7 +294,7 @@ export default {
         this.total = 0
         throw e
       } finally {
-        console.log("fetch",this.items,this.total)
+        console.log("fetch", this.items, this.total)
         this.addTable(this.items)
         this.loading = false
       }
