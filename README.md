@@ -1,4 +1,4 @@
-﻿# Triangle Embedded Interest Group (TriEmbed)
+﻿# Triangle Embedded Interest Group (TriEmbed) M80 Standalone ESP32/FPGA Board
 ![Repo logo](/images/m80.png)
 ## m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
@@ -7,23 +7,26 @@
 
 1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be a programmer for the Dialog SLGxxxxx ICs and also run applications with an onboard SLG47004V-DIP. 
 2. Cache of Dialog info resources
-   1. Pointers to Dialog web resources
+   1. Only resources specifically relevant to the board design and application
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
-3. Firmware for ESP32 to present a WIFI access point, allowing web-based programing of the Dialog FPGA from any WIFI client. There will be a password mechanism for security.
 
+This project is designed in concert with Nick Edgington's "aardvark" ESP32 firmware project in a different repository. The aardvark firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool.
 
 ## Project Status
 
-Aardvark is just starting its second release cycle with version 0.70 hardware at the PCB fab as this is being written. Version 0.70 board assembly expected to commence by 2/12/2022. Firmware for a web-based FPGA programming appliance is approaching alpha test. The second and third 0.60 boards were assembled with outboard circuitry on a solderless breadboard to match the first example. Nick has #1, Rob has #2, and Pete has #3. The USB breakout of the 3rd system will be sacrificed to provide a third chip for the 0.70 boards
+m80 versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aaardvark".
 
-## Release notes:
+A version 0.80 board is being planned for TBD release with the following changes:
+1. Name change to "M80"
+2. ECO elimination
+3. Updates to reset and boot circuitry
+4. Provision for a strap to tie the USB connector down and reduce the chance of broken solder joints.
+5. Considering connection of SMD adapter pins to Dialog DIP pins if a compatible set of connections can be worked out. This would allow an SMD part in the adapter to be used for in circuit testing and not just programming.
 
-**0.80** ETA TBD - third prototype
+See the "firedeck" repository for information about the 10x10cm "motherboard" hardware design being planned.
 
-1. 10x10cm PCB
-2. Expecting review, changes and additions from community input
-3. Lots of room for additional circuitry
+### Release notes
 
 **0.70** ETA 2/11/2022 - Second prototype. Pure superset of 0.60:
 

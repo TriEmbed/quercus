@@ -1,4 +1,4 @@
-# Aardvark documentation to do with ESP32 C3+SLG47004V-DIP board
+# Documentation to do with ESP32 C3+SLG47004V-DIP board
 
 ## Links to important docs:
 
