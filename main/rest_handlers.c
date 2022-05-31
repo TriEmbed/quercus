@@ -429,7 +429,7 @@ i2c_handler (httpd_req_t * req)
 	     }
         if (strcmp (current_key, i2cset_tag) == 0) { // set takes a list as the second
        cJSON_AddItemToObject (root, i2cset_tag, i2cset (parm[0]->valueint,parm[1]->valueint, 
-                                              parm[1]));
+                                              parm[2]));
        break;
      }
       } // end case
