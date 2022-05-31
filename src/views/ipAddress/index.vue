@@ -5,20 +5,20 @@
         <v-form ref="form">
           <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
-              <v-toolbar-title>Login form</v-toolbar-title>
+              <v-toolbar-title>SSID form</v-toolbar-title>
               <v-spacer />
             </v-toolbar>
 
             <v-card-text>
               <v-text-field
                 autofocus
-                label="Login"
-                name="login"
+                label="ssid"
+                name="ssid"
                 prepend-icon="person"
-                :rules="[v => !!v || 'please enter user name']"
+                :rules="[v => !!v || 'please enter SSID']"
                 type="text"
                 validate-on-blur
-                v-model="formData.username"
+                v-model="formData.ssid"
               />
               <v-text-field
                 id="password"
@@ -55,10 +55,10 @@ import { mapActions } from 'vuex'
 import { AccountActions } from '@/store/modules/account'
 
 export default {
-  name: 'Login',
+  name: 'IpAddress',
   data: () => ({
     formData: {
-      username: '',
+      ssid: '',
       password: '',
     },
     loading: false,
@@ -80,7 +80,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.formData = {
-        username: 'Admin',
+        ssid: 'ap-ssid',
         password: 'h97rpXts8@qzj7wp',
       }
     }, 450)

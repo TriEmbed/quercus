@@ -70,7 +70,7 @@
 
 <script>
 import ProjectSchema from './modules/ProjectSchema.vue'
-import {deleteProject, getI2C, testI2C} from '@/api/project'
+import {deleteProject, testI2C} from '@/api/project'
 
 import toast from '@/utils/toast'
 const item = (id = 1,a,b) => ({

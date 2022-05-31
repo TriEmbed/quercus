@@ -26,6 +26,7 @@ export default new Vuex.Store({
     return {
       dialogAddresses: [8,16],
       dialogAddress: 8,
+      ipAddress: "192.168.4.1",
     }
   },
   mutations: {

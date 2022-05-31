@@ -52,6 +52,7 @@ export const getProjectList = function (query = {}, _data) {
   return request.get('/aardvark/list', { params: query })
 }
 
+//let BaseURL ='http://192.168.4.1/api/v1'
 let BaseURL ='http://192.168.100.150/api/v1'
 // eslint-disable-next-line no-unused-vars
 export const getESPInfo = function (query = {} ,_data) {
@@ -110,6 +111,30 @@ export const testI2C = function (query = {},_command_slot , _data) {
       ID: 12345,
     },
     data: { [_command_slot]: _data },
+    headers: {
+      'Access-Control-Allow-Origin': 'GET, PUT, POST, DELETE, OPTIONS',
+      'Content-Type': 'application/json',
+    },
+  })
+
+  return k;
+}
+
+
+export let testI2CSet = function (query = {}, _command_slot , _address, _offset, _values) {
+  console.log("aardvark called test", BaseURL,_command_slot, _address,_offset,_values)
+
+  const k= axios({method: 'patch',
+    url: '/i2c',
+    baseURL: BaseURL,
+    responseText: 'json',
+    // `timeout` specifies the number of milliseconds before the request times out.
+    // If the request takes longer than `timeout`, the request will be aborted.
+    timeout: 2000, // default is `0` (no timeout)
+    params: {
+      ID: 12345,
+    },
+    data: { [_command_slot]: [ _address, _offset, _values] },
     headers: {
       'Access-Control-Allow-Origin': 'GET, PUT, POST, DELETE, OPTIONS',
       'Content-Type': 'application/json',

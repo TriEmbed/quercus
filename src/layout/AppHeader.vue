@@ -29,6 +29,23 @@
           v-on="on"
           @click="logout"
         >
+          <span>esp address{{ ipAddress }} </span>
+        </v-btn>
+      </template>
+      <span>192.168.4.1</span>
+    </v-tooltip>
+
+
+
+    <v-tooltip bottom>
+      <template #activator="{ on }">
+        <v-btn
+          class="text-none"
+          dark
+          text
+          v-on="on"
+          @click="logout"
+        >
           <span>{{ username }}</span>
         </v-btn>
       </template>
@@ -81,14 +98,20 @@
 
 <script>
 import mixin from './LayoutMixin.vue'
-
+import store from '../store/index.js'
 export default {
   name: 'AppHeader',
   mixins: [mixin],
   data: () => ({
     title: process.env.VUE_APP_TITLE,
     repo: process.env.VUE_APP_GITHUB_REPO,
+
   }),
+  computed: {
+    ipAddress () {
+      return store.state.ipAddress
+    },
+  },
 }
 </script>
 

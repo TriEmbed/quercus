@@ -72,15 +72,15 @@ adaptor.onPost(/api\/login/).reply(config => {
 
         ],
       },
-      {
-        text: 'Tencent Map',
-        icon: 'place',
-        hidden: false,
-        to: '/map',
-        permissions: [],
-        type: 'VIEW',
-        resource: 'map/index',
-      },
+      // {
+      //   text: 'Tencent Map',
+      //   icon: 'place',
+      //   hidden: false,
+      //   to: '/map',
+      //   permissions: [],
+      //   type: 'VIEW',
+      //   resource: 'map/index',
+      // },
       {
         text: '404',
         icon: 'priority_high',

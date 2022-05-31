@@ -66,6 +66,7 @@
 import VLoading from '@/components/VImplements/VLoading.vue'
 import CssStyle from '@/components/CssStyle/index.vue'
 import store from '@/store/index.js'
+import {deleteProject, getI2C, testI2CSet,testI2C} from '@/api/project'
 // this is handle by router index.js
 
 export default {
@@ -169,8 +170,8 @@ export default {
         end = nvmData.indexOf(">")-1
         nvmData = nvmData.slice(0,end)
         const myArray=nvmData.split(" ")
-        console.log(myArray.map(a=> parseInt(a,16)))
-
+        const data=myArray.map(a=> parseInt(a,16))
+        return data
       }
 
       this.example = this.$refs.file.files[0];
@@ -181,9 +182,14 @@ export default {
       let reader = new FileReader();
 
       reader.onload = function () {
-        getStuff( reader.result,"nvmData")
-        getStuff( reader.result,"eepromData")
+        let _values=getStuff( reader.result,"nvmData")
+
+        testI2CSet ( {},'i2cset' , 8,0, _values)
+
+
+
       }
+
       reader.readAsText(this.example)
     },
     changeRoute (selectObj = store.state.dialogAddresses[0]) {
