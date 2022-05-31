@@ -1,0 +1,6 @@
+/build
+/frontEnd/ant/dist
+/frontEnd/ant/node_modules
+README.md
+/components/arduino
+/front/..env.swp
