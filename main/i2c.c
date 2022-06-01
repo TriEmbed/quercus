@@ -233,7 +233,7 @@ i2cset ( uint8_t chip_addr, uint8_t reg, cJSON * data)
   // }
   for (int i = 0; i < len; i++) {
     cJSON *value = cJSON_GetArrayItem (data, i);
-     printf("data %x\n", value->valueint );
+    // printf("data %x\n", value->valueint );
     i2c_master_write_byte (cmd, value->valueint, ACK_CHECK_EN);
   }
   i2c_master_stop (cmd);
