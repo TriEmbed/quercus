@@ -84,6 +84,6 @@ See the "firedeck" repository for information about the 10x10cm "motherboard" ha
 
 ## Parts issues
 
-1. CH340C USB chips One in hand and four expected by 2/7 by stripping from Arduino Nano boards. Need many more.
-2. 1x10 female headers: None. Soldering Dialog board into the main board.
+As of 6/2/2022 most parts are in hand to build about a dozen more m80 boards. Notable exception is the pushbutton switches. Hopefully other parts availability improving with the lessening pandemic crisis in China. 
+
 
