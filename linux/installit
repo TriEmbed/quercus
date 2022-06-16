@@ -1,0 +1,120 @@
+#!/bin/bash -x
+# prerequisites
+# Python 3.x.10 for v5.0
+targetdir=~
+targetbranch="v4.4"
+
+usage() {
+  echo $1
+  exit 1
+}
+
+if [ $# -gt 0 ] ; then
+  switch=$1
+  shift
+  case $switch in
+    '-branch' ) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi;
+	     targetbranch=$1;
+             shift;
+	     break;;
+    '-targetdir' ) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi;
+	     targetdir=$1;
+	     shift;
+	     break;;
+    * ) usage "unknown option switch"
+	     exit 1;
+  esac
+fi
+
+if [ $# -gt 0 ] ; then
+  switch=$1
+  shift
+  case $switch in
+    '-branch' ) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi;
+	     targetbranch=$1;
+             shift;
+	     break;;
+    '-targetdir' ) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi;
+	     targetdir=$1;
+	     shift;
+	     break;;
+    * ) usage "unknown option switch";
+	     exit 1;
+  esac
+fi
+
+if ls -1qA "$targetdir"/esp-idf 2>/dev/null | grep -q . ; then 
+  present=1
+else
+  present=0
+fi
+
+if [ $present -eq 1 ] ; then
+  pushd "$targetdir"/esp-idf
+  git branch | grep "$targetbranch" >/dev/null 2>&1
+  if [ $? -eq 0 ] ; then
+    if [ -e "$targetdir"/esp-idf/.cloned ] && [ -e "$targetdir"/esp-idf/.submodules ] ; then
+      "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
+      read ans
+      if [ $ans = "n" ] || [ $ans = "N" ] ; then
+        echo "cannot proceed: aborting"
+        exit 1
+      elif [ ! $ans = "y" ] || [ ! $ans = "Y" ] ; then
+        echo "bad input: aborting"
+        exit 1
+      else
+	rm -rf "$targetdir"/esp-idf
+        if [ $? -ne 0 ] ; then
+          "Could not erase "$targetdir"/esp-idf: aborting"
+          exit 1
+	else
+	  echo "old repo erased"
+	  present = 0
+        fi
+      fi
+    else
+      echo "repository not properly cloned or had its submodules populated: not usable"
+      present=0
+    fi
+  else
+    echo "repository on the wrong branch: not usable"
+    present=0
+  fi  
+  popd
+fi
+
+pushd "$targetdir"
+
+if [ $present -eq 1 ] ; then
+  echo "Internal error after second if [ $present ]: aborting"
+  exit 1
+else
+  cd $targetdir
+  if [ -d esp-idf ] ; then
+    rm -r esp-idf
+    if [ $? -ne 0 ] ; then
+      echo "could not erase existing repo: aborting"
+      exit 1
+    fi
+  fi
+  git clone https://github.com/espressif/esp-idf.git >/dev/null 2>&1
+  if [ $? -eq 0 ] ; then
+    cd esp-idf
+    touch .cloned
+    git submodule update --init --recursive >/dev/null 2>&1
+    if [ $? -eq 0 ] ; then
+      touch .submodules
+    else
+      echo "git submodule update --init --recursive failed"
+      exit 1
+    fi
+    git checkout $targetbranch
+    if [ $? -ne 0 ] ; then
+      echo "could not checkout branch $targetbranch: invalidating repo and aborting"
+      rm .cloned .submodules
+    fi
+  else
+    echo "https://github.com/espressif.com/esp-idf failed"
+    exit 1
+  fi
+fi
