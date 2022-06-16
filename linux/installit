@@ -1,13 +1,47 @@
 #!/bin/bash -x
-# prerequisites
+# install the Espressif IDF and prerequisites and nvm, npm, aardvark and the-ant
+
+# version 0.02 pete@soper.us
 # Python 3.x.10 for v5.0
+
+#default target directory to contain esp-idf tool directory. ~ means "home directory" aka $HOME aka /home/$USERNAME
+
 targetdir=~
+
+#default target branch (version) of the esp-idf tool directory. This has to be updated each time Espressif makes a new "stable release"
+
 targetbranch="v4.4"
+
+# Uncomment one of these two lines. If set to "" then verbose output is enabled
+
+#DEBUGOUT=">/dev/null 2>&1"
+DEBUGOUT=""
+
+# don't modify lines below here unless you know what you're doing
 
 usage() {
   echo $1
+  echo "usage: installit [-targetdir <path>] [-targetbranch <path>]"
   exit 1
 }
+
+fatal() {
+  echo $1
+  echo "aborting"
+  exit 1
+}
+
+prerequsites="wget flex bison gperf python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 curl"
+
+if [ $targetversion = "v5.0" ] ; then
+  pypackage="python 3.10"
+else
+  pypackage="python 3"
+fi
+
+prerequisites="$prerequisites $pypackage"
+
+# brute force option handling
 
 if [ $# -gt 0 ] ; then
   switch=$1
@@ -43,7 +77,26 @@ if [ $# -gt 0 ] ; then
   esac
 fi
 
-if ls -1qA "$targetdir"/esp-idf 2>/dev/null | grep -q . ; then 
+for prerequisite in $prerequistes ; do
+  sudo apt install $DEBUGOUT
+  if [ $? -ne 0 ] ; then
+    fatal "aborting"
+    exit 1
+  fi
+done
+
+if [ -d $HOME/.nvm ] ; then
+  echo "nvm already installed. If it is defective, delete $HOME/.nvm and run this script again"
+else
+  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash $DEBUGOUT
+fi
+if [ $? -ne 0 ] ; then
+  fatal "failed to install nvm"
+fi
+echo "nvm installed"
+exit 0
+
+if ls -1qA "$targetdir"/esp-idf $DEBUGOUT | grep -q . ; then 
   present=1
 else
   present=0
@@ -51,7 +104,7 @@ fi
 
 if [ $present -eq 1 ] ; then
   pushd "$targetdir"/esp-idf
-  git branch | grep "$targetbranch" >/dev/null 2>&1
+  git branch | grep "$targetbranch" $DEBUGOUT
   if [ $? -eq 0 ] ; then
     if [ -e "$targetdir"/esp-idf/.cloned ] && [ -e "$targetdir"/esp-idf/.submodules ] ; then
       "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
@@ -97,11 +150,11 @@ else
       exit 1
     fi
   fi
-  git clone https://github.com/espressif/esp-idf.git >/dev/null 2>&1
+  git clone https://github.com/espressif/esp-idf.git $DEBUGOUT
   if [ $? -eq 0 ] ; then
     cd esp-idf
     touch .cloned
-    git submodule update --init --recursive >/dev/null 2>&1
+    git submodule update --init --recursive $DEBUGOUT
     if [ $? -eq 0 ] ; then
       touch .submodules
     else
@@ -118,3 +171,7 @@ else
     exit 1
   fi
 fi
+
+echo "$targetdir/esp-idf installed"
+
+
