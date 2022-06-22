@@ -1,11 +1,16 @@
 #!/bin/bash -x
+# Add -x to above line for more verbose output
+#
 # TriEmbed ESP32/Dialog FPGA Project
+# Todo: Get a project name!!! Then this can be <name>tools
+#
 # Tool chain installation script
-# version 0.02 pete@soper.us
+# version 0.03 pete@soper.us
 
-# Copyright 2022 Triangle Embedded Interest Group
-# Todo discuss this: this probalby isn't a valid holder
-
+# MIT License
+#
+# Copyright 2022 Peter James Soper
+#
 # Permission is hereby granted, free of charge, to any person 
 # obtaining a copy of this software and associated 
 # documentation files (the "Software"), to deal in the
@@ -48,19 +53,23 @@ targetdir=~
 
 targetbranch="v4.4"
 
+# This is a todo. Just use raw list for Ubuntu until later
 # Uncomment ONE of these three variable assignments below enable the prerequsite package installation for your system
 # Todo automate the OS detection
 # Todo May have to use while for per package to avoid spewage
+# Todo if idf version 5.0 install Python 3.10
 
 # Ubuntu and Debian:
 
-getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0"
+#getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0"
 
 # CentOS 7 & 8:
 
 #CentOS 7 is still supported but CentOS version 8 is recommended for a better user experience.
 
 #getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx"
+
+packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0"
 
 #Arch:
 
@@ -112,14 +121,16 @@ fatal() {
 if [ $# -gt 0 ] ; then
   switch=$1
   shift
-  case $switch
-    -branch: if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
-	     targetbranch=$1
-             $shift
-	     break
-    -targetdir: if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
-	     break
-    default: usage "unknown option switch"
+  case $switch in
+    -branch) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
+	     targetbranch=$1;
+             $shift;
+	     break;;
+    -targetdir) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
+	     targetdir=$1;
+ 	     shift;
+	     break;;
+    *): usage "unknown option switch"
 	     exit 1;
   esac
 fi
@@ -127,14 +138,16 @@ fi
 if [ $# -gt 0 ] ; then
   switch=$1
   shift
-  case $switch
-    -branch: if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
-	     targetbranch=$1
-             $shift
-	     break
-    -targetdir: if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
-	     break
-    default: usage "unknown option switch"
+  case $switch in
+    -branch) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
+	     targetbranch=$1;
+             $shift;
+	     break;;
+    -targetdir) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
+	     targetdir=$1;
+	     shift;
+	     break;;
+    *) usage "unknown option switch"
 	     exit 1;
   esac
 fi
@@ -143,24 +156,38 @@ fi
 # Todo need to just point a finger at the packages that did
 # not install properly
 
-if "$getpackages " -eq " " ] ; then
-  fatal "must uncomment one package install line"
-fi
+#if "$getpackages " -eq " " ] ; then
+#  fatal "must uncomment one package install line"
+#fi
 
-$getpackages >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  echo "package install did not complete"
-  echo "exiting with error status after dumping log"
-  cat /tmp/log.$$
-  rm /tmp/log.$$
-  fatal "package installation error"
-fi
+#$getpackages >/tmp/log.$$ 2>&1
+#if [ $? -ne 0 ] ; then
+#  echo "package install did not complete"
+#  echo "exiting with error status after dumping log"
+#  cat /tmp/log.$$
+#  rm /tmp/log.$$
+#  fatal "package installation error"
+#else
+#  echo "PACKAGES SEEMED TO INSTALL"
+#  exit 
+#fi
+
+for package in $packages ; do
+  sudo apt-get install $package >/tmp/log.$$ 2>&1
+  if [ $? -ne 0 ] ; then
+    echo "package $package did not install properly:"
+    cat /tmp/log.$$
+    fatal "Could not install $package"
+  fi
+done
+
+echo "Prerequisite packages installed"
 
 rm /tmp/log.$$
 
 # Is the directory present and not empty?
 
-if ls -1qA "$targetdir"/esp-idf 2>/dev/null | grep -q . ; then 
+if [ ls -1qA "$targetdir"/esp-idf 2>/dev/null | grep -q . 2>/dev/null -eq 0 ] ; then 
   present=1
 else
   present=0
@@ -169,12 +196,11 @@ fi
 # If dir is present then qualify it. If user wants to bail
 # then error exit
 
-if [ $present ] ; then
+if [ $present -eq 1 ] ; then
   pushd "$targetdir"/esp-idf
   git branch | grep "$targetbranch" >/dev/null 2>&1
   if [ $? -eq 0 ] && [ -e "$targetdir"/esp-idf/.cloned ] && [ -e "$targetdir"/esp-idf/.submodules ] && "$targetdir/esp-idf/.prepped" ]; then
-    if [ getyes "$targetdir"/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
-] ; then
+    if [ getyes "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)" ] ; then
       rm -rf "$targetdir"/esp-idf
       if [ $? -ne 0 ] ; then
 	fatal "Could not erase "$targetdir"/esp-idf"
