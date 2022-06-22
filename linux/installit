@@ -1,61 +1,125 @@
 #!/bin/bash -x
-# install the Espressif IDF and prerequisites and nvm, npm, aardvark and the-ant
-
+# TriEmbed ESP32/Dialog FPGA Project
+# Tool chain installation script
 # version 0.02 pete@soper.us
-# Python 3.x.10 for v5.0
 
-#default target directory to contain esp-idf tool directory. ~ means "home directory" aka $HOME aka /home/$USERNAME
+# Copyright 2022 Triangle Embedded Interest Group
+# Todo discuss this: this probalby isn't a valid holder
+
+# Permission is hereby granted, free of charge, to any person 
+# obtaining a copy of this software and associated 
+# documentation files (the "Software"), to deal in the
+# Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, 
+# distribute, sublicense, and/or sell copies of the
+# Software, and to permit persons to whom the Software is 
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall
+# be included in all copies or substantial portions of the 
+# Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY 
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+# PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+# OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+# The pathname to the Espressif esp-idf tools. 
+# NOTE WELL that the aardvrk, the-ant, and triembedtools repos
+# will be placed along side esp-idf, not within esp-idf
+# The default is installation in the user's home directory
+# Todo rename thetools to triembedtools?
+# NEED A NAME FOR THE WHOLE PROJECT!!!
 
 targetdir=~
 
-#default target branch (version) of the esp-idf tool directory. This has to be updated each time Espressif makes a new "stable release"
+# The git branch label for the exact version of tools to
+# install. If this variable does not match the branch of an
+# existing esp-idf the script must be aborted because there
+# is the likelihood that the submodules are not right.
+# The v4.4 branch is the latest Espressif stable branch.
+# the v5.0 branch is the bleeding edge branch that is used
+# by the Arduino runtime. NOTE that the TriEmbed project is
+# currently committed to the stable branch.
 
 targetbranch="v4.4"
 
-# Uncomment one of these two lines. If set to "" then verbose output is enabled
+# Uncomment ONE of these three variable assignments below enable the prerequsite package installation for your system
+# Todo automate the OS detection
+# Todo May have to use while for per package to avoid spewage
 
-#DEBUGOUT=">/dev/null 2>&1"
-DEBUGOUT=""
+# Ubuntu and Debian:
 
-# don't modify lines below here unless you know what you're doing
+getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0"
+
+# CentOS 7 & 8:
+
+#CentOS 7 is still supported but CentOS version 8 is recommended for a better user experience.
+
+#getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx"
+
+#Arch:
+
+#getpackages="sudo pacman -S --needed gcc git make flex bison gperf python cmake ninja ccache dfu-util libusb"
+
+#NOTE:  CMake version 3.16 or newer is required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to install a suitable version if your OS version doesn’t have one.
+#todo automate this
+
+#### Do not change lines below here
+
+# Detail proper usage of the script command and error exit
 
 usage() {
   echo $1
-  echo "usage: installit [-targetdir <path>] [-targetbranch <path>]"
+  echo "usage: installit [ -targetdir <path> ] [ -branch <branch id> ]"
   exit 1
 }
+
+# Get a Y or y or N or n after a prompt. Return true if Y or
+# y, false if N or n. Cannot escape until an acceptable 
+# answer is input. Use ctrl-C to break out.
+# Todo signal handler to ensure exit 1 with ctrl-C if we
+# don't get this for free
+
+getyes() {
+  ans="y"
+  while [ ans = "Y" ] || [ ans = "y" ] || [ ans = "N" ] || [ ans = "n" ] ; do
+    echo "$1"
+    read ans
+    if [ $ans = "Y" ] || [ $ans = "y" ] ; then
+      return 1
+    elif [ $ans = "N" ] || [ $ans = "n" ] ; then
+      return 0
+    else
+      echo "Answer MUST be Y, y, N, or n"
+    fi
+  done
+}
+
+# Output a fatal error message and error exit
 
 fatal() {
   echo $1
-  echo "aborting"
   exit 1
 }
 
-prerequsites="wget flex bison gperf python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 curl"
-
-if [ $targetversion = "v5.0" ] ; then
-  pypackage="python 3.10"
-else
-  pypackage="python 3"
-fi
-
-prerequisites="$prerequisites $pypackage"
-
-# brute force option handling
+# Brute force handling of option switches
 
 if [ $# -gt 0 ] ; then
   switch=$1
   shift
-  case $switch in
-    '-branch' ) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi;
-	     targetbranch=$1;
-             shift;
-	     break;;
-    '-targetdir' ) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi;
-	     targetdir=$1;
-	     shift;
-	     break;;
-    * ) usage "unknown option switch"
+  case $switch
+    -branch: if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
+	     targetbranch=$1
+             $shift
+	     break
+    -targetdir: if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
+	     break
+    default: usage "unknown option switch"
 	     exit 1;
   esac
 fi
@@ -63,115 +127,87 @@ fi
 if [ $# -gt 0 ] ; then
   switch=$1
   shift
-  case $switch in
-    '-branch' ) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi;
-	     targetbranch=$1;
-             shift;
-	     break;;
-    '-targetdir' ) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi;
-	     targetdir=$1;
-	     shift;
-	     break;;
-    * ) usage "unknown option switch";
+  case $switch
+    -branch: if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
+	     targetbranch=$1
+             $shift
+	     break
+    -targetdir: if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
+	     break
+    default: usage "unknown option switch"
 	     exit 1;
   esac
 fi
 
-for prerequisite in $prerequistes ; do
-  sudo apt install $DEBUGOUT
-  if [ $? -ne 0 ] ; then
-    fatal "aborting"
-    exit 1
-  fi
-done
+# Install the required packages
+# Todo need to just point a finger at the packages that did
+# not install properly
 
-if [ -d $HOME/.nvm ] ; then
-  echo "nvm already installed. If it is defective, delete $HOME/.nvm and run this script again"
-else
-  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash $DEBUGOUT
+if "$getpackages " -eq " " ] ; then
+  fatal "must uncomment one package install line"
 fi
+
+$getpackages >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
-  fatal "failed to install nvm"
+  echo "package install did not complete"
+  echo "exiting with error status after dumping log"
+  cat /tmp/log.$$
+  rm /tmp/log.$$
+  fatal "package installation error"
 fi
-echo "nvm installed"
-exit 0
 
-if ls -1qA "$targetdir"/esp-idf $DEBUGOUT | grep -q . ; then 
+rm /tmp/log.$$
+
+# Is the directory present and not empty?
+
+if ls -1qA "$targetdir"/esp-idf 2>/dev/null | grep -q . ; then 
   present=1
 else
   present=0
 fi
 
-if [ $present -eq 1 ] ; then
+# If dir is present then qualify it. If user wants to bail
+# then error exit
+
+if [ $present ] ; then
   pushd "$targetdir"/esp-idf
-  git branch | grep "$targetbranch" $DEBUGOUT
-  if [ $? -eq 0 ] ; then
-    if [ -e "$targetdir"/esp-idf/.cloned ] && [ -e "$targetdir"/esp-idf/.submodules ] ; then
-      "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
-      read ans
-      if [ $ans = "n" ] || [ $ans = "N" ] ; then
-        echo "cannot proceed: aborting"
-        exit 1
-      elif [ ! $ans = "y" ] || [ ! $ans = "Y" ] ; then
-        echo "bad input: aborting"
-        exit 1
+  git branch | grep "$targetbranch" >/dev/null 2>&1
+  if [ $? -eq 0 ] && [ -e "$targetdir"/esp-idf/.cloned ] && [ -e "$targetdir"/esp-idf/.submodules ] && "$targetdir/esp-idf/.prepped" ]; then
+    if [ getyes "$targetdir"/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
+] ; then
+      rm -rf "$targetdir"/esp-idf
+      if [ $? -ne 0 ] ; then
+	fatal "Could not erase "$targetdir"/esp-idf"
       else
-	rm -rf "$targetdir"/esp-idf
-        if [ $? -ne 0 ] ; then
-          "Could not erase "$targetdir"/esp-idf: aborting"
-          exit 1
-	else
-	  echo "old repo erased"
-	  present = 0
-        fi
+	present = 0
       fi
-    else
-      echo "repository not properly cloned or had its submodules populated: not usable"
-      present=0
     fi
   else
-    echo "repository on the wrong branch: not usable"
-    present=0
-  fi  
+    echo "Adjust/save esp-idf and rerun this script"
+    exit 1
+  fi
   popd
 fi
 
 pushd "$targetdir"
 
-if [ $present -eq 1 ] ; then
-  echo "Internal error after second if [ $present ]: aborting"
-  exit 1
+if [ $present ] ; then
+  # This is probably bogus and we just carry on
+  fatal "Internal error 1"
 else
-  cd $targetdir
-  if [ -d esp-idf ] ; then
-    rm -r esp-idf
-    if [ $? -ne 0 ] ; then
-      echo "could not erase existing repo: aborting"
-      exit 1
-    fi
-  fi
-  git clone https://github.com/espressif/esp-idf.git $DEBUGOUT
+  git clone https://github.com/espressif.com/esp-idf >/dev/null 2>&1
   if [ $? -eq 0 ] ; then
     cd esp-idf
     touch .cloned
-    git submodule update --init --recursive $DEBUGOUT
+    git submodule update --init --recursive >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
       touch .submodules
     else
       echo "git submodule update --init --recursive failed"
       exit 1
     fi
-    git checkout $targetbranch
-    if [ $? -ne 0 ] ; then
-      echo "could not checkout branch $targetbranch: invalidating repo and aborting"
-      rm .cloned .submodules
-    fi
   else
     echo "https://github.com/espressif.com/esp-idf failed"
     exit 1
   fi
 fi
-
-echo "$targetdir/esp-idf installed"
-
-
