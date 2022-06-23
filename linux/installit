@@ -5,7 +5,7 @@
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.03 pete@soper.us
+# version 0.04 pete@soper.us
 
 # MIT License
 #
@@ -80,6 +80,13 @@ packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccach
 
 #### Do not change lines below here
 
+# No need for sudo if root
+if [ $USER = "root" ] ; then
+  SUDO=""
+else
+  SUDO="sudo"
+fi
+
 # Detail proper usage of the script command and error exit
 
 usage() {
@@ -113,6 +120,7 @@ getyes() {
 
 fatal() {
   echo $1
+  rm -f /tmp/log.$$
   exit 1
 }
 
@@ -165,75 +173,93 @@ fi
 #  echo "package install did not complete"
 #  echo "exiting with error status after dumping log"
 #  cat /tmp/log.$$
-#  rm /tmp/log.$$
 #  fatal "package installation error"
 #else
 #  echo "PACKAGES SEEMED TO INSTALL"
 #  exit 
 #fi
 
+if [ 1 -eq 0 ] ; then
 for package in $packages ; do
-  sudo apt-get install $package >/tmp/log.$$ 2>&1
+  $SUDO apt-get install $package >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     echo "package $package did not install properly:"
     cat /tmp/log.$$
     fatal "Could not install $package"
   fi
 done
+fi
 
 echo "Prerequisite packages installed"
 
-rm /tmp/log.$$
-
 # Is the directory present and not empty?
 
-if [ ls -1qA "$targetdir"/esp-idf 2>/dev/null | grep -q . 2>/dev/null -eq 0 ] ; then 
+if [ ls -1qA $targetdir/esp-idf 2>/dev/null | grep -q . 2>/dev/null -eq 0 ] ; then 
   present=1
 else
   present=0
 fi
 
+echo "present: $present"
+
 # If dir is present then qualify it. If user wants to bail
 # then error exit
 
 if [ $present -eq 1 ] ; then
-  pushd "$targetdir"/esp-idf
-  git branch | grep "$targetbranch" >/dev/null 2>&1
-  if [ $? -eq 0 ] && [ -e "$targetdir"/esp-idf/.cloned ] && [ -e "$targetdir"/esp-idf/.submodules ] && "$targetdir/esp-idf/.prepped" ]; then
+  echo "present == 1"
+  pushd $targetdir/esp-idf
+  git branch | grep $targetbranch
+  if [ $? -eq 0 ] && [ -e $targetdir/esp-idf/.cloned ] && [ -e $targetdir/esp-idf/.submodules ] ; then
     if [ getyes "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)" ] ; then
-      rm -rf "$targetdir"/esp-idf
+      rm -rf $targetdir/esp-idf
       if [ $? -ne 0 ] ; then
-	fatal "Could not erase "$targetdir"/esp-idf"
+	fatal "Could not erase $targetdir/esp-idf"
       else
 	present = 0
       fi
+    else
+      fatal "make necessary changes and run this script again"
     fi
   else
-    echo "Adjust/save esp-idf and rerun this script"
-    exit 1
-  fi
-  popd
+    echo "valid esp-idf found"
+  fi  
 fi
 
-pushd "$targetdir"
-
-if [ $present ] ; then
-  # This is probably bogus and we just carry on
-  fatal "Internal error 1"
-else
-  git clone https://github.com/espressif.com/esp-idf >/dev/null 2>&1
-  if [ $? -eq 0 ] ; then
+if [ $present -eq 0 ] ;then
+  cd $targetdir
+  git clone https://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
+  if [ $? -ne 0 ] ; then
+    cat /tmp/log.$$
+    fatal "Could not clone espressif esp-idf repository"
+  else
     cd esp-idf
     touch .cloned
-    git submodule update --init --recursive >/dev/null 2>&1
-    if [ $? -eq 0 ] ; then
-      touch .submodules
+    git submodule update --init --recursive >/tmp/log.$$ 2>&1
+    if [ $? -ne 0 ] ; then
+      cat /tmp/log.$$
+      fatal "git submodule update --init --recursive failed"
     else
-      echo "git submodule update --init --recursive failed"
-      exit 1
+      touch .submodules
     fi
-  else
-    echo "https://github.com/espressif.com/esp-idf failed"
-    exit 1
   fi
 fi
+
+echo "valid esp-idf repo"
+
+cd $targetdir
+git clone https://github.com/triembed/aardvark >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat log.$$
+  fatal "could not clone aardvark"
+fi
+
+git clone https://github.com/triembed/the-ant >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat log.$$
+  fatal "could not clone the-ant"
+fi
+
+
+echo "installation complete"
+rm -f log.$$
+exit 0
