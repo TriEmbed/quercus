@@ -1,11 +1,11 @@
-#!/bin/bash -x
+#!/bin/bash
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.04 pete@soper.us
+# version 0.05 pete@soper.us
 
 # MIT License
 #
@@ -49,7 +49,11 @@ targetdir=~
 # The v4.4 branch is the latest Espressif stable branch.
 # the v5.0 branch is the bleeding edge branch that is used
 # by the Arduino runtime. NOTE that the TriEmbed project is
-# currently committed to the stable branch.
+# currently committed to the stable branch. Also note that
+# the v5.0 branch is updated frequently, so it is not safe to
+# assume it is stable and frequent git pull operations and
+# submodule operations are needed: neither of which are done
+# by this script.
 
 targetbranch="v4.4"
 
@@ -125,6 +129,7 @@ fatal() {
 }
 
 # Brute force handling of option switches
+# Todo just put this in a while loop
 
 if [ $# -gt 0 ] ; then
   switch=$1
@@ -179,35 +184,29 @@ fi
 #  exit 
 #fi
 
-if [ 1 -eq 0 ] ; then
 for package in $packages ; do
   $SUDO apt-get install $package >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
-    echo "package $package did not install properly:"
     cat /tmp/log.$$
     fatal "Could not install $package"
   fi
 done
-fi
 
 echo "Prerequisite packages installed"
 
 # Is the directory present and not empty?
 
-if [ ls -1qA $targetdir/esp-idf 2>/dev/null | grep -q . 2>/dev/null -eq 0 ] ; then 
+if [ -d $targetdir/esp-idf ] ; then
   present=1
 else
   present=0
 fi
 
-echo "present: $present"
-
 # If dir is present then qualify it. If user wants to bail
 # then error exit
 
 if [ $present -eq 1 ] ; then
-  echo "present == 1"
-  pushd $targetdir/esp-idf
+  cd $targetdir/esp-idf
   git branch | grep $targetbranch
   if [ $? -eq 0 ] && [ -e $targetdir/esp-idf/.cloned ] && [ -e $targetdir/esp-idf/.submodules ] ; then
     if [ getyes "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)" ] ; then
@@ -220,8 +219,6 @@ if [ $present -eq 1 ] ; then
     else
       fatal "make necessary changes and run this script again"
     fi
-  else
-    echo "valid esp-idf found"
   fi  
 fi
 
@@ -247,18 +244,24 @@ fi
 echo "valid esp-idf repo"
 
 cd $targetdir
-git clone https://github.com/triembed/aardvark >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat log.$$
-  fatal "could not clone aardvark"
-fi
+for repo in aardvark the-ant ; do
+  if [ -d $targetdir/$repo ] ; then
+    cd $targetdir/$repo
+    git pull >/tmp/log.$$
+    if [ $? -ne 0 ] ; then
+      cat /tmp/log.$$
+      fatal "could not update existing $repo repo"
+    fi
+  else
+    git clone https://github.com/triembed/$repo.git >/tmp/log.$$ 2>&1
+    if [ $? -ne 0 ] ; then
+      cat log.$$
+      fatal "could not clone $repo"
+    fi
+  fi
+done
 
-git clone https://github.com/triembed/the-ant >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat log.$$
-  fatal "could not clone the-ant"
-fi
-
+echo "aardvark and the-ant repos are present and up to date"
 
 echo "installation complete"
 rm -f log.$$
