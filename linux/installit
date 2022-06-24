@@ -5,7 +5,7 @@
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.09 pete@soper.us
+# version 0.10 pete@soper.us
 
 # MIT License
 #
@@ -68,15 +68,15 @@ targetbranch="v4.4"
 # The nvm version
 nvmversion="14.15.5"
 
-#getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv"
+#getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
 
 # CentOS 7 & 8:
 
 #CentOS 7 is still supported but CentOS version 8 is recommended for a better user experience.
 
-#getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx direnv"
+#getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx direnv curl"
 
-packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv"
+packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
 
 #Arch:
 
