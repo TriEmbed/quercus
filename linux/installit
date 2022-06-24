@@ -5,7 +5,7 @@
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.08 pete@soper.us
+# version 0.09 pete@soper.us
 
 # MIT License
 #
@@ -246,6 +246,7 @@ if [ $present -eq 0 ] ;then
     cd esp-idf
     touch .cloned
     git branch $targetbranch
+    echo "loading submodules: this takes longer than the repo clone, be patient"
     git submodule update --init --recursive >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
       cat /tmp/log.$$
