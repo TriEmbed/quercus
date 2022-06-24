@@ -5,7 +5,7 @@
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.07 pete@soper.us
+# version 0.08 pete@soper.us
 
 # MIT License
 #
@@ -188,7 +188,7 @@ fi
 
 if [ 1 -eq 1 ] ; then
 for package in $packages ; do
-  $SUDO apt-get install $package >/tmp/log.$$ 2>&1
+  $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     cat /tmp/log.$$
     fatal "Could not install $package"
