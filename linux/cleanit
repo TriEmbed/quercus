@@ -1,0 +1,9 @@
+#!/bin/bash
+# Clean out the non-package files installed by installit
+#todo uninstall packages?
+
+targetdir=~
+
+rm -rf $targetdir/.nvm
+rm -rf $targetdir/aardvark
+rm -rf $targetdir/the-ant

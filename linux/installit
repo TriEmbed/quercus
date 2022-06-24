@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/bash -x
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.05 pete@soper.us
+# version 0.06 pete@soper.us
 
 # MIT License
 #
@@ -65,19 +65,22 @@ targetbranch="v4.4"
 
 # Ubuntu and Debian:
 
-#getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0"
+# The nvm version
+nvmversion="14.15.5"
+
+#getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv"
 
 # CentOS 7 & 8:
 
 #CentOS 7 is still supported but CentOS version 8 is recommended for a better user experience.
 
-#getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx"
+#getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx direnv"
 
-packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0"
+packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv"
 
 #Arch:
 
-#getpackages="sudo pacman -S --needed gcc git make flex bison gperf python cmake ninja ccache dfu-util libusb"
+#getpackages="sudo pacman -S --needed gcc git make flex bison gperf python cmake ninja ccache dfu-util libusb direnv"
 
 #NOTE:  CMake version 3.16 or newer is required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to install a suitable version if your OS version doesn’t have one.
 #todo automate this
@@ -106,14 +109,13 @@ usage() {
 # don't get this for free
 
 getyes() {
-  ans="y"
-  while [ ans = "Y" ] || [ ans = "y" ] || [ ans = "N" ] || [ ans = "n" ] ; do
+  while [ 1 -eq 1 ] ; do
     echo "$1"
     read ans
     if [ $ans = "Y" ] || [ $ans = "y" ] ; then
-      return 1
-    elif [ $ans = "N" ] || [ $ans = "n" ] ; then
       return 0
+    elif [ $ans = "N" ] || [ $ans = "n" ] ; then
+      return 1
     else
       echo "Answer MUST be Y, y, N, or n"
     fi
@@ -184,6 +186,7 @@ fi
 #  exit 
 #fi
 
+if [ 0 -eq 1 ] ; then
 for package in $packages ; do
   $SUDO apt-get install $package >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
@@ -191,6 +194,7 @@ for package in $packages ; do
     fatal "Could not install $package"
   fi
 done
+fi
 
 echo "Prerequisite packages installed"
 
@@ -201,36 +205,47 @@ if [ -d $targetdir/esp-idf ] ; then
 else
   present=0
 fi
-
 # If dir is present then qualify it. If user wants to bail
 # then error exit
 
 if [ $present -eq 1 ] ; then
   cd $targetdir/esp-idf
-  git branch | grep $targetbranch
+  git branch | grep $targetbranch >/dev/null
   if [ $? -eq 0 ] && [ -e $targetdir/esp-idf/.cloned ] && [ -e $targetdir/esp-idf/.submodules ] ; then
-    if [ getyes "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)" ] ; then
+    getyes "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
+    if [ $? -eq 0 ] ; then
+      present=1
+    else
       rm -rf $targetdir/esp-idf
       if [ $? -ne 0 ] ; then
 	fatal "Could not erase $targetdir/esp-idf"
       else
-	present = 0
+	present=0
       fi
-    else
-      fatal "make necessary changes and run this script again"
+    fi
+  else
+    getyes "$targetdir/esp-idf is on the wrong branch: delete and recreate it? (y/n)"
+    if [ $? -eq 0 ] ; then
+      rm -rf $targetdir/esp-idf
+      if [ $? -ne 0 ] ; then
+	fatal "Could not erase $targetdir/esp-idf"
+      else
+	present=0
+      fi
     fi
   fi  
 fi
 
 if [ $present -eq 0 ] ;then
   cd $targetdir
-  git clone https://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
+  git clone http://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     cat /tmp/log.$$
     fatal "Could not clone espressif esp-idf repository"
   else
     cd esp-idf
     touch .cloned
+    git branch $targetbranch
     git submodule update --init --recursive >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
       cat /tmp/log.$$
@@ -238,12 +253,18 @@ if [ $present -eq 0 ] ;then
     else
       touch .submodules
     fi
+    ./install.sh >/tmp/log.$$
+    if [ $? -ne 0 ] ; then
+      cat /tmp/log.$$
+      fatal "esp-idf/intall.sh failed"
+    fi
   fi
 fi
 
 echo "valid esp-idf repo"
 
 cd $targetdir
+
 for repo in aardvark the-ant ; do
   if [ -d $targetdir/$repo ] ; then
     cd $targetdir/$repo
@@ -253,7 +274,7 @@ for repo in aardvark the-ant ; do
       fatal "could not update existing $repo repo"
     fi
   else
-    git clone https://github.com/triembed/$repo.git >/tmp/log.$$ 2>&1
+    git clone http://github.com/triembed/$repo.git >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
       cat log.$$
       fatal "could not clone $repo"
@@ -263,6 +284,48 @@ done
 
 echo "aardvark and the-ant repos are present and up to date"
 
+grep "direnv hook bash" ~/.bashrc
+if [ $? -ne 0 ] ; then
+  echo 'eval "$(direnv hook bash)"' >>~/.bashrc
+  if [ $? -ne 0 ] ; then
+    fail "could not edit ~/.bashrc"
+  fi
+  echo 'eval \$(direnv hook bash) added to .bashrc'
+fi
+
+echo ". $targetdir/esp-idf/export.sh" >$targetdir/the-ant/.direnv
+
+if [ ! -d $HOME/.nvm ] ; then
+  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash >/tmp/log.$$ 2>&1
+  if [ $? -ne 0 ] ; then
+    cat /tmp/log.$$
+    fatal "nvm could not be installed"
+  fi
+  . ~/.bashrc
+fi
+
+export NVM_DIR=$HOME/.nvm;
+source $NVM_DIR/nvm.sh;
+nvm install $nvmversion >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not install nvm version $nvmversion"
+fi
+
+cd $targetdir/aardvark
+npm install >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not intall npm in aardvark"
+fi
+  
+cd $targetdir/the-ant/ant
+npm install >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not intall npm in the-ant/ant"
+fi
+  
 echo "installation complete"
 rm -f log.$$
 exit 0
