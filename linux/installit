@@ -12,7 +12,7 @@
 
 # Bump this per push
 
-version="0.12"
+version="0.13"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -155,13 +155,13 @@ while [ $# -ge 2 ] ; do
 	     break;;
     -version) echo "version: $version";
 	     exit 0;;
-    *): usage "unknown option switch: $1"
-	     exit 1;
+    *): usage "unknown option switch: $1";
+	     exit 1;;
   esac
 done
 
 if [ $# -gt 0 ] ; then
-  if " $1 = "-version" ] ; then
+  if $1 = "-version" ] ; then
     echo "version: $version"
     exit 0
   else
@@ -305,6 +305,7 @@ fi
 
 export NVM_DIR=$HOME/.nvm;
 source $NVM_DIR/nvm.sh;
+echo "install node version $nvmversion"
 nvm install $nvmversion >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
@@ -312,6 +313,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 cd $targetdir/aardvark
+echo "installing npm in aardvark"
 npm install >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
@@ -319,6 +321,7 @@ if [ $? -ne 0 ] ; then
 fi
   
 cd $targetdir/the-ant/ant
+echo "installing npm in the-ant"
 npm install >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$

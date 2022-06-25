@@ -13,7 +13,7 @@
 
 # Bump this per push
 
-version="0.02"
+version="0.03"
 
 # Append your email addr here and append your name to the 
 # copyright list with commas. 
@@ -78,7 +78,7 @@ while [ $# -gt 0 ] ; do
   else
     usage "unknown option: $1"
   fi
-fi
+done
 
 if [ ! $USER = "root" ] ; then
   SUDO=sudo
@@ -89,9 +89,9 @@ if [ $completely -eq $true ] ; then
     echo "-completely currently ignored unless root"
   else
     for package in $packages ; do
-      $SUDO apt-get remove -y $package >/tmp/log.$$ 2>&1
+#      $SUDO apt-get remove -y $package >/tmp/log.$$ 2>&1
+echo "Not gonna doit"
     done
-    rm -rf $targetdir/.nvm
   fi
 fi
 
