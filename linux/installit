@@ -2,7 +2,6 @@
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
-# Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
 # The expectation is that much of this will be put under
@@ -10,7 +9,11 @@
 # specializes it with arguments to the common script but 
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
-# version 0.10 
+
+# Bump this per push
+
+version="0.12"
+
 # Add your email here and append your name to the copyright list with commas
 
 # pete@soper.us
@@ -139,7 +142,6 @@ fatal() {
 }
 
 # Brute force handling of option switches
-# Todo just put this in a while loop
 
 while [ $# -ge 2 ] ; do
   switch=$1
@@ -151,13 +153,20 @@ while [ $# -ge 2 ] ; do
     -targetdir) targetdir=$1;
  	     shift;
 	     break;;
+    -version) echo "version: $version";
+	     exit 0;;
     *): usage "unknown option switch: $1"
 	     exit 1;
   esac
 done
 
 if [ $# -gt 0 ] ; then
-  usage "orphan command line option: $@"
+  if " $1 = "-version" ] ; then
+    echo "version: $version"
+    exit 0
+  else
+    usage "orphan command line option: $@"
+  fi
 fi
 
 # Install the required packages
@@ -170,16 +179,13 @@ fi
 
 #$getpackages >/tmp/log.$$ 2>&1
 #if [ $? -ne 0 ] ; then
-#  echo "package install did not complete"
-#  echo "exiting with error status after dumping log"
+#  Grep this to flag package names?
 #  cat /tmp/log.$$
-#  fatal "package installation error"
+#  fatal "packages did not all install properly"
 #else
-#  echo "PACKAGES SEEMED TO INSTALL"
-#  exit 
+#  echo "packages installed
 #fi
 
-if [ 1 -eq 1 ] ; then
 for package in $packages ; do
   $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
@@ -187,7 +193,6 @@ for package in $packages ; do
     fatal "Could not install $package"
   fi
 done
-fi
 
 echo "Prerequisite packages installed"
 
