@@ -5,7 +5,15 @@
 # Todo: Get a project name!!! Then this can be <name>tools
 #
 # Tool chain installation script
-# version 0.10 pete@soper.us
+# The expectation is that much of this will be put under
+# ../common and sourced by the remainder of this script that
+# specializes it with arguments to the common script but 
+# discussion is needed as the WSL version takes shape and the
+# Windows version is thought through (by Windows developers).
+# version 0.10 
+# Add your email here and append your name to the copyright list with commas
+
+# pete@soper.us
 
 # MIT License
 #
@@ -133,38 +141,23 @@ fatal() {
 # Brute force handling of option switches
 # Todo just put this in a while loop
 
-if [ $# -gt 0 ] ; then
+while [ $# -ge 2 ] ; do
   switch=$1
   shift
   case $switch in
-    -branch) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
-	     targetbranch=$1;
+    -targetbranch) targetbranch=$1;
              $shift;
 	     break;;
-    -targetdir) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
-	     targetdir=$1;
+    -targetdir) targetdir=$1;
  	     shift;
 	     break;;
-    *): usage "unknown option switch"
+    *): usage "unknown option switch: $1"
 	     exit 1;
   esac
-fi
+done
 
 if [ $# -gt 0 ] ; then
-  switch=$1
-  shift
-  case $switch in
-    -branch) if [ $# -lt 1 ] ; then usage "-branch with no branch label" ; fi
-	     targetbranch=$1;
-             $shift;
-	     break;;
-    -targetdir) if [ $# -lt 1 ] ; then usage "-targetdir with no directory path" ; fi
-	     targetdir=$1;
-	     shift;
-	     break;;
-    *) usage "unknown option switch"
-	     exit 1;
-  esac
+  usage "orphan command line option: $@"
 fi
 
 # Install the required packages
