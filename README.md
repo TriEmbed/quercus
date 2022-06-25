@@ -1,4 +1,11 @@
 ### Build and other support tools
+
+Todo: Get a project name!!! Then this and repo and the others
+      can have be <name abbreviation>-tools. How about 
+      "Free Bird" or FB? Or "Fast Free Bird" or FFB so folks
+      will wonder what the extra F in front of FaceBook 
+      stands for. :-)
+
 This repo primarily holds scripts for automated installs of Espressif IDF, nvm/node/npm, project repositories as well as prerequisit packages
 
 Initial support is for straight Linux with Windows WSL in the pipes. Windows support is expected to follow via Powershell.
