@@ -1,13 +1,6 @@
 #!/bin/bash -x
 # Add -x to above line for more verbose output
 # Clean out the files installed by installit
-# WARNING: This will remove $targetdir/{esp-idf, aarvark, the-ant}
-# By default leaves packages installed. See usage().
-# B E W A R E using -completely. Look long and hard at the 
-# package list and ask yourself if you will cripple your
-# system with this (the answer is yes). This feature is a 
-# convenience for Docker development.
-# Currently ignored unless you're root.
 
 # see installit for more relevant notes
 
@@ -52,10 +45,6 @@ targetdir=~
 
 # Don't modify lines below this one
 
-# Ditto for this list
-
-packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
-
 true=1
 false=0
 
@@ -69,10 +58,7 @@ usage() {
 }
 
 while [ $# -gt 0 ] ; do
-  if [ $1 = "-completely" ] ; then
-    completely=$true
-    shift
-  elif [ $1 = "-version" ] ; then
+  if [ $1 = "-version" ] ; then
     echo "version: $version"
     exit 0
   else
@@ -82,17 +68,6 @@ done
 
 if [ ! $USER = "root" ] ; then
   SUDO=sudo
-fi
-
-if [ $completely -eq $true ] ; then
-  if [ ! $USER = "root" ] ; then
-    echo "-completely currently ignored unless root"
-  else
-    for package in $packages ; do
-#      $SUDO apt-get remove -y $package >/tmp/log.$$ 2>&1
-echo "Not gonna doit"
-    done
-  fi
 fi
 
 rm -rf $targetdir/esp-idf
