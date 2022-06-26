@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
@@ -10,9 +10,16 @@
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
 
+# Todo:
+#  1) Should be able to detect and elide redundant package
+#     installs
+#  2) Ditto for nvm/node
+#  3) If we can assume no mutation of aardvark and the-ant
+#     then if present just do a git pull
+
 # Bump this per push
 
-version="0.13"
+version="0.14"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -77,7 +84,7 @@ targetbranch="v4.4"
 # Ubuntu and Debian:
 
 # The nvm version
-nvmversion="14.15.5"
+nodeversion="14"
 
 #getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
 
@@ -186,6 +193,8 @@ fi
 #  echo "packages installed
 #fi
 
+echo "installing packages"
+
 for package in $packages ; do
   $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
@@ -292,9 +301,21 @@ if [ $? -ne 0 ] ; then
   echo 'eval \$(direnv hook bash) added to .bashrc'
 fi
 
-echo ". $targetdir/esp-idf/export.sh" >$targetdir/the-ant/.direnv
+echo "set up direnv"
+
+# Nick: This is probably wrong. Seem to need both .envrc and
+# .direnv. At one point the .envrc file seemed to create
+# itself and nag about needing the allow. Don't understand.
+
+echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
+echo "IDF initialized" >>$targetdir/the-ant/.envrc
+echo "nvm use $nodeversion" >>$targetdir/the-ant/.envrc
+cp $targetdir/the-ant/.envrc $targetdir/the-ant/.direnv
+cd $targetdir/the-ant
+direnv allow
 
 if [ ! -d $HOME/.nvm ] ; then
+  echo "installing nvm"
   curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     cat /tmp/log.$$
@@ -305,11 +326,11 @@ fi
 
 export NVM_DIR=$HOME/.nvm;
 source $NVM_DIR/nvm.sh;
-echo "install node version $nvmversion"
-nvm install $nvmversion >/tmp/log.$$ 2>&1
+echo "install node version $nodeversion"
+nvm install $nodeversion >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not install nvm version $nvmversion"
+  fatal "could not install nvm version $nodeversion"
 fi
 
 cd $targetdir/aardvark
@@ -318,6 +339,13 @@ npm install >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not intall npm in aardvark"
+fi
+
+echo "building npm in aardvark"
+npm run build >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not npm run build in aardvark"
 fi
   
 cd $targetdir/the-ant/ant
@@ -328,6 +356,22 @@ if [ $? -ne 0 ] ; then
   fatal "could not intall npm in the-ant/ant"
 fi
   
+echo "building npm in the-ant"
+npm run build >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not npm run build in the-ant"
+fi
+
+cd .. # the-ant
+echo "idf build in the-ant"
+idf.py build >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not do IDF build in the-ant"
+fi
+
 echo "installation complete"
 rm -f log.$$
+
 exit 0
