@@ -10,16 +10,23 @@
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
 
+# Bugs:
+#  0) The the-ant repo needs an edit of main/i2c.h to prefix
+#     the two uint8_t decls with "extern". This can be done
+#     starting when the first "npm build" is listed as long
+#     as the edits are done before "idf build in the-ant" is
+#     displayed. 
+#  1) The nvm install is not properly editing .bashrc such
+#     that nvm cannot be found outside of the installit
+#     script. This used to work!
+#
 # Todo:
 #  1) Should be able to detect and elide redundant package
-#     installs
-#  2) Ditto for nvm/node
-#  3) If we can assume no mutation of aardvark and the-ant
-#     then if present just do a git pull
+#     installs and perhaps npm install and npm run build
 
 # Bump this per push
 
-version="0.14"
+version="0.15"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -271,10 +278,10 @@ fi
 
 echo "valid esp-idf repo"
 
-cd $targetdir
-
 for repo in aardvark the-ant ; do
+  cd $targetdir
   if [ -d $targetdir/$repo ] ; then
+    echo "pull on $repo"
     cd $targetdir/$repo
     git pull >/tmp/log.$$
     if [ $? -ne 0 ] ; then
@@ -282,6 +289,7 @@ for repo in aardvark the-ant ; do
       fatal "could not update existing $repo repo"
     fi
   else
+    echo "clone of $repo"
     git clone http://github.com/triembed/$repo.git >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
       cat log.$$
@@ -292,25 +300,27 @@ done
 
 echo "aardvark and the-ant repos are present and up to date"
 
+echo "setting up direnv"
+
+if [ ! -f $targetdir/the-ant/.direnv ] ; then
+  echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.direnv
+  echo "echo IDF initialized" >>$targetdir/the-ant/.direnv
+  echo "nvm use $nodeversion" >>$targetdir/the-ant/.direnv
+  cd $targetdir/the-ant
+fi
+
 grep "direnv hook bash" ~/.bashrc
 if [ $? -ne 0 ] ; then
   echo 'eval "$(direnv hook bash)"' >>~/.bashrc
   if [ $? -ne 0 ] ; then
     fail "could not edit ~/.bashrc"
   fi
-  echo 'eval \$(direnv hook bash) added to .bashrc'
 fi
 
-echo "set up direnv"
-
-# Nick: This is probably wrong. Seem to need both .envrc and
-# .direnv. At one point the .envrc file seemed to create
-# itself and nag about needing the allow. Don't understand.
-
-echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
-echo "IDF initialized" >>$targetdir/the-ant/.envrc
-echo "nvm use $nodeversion" >>$targetdir/the-ant/.envrc
-cp $targetdir/the-ant/.envrc $targetdir/the-ant/.direnv
+# Something is causing this file to be created with a 
+# bogus source command. Mysterious!
+cp $targetdir/the-ant/.direnv $targetdir/the-ant/.envrc
+rm $targetdir/the-ant/.direnv
 cd $targetdir/the-ant
 direnv allow
 
@@ -321,11 +331,12 @@ if [ ! -d $HOME/.nvm ] ; then
     cat /tmp/log.$$
     fatal "nvm could not be installed"
   fi
-  . ~/.bashrc
 fi
 
-export NVM_DIR=$HOME/.nvm;
-source $NVM_DIR/nvm.sh;
+. ~/.bashrc >/dev/null 2>&1
+
+export NVM_DIR=$HOME/.nvm
+source $NVM_DIR/nvm.sh >/dev/null 2>&1
 echo "install node version $nodeversion"
 nvm install $nodeversion >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
@@ -363,8 +374,12 @@ if [ $? -ne 0 ] ; then
   fatal "could not npm run build in the-ant"
 fi
 
-cd .. # the-ant
 echo "idf build in the-ant"
+cd $targetdir/the-ant
+rm -rf build
+rm -rf ant/dist/js/*.map
+. $targetdir/esp-idf/export.sh >/dev/null 2>&1
+
 idf.py build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
@@ -372,6 +387,9 @@ if [ $? -ne 0 ] ; then
 fi
 
 echo "installation complete"
+echo "Now ready to enter aardvark and use npm run serve"
+echo "Then enter the-ant and use idf.py flash
+
 rm -f log.$$
 
 exit 0
