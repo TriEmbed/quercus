@@ -28,7 +28,7 @@ menu "Example Configuration"
 
     choice EXAMPLE_WEB_DEPLOY_MODE
         prompt "Website deploy mode"
-        default EXAMPLE_WEB_DEPLOY_SEMIHOST
+        default EXAMPLE_WEB_DEPLOY_SF
         help
             Select website deploy mode.
             You can deploy website to host, and ESP32 will retrieve them in a semihost way (JTAG is needed).
