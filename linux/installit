@@ -17,20 +17,20 @@
 #     assignments changed between versions 0.60 and 0.70. Users of the 0.60 boar
 #     must manually force the needed pin numbers in i2c.c (will be there with 
 #     comments) after the first part of this bug is fixed.
+#     Partially fixed.
+#  2) .envrc still not right
+#  3) Use chip id to eliminate need for targetdevice? Depends on the device
+#     being plugged in. Probably best to use both.
  
 #
 # Todo:
 #  1) Should be able to detect and elide redundant package
 #     installs and perhaps npm install and npm run build
-#  2) This script needs to edit the-ant file(s) to configure the 
-#     wifi router to use. Note that this results in the SSID and
-#     password being in plain text in multiple files inside the
-#     the-ant directory.
-#  3) Use esptool to get ESP32 type and the mac address
+#  2) Use esptool to get ESP32 type and the mac address
 
 # Bump this per push
 
-version="0.16"
+version="0.17"
 
 # Add your email here and append your name to the copyright list with commas
 
