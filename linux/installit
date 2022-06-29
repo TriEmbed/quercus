@@ -10,7 +10,12 @@
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
 
+# IP hack goes in aardvark/src/api/project.js
+
 # Bugs:
+#  0) SSID, password not set in the-ant. Freaking sdkconfig? who knows.
+#     but apsta/Kconfig* DOES have the specified SSID/password.
+#     Praying we can fix this with menuconfig
 #  1) The I2C SDA and SCL pins are hard-wired in the-ant/main/i2c.c (first function).
 #     There are conditionally compiled definitions based on target ESP32 that need
 #     to be corrected. But the ass-kicker is that for the m80 dev board the pin
