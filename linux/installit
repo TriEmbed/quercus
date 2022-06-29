@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash -x
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
@@ -11,22 +11,26 @@
 # Windows version is thought through (by Windows developers).
 
 # Bugs:
-#  0) The the-ant repo needs an edit of main/i2c.h to prefix
-#     the two uint8_t decls with "extern". This can be done
-#     starting when the first "npm build" is listed as long
-#     as the edits are done before "idf build in the-ant" is
-#     displayed. 
-#  1) The nvm install is not properly editing .bashrc such
-#     that nvm cannot be found outside of the installit
-#     script. This used to work!
+#  1) The I2C SDA and SCL pins are hard-wired in the-ant/main/i2c.c (first function).
+#     There are conditionally compiled definitions based on target ESP32 that need
+#     to be corrected. But the ass-kicker is that for the m80 dev board the pin
+#     assignments changed between versions 0.60 and 0.70. Users of the 0.60 boar
+#     must manually force the needed pin numbers in i2c.c (will be there with 
+#     comments) after the first part of this bug is fixed.
+ 
 #
 # Todo:
 #  1) Should be able to detect and elide redundant package
 #     installs and perhaps npm install and npm run build
+#  2) This script needs to edit the-ant file(s) to configure the 
+#     wifi router to use. Note that this results in the SSID and
+#     password being in plain text in multiple files inside the
+#     the-ant directory.
+#  3) Use esptool to get ESP32 type and the mac address
 
 # Bump this per push
 
-version="0.15"
+version="0.16"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -57,6 +61,20 @@ version="0.15"
 # OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+# The target WIFI router SSID
+# NOTICE: These strings will be in plain text in the-ant repo. They will be
+# encrypted eventually but for the time being remove the-ant after flashing to
+# maintain security.
+
+targetSSID=""
+targetpassword=""
+
+c3board=0
+
+# The default target ESP32 device
+
+targetdevice="ESP32C3"
 
 # The pathname to the Espressif esp-idf tools. 
 # NOTE WELL that the aardvrk, the-ant, and triembedtools repos
@@ -123,8 +141,20 @@ fi
 
 usage() {
   echo $1
-  echo "usage: installit [ -targetdir <path> ] [ -branch <branch id> ]"
+  echo "usage: installit WIFISSID WIFIpassword [ -targetdevice <ESP32 | ESP32C3 | ESP32S2> ] [ -targetdir <path> ] [ -branch <branch id> ] [ -c3board <60 | 70> ] [ -version ] [ -help ]"
+  echo "default targetdir: $targetdir"
+  echo "default branch: $targetbranch"
+  echo "default device: $targetdevice"
   exit 1
+}
+
+help() {
+  echo "ESP32, ESP32S3 and ESPC3 supported"
+  echo "I2C pins as follows:"
+  echo "ESP32: SDA 18 SCL 19"
+  echo "ESP32S2: SDA 1 SCL 0"
+  echo "ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)"
+  usage ""
 }
 
 # Get a Y or y or N or n after a prompt. Return true if Y or
@@ -157,6 +187,15 @@ fatal() {
 
 # Brute force handling of option switches
 
+if [ $# -lt 2 ] ; then
+  usage "insufficient arguments"
+else
+  targetSSID=$1
+  shift
+  targetpassword=$1
+  shift
+fi
+
 while [ $# -ge 2 ] ; do
   switch=$1
   shift
@@ -167,21 +206,64 @@ while [ $# -ge 2 ] ; do
     -targetdir) targetdir=$1;
  	     shift;
 	     break;;
+    -targetdevice) targetdevice=$1;
+ 	     shift;
+             if [ ! $targetdevice = "ESP32" && ! $targetdevice = "ESP32S2" && 
+                ! $targetdevice = "ESP32C3" ] ; then
+               usage "unrecognized ESP32";
+             fi
+	     break;;
+    -c3board) c3board=$1;
+             shift;
+             if $c3board -ne 70 & $c3board -ne 60 ; then
+               fatal "-c3board value must be either 60 or 70"
+             fi
+             break;;
     -version) echo "version: $version";
 	     exit 0;;
-    *): usage "unknown option switch: $1";
+    -help) help;;
+    *) usage "unknown option switch: $1";
 	     exit 1;;
   esac
 done
 
 if [ $# -gt 0 ] ; then
-  if $1 = "-version" ] ; then
+  if [ $1 = "-version" ] ; then
     echo "version: $version"
     exit 0
+  elif [ $1 = "-help" ] ; then
+    help
   else
-    usage "orphan command line option: $@"
+    usage "unknown command line option: $@"
   fi
 fi
+
+case $targetdevice in
+  ESP32C3) if $c3board -eq 60 ; then
+             targetsda=18;
+             targetscl=19;
+           elif $c3board -eq 70; then
+             targetsda=1;
+             targetscl=0;
+           else
+             fatal "unknown ESP32C3 board version number"
+           fi;
+           break;;
+  ESP32)  targetsda=18;
+          targetscl=19;
+          break;;
+  ESP32S2) targetsda=1;
+           targetscl=0;
+           break;;
+  *) fatal "unknown targetdevice: $targetdevice";;
+esac
+
+echo "targetdir: $targetdir
+echo "targetdevice: $targetdevice"
+echo "targetbranch: $targetbranch"
+echo "node version: $nodeversion"
+echo "targetsda: $targetsda"
+echo "targetscl: $targetscl"
 
 # Install the required packages
 # Todo need to just point a finger at the packages that did
@@ -252,6 +334,7 @@ fi
 
 if [ $present -eq 0 ] ;then
   cd $targetdir
+  echo "cloning esp-idf"
   git clone http://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     cat /tmp/log.$$
@@ -273,6 +356,13 @@ if [ $present -eq 0 ] ;then
       cat /tmp/log.$$
       fatal "esp-idf/intall.sh failed"
     fi
+
+    # install source of export.sh in esp-idf/examples so power users can have 
+    # multiple esp-idf dirs with different branches
+
+    echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/esp-idf/examples/.envrc
+    cd $targetdir/esp-idf/examples
+    direnv allow
   fi
 fi
 
@@ -298,16 +388,33 @@ for repo in aardvark the-ant ; do
   fi
 done
 
+# Edit sdkconfig to use the given SSID and password
+
+if [ 1 -eq 0 ] ; then
+cd $targetdir/the-ant
+grep -v CONFIG_SDA_WIFI_SSID sdkconfig | grep -v CONFIG_SDA_WIFI_PASSWORD >/tmp/tmp.$$
+echo "CONFIG_STA_WIFI_SSID=\"$targetSSID\"" >>/tmp/tmp.$$
+echo "CONFIG_SDA_WIFI_PASSWORD=\"$targetpassword\"" >>/tmp/tmp.$$
+cp /tmp/tmp.$$ sdkconfig
+rm /tmp/tmp.$$
+echo "new sdkconfig:"
+grep CONFIG_SDA_WIFI_SSID sdkconfig
+grep CONFIG_SDA_WIFI_PASSWORD sdkconfig
+fi
+
 echo "aardvark and the-ant repos are present and up to date"
 
-echo "setting up direnv"
+# setting up direnv to automatically run IDF export.sh and steer node version
+# when the-ant is cd'd to.
 
 if [ ! -f $targetdir/the-ant/.direnv ] ; then
-  echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.direnv
-  echo "echo IDF initialized" >>$targetdir/the-ant/.direnv
-  echo "nvm use $nodeversion" >>$targetdir/the-ant/.direnv
+  echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
+  echo ". $targetdir/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
   cd $targetdir/the-ant
+  direnv allow
 fi
+
+# Adding direnv hook to .bashrc
 
 grep "direnv hook bash" ~/.bashrc
 if [ $? -ne 0 ] ; then
@@ -317,16 +424,9 @@ if [ $? -ne 0 ] ; then
   fi
 fi
 
-# Something is causing this file to be created with a 
-# bogus source command. Mysterious!
-cp $targetdir/the-ant/.direnv $targetdir/the-ant/.envrc
-rm $targetdir/the-ant/.direnv
-cd $targetdir/the-ant
-direnv allow
-
 if [ ! -d $HOME/.nvm ] ; then
   echo "installing nvm"
-  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash >/tmp/log.$$ 2>&1
+  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh 2>/dev/null | bash >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     cat /tmp/log.$$
     fatal "nvm could not be installed"
@@ -380,15 +480,38 @@ rm -rf build
 rm -rf ant/dist/js/*.map
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 
+idf.py set-target $targetdevice >/tmp/log.$$ 2>&1
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "could not do idf.py set-target"
+fi
+
+# Edit main/Kconfig.projbuild to use the given SSID and password
+
+cd $targetdir/the-ant/components/apsta
+sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp1.$$
+sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp1.$$ >Kconfig.projbuild
+cd $targetdir/the-ant/main
+sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp2.$$
+sed -e"s/.*TARGETSCL.*$/                default $targetscl/" /tmp/tmp2.$$ >Kconfig.projbuild
+exit 0
+
+rm /tmp/tmp.$$
+
+cd $targetdir/the-ant
 idf.py build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not do IDF build in the-ant"
+  fatal "could not do idf.py build in the-ant"
 fi
 
 echo "installation complete"
-echo "Now ready to enter aardvark and use npm run serve"
-echo "Then enter the-ant and use idf.py flash
+echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
+echo ". $targetdir/esp-idf/export.sh" >/dev/null 2>&1
+echo "Now ready to enter $targetdir/aardvark and enter 'npm run serve'"
+echo "Then point your browser to http://localhost:8080"
+echo "Then cd to $targetdir/the-ant and enter 'idf.py flash'"
+echo "Then enter 'idf.py monitor' (use cntrl ] to break out of monitor)"
 
 rm -f log.$$
 
