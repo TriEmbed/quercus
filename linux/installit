@@ -27,10 +27,12 @@
 #  1) Should be able to detect and elide redundant package
 #     installs and perhaps npm install and npm run build
 #  2) Use esptool to get ESP32 type and the mac address
+#  3) Executable code comes AFTER all the function declarations
+#  4) Add a function to handle the tmp log and operation result idiom
 
 # Bump this per push
 
-version="0.17"
+version="0.18"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -291,6 +293,7 @@ for package in $packages ; do
     fatal "Could not install $package"
   fi
 done
+ls -la $targetdir/the-ant
 
 echo "Prerequisite packages installed"
 
@@ -388,26 +391,12 @@ for repo in aardvark the-ant ; do
   fi
 done
 
-# Edit sdkconfig to use the given SSID and password
-
-if [ 1 -eq 0 ] ; then
-cd $targetdir/the-ant
-grep -v CONFIG_SDA_WIFI_SSID sdkconfig | grep -v CONFIG_SDA_WIFI_PASSWORD >/tmp/tmp.$$
-echo "CONFIG_STA_WIFI_SSID=\"$targetSSID\"" >>/tmp/tmp.$$
-echo "CONFIG_SDA_WIFI_PASSWORD=\"$targetpassword\"" >>/tmp/tmp.$$
-cp /tmp/tmp.$$ sdkconfig
-rm /tmp/tmp.$$
-echo "new sdkconfig:"
-grep CONFIG_SDA_WIFI_SSID sdkconfig
-grep CONFIG_SDA_WIFI_PASSWORD sdkconfig
-fi
-
 echo "aardvark and the-ant repos are present and up to date"
 
 # setting up direnv to automatically run IDF export.sh and steer node version
 # when the-ant is cd'd to.
 
-if [ ! -f $targetdir/the-ant/.direnv ] ; then
+if [ ! -f $targetdir/the-ant/.envrc ] ; then
   echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
   echo ". $targetdir/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
   cd $targetdir/the-ant
@@ -474,30 +463,32 @@ if [ $? -ne 0 ] ; then
   fatal "could not npm run build in the-ant"
 fi
 
-echo "idf build in the-ant"
-cd $targetdir/the-ant
-rm -rf build
-rm -rf ant/dist/js/*.map
+echo "idf set-target and Kconfig edits"
+
+# Edit main/Kconfig.projbuild for SSID, password, SDA and SCL pins
+
+cd $targetdir/the-ant/components/apsta
+sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp1.$$
+sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp1.$$ >Kconfig.projbuild
+
+cd $targetdir/the-ant/main
+sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp1.$$
+sed -e"s/.*TARGETSCL.*$/                default $targetscl/" /tmp/tmp1.$$ >Kconfig.projbuild
+
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 
+cd $targetdir/the-ant
 idf.py set-target $targetdevice >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not do idf.py set-target"
 fi
 
-# Edit main/Kconfig.projbuild to use the given SSID and password
+cd $targetdir/the-ant
+rm -rf build
+rm -rf ant/dist/js/*.map
 
-cd $targetdir/the-ant/components/apsta
-sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp1.$$
-sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp1.$$ >Kconfig.projbuild
-cd $targetdir/the-ant/main
-sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp2.$$
-sed -e"s/.*TARGETSCL.*$/                default $targetscl/" /tmp/tmp2.$$ >Kconfig.projbuild
-exit 0
-
-rm /tmp/tmp.$$
-
+echo "idf build of the-ant"
 cd $targetdir/the-ant
 idf.py build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
