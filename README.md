@@ -1,15 +1,12 @@
-### Build and other support tools
+# Build and other support tools
 
-Todo: Get a project name!!! Then this and repo and the others
-      can have be <name abbreviation>-tools. How about 
-      "Free Bird" or FB? Or "Fast Free Bird" or FFB so folks
-      will wonder what the extra F in front of FaceBook 
-      stands for. :-)
+## linux/installit is a bash script that automates installation of the Espressif IDF, nvm, node.js, ESP32 app repo the-ant, portable web application aardvark and necessary prerequisit linux packages. After completing installation and most build operations final steps for flashing the target ESP32, setting an IP addressin aardvark and running both to allow programming the FPGA are displayed.
 
-This repo primarily holds scripts for automated installs of Espressif IDF, nvm/node/npm, project repositories as well as prerequisit packages
+## Instructions for building a dev system by combining an ESP32 dev board with a Dialog SLG47004V-DIP FPGA board or (with a subset of steps) a Quem80 dev board version 0.60 or 0.70.
 
-Initial support is for straight Linux with Windows WSL in the pipes. Windows support is expected to follow via Powershell.
+Here's how to connect  a resistor and LED to the Dialog FPGA DIP board and that board to an ESP32. This will give you the same setup as Dawn Trembath and Jaimie Johnsen have or an equivalent with a Quem80 dev board such as Rob Mackie has (just wiring the DIP board). Refer to your ESP32 docs for the pinouts. You need the 3.3v power, ground, pin 18, and pin 19. For the Dialog board refer to the folloyingwing document. NOTE WELL that you're to pay attention to the pin labels in the colored boxes and use that to correlate with the actual pin of the DIP board to physically connect. https://github.com/TriEmbed/m80/blob/main/doc/contrib/dialog/datasheets/SLG47004V_DIP_Proto_Board_Quick_Start_Guide.pdf .  Connect ESP32 ground to the DIP board "GND". Connect ESP32 pin "3.3v" to DIP board "Vdd". Connect ESP32 pin "I/O 18" to Dialog DIP board pin 11 and pin "I/O 19" to DIP board pin 10. Jumper Dialog pins 15 and 16 together. Connect the annode (longer lead) of an LED to Dialog DIP board pin 18 and the cathode to an uncommited place on the breadboard. Then use an approximately 1k (500-1500 should work) resistor from that same place on the breadboard to the DIP board ground. Now you're ready to use aardvark to load "greekpak-test1.aap" into the FPGA and run it to cause the LED to blink. The .aap file is here: https://github.com/TriEmbed/League/tree/main/CAD.
 
-There are subdirectories for each OS type plus a common directory for shared items such as default variable values and functions that can be used on multiple platforms. The common directory will develop as WSL support shapes up.
+## Need instructions for using the aardvark web UI here
 
-Each OS has an "installit" script for full installation and "cleanit" for removal of everything but OS packages (that can be removed with the "-total" option switch).
+ 
+
