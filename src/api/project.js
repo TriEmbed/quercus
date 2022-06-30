@@ -51,9 +51,7 @@ export const getProjectList = function (query = {}, _data) {
 
   return request.get('/aardvark/list', { params: query })
 }
-
-//let BaseURL ='http://192.168.4.1/api/v1'
-let BaseURL ='http://192.168.100.150/api/v1'
+let BaseURL ='http://BASEIP/api/v1'
 // eslint-disable-next-line no-unused-vars
 export const getESPInfo = function (query = {} ,_data) {
   console.log("aardvark called", BaseURL)
