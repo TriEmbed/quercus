@@ -30,7 +30,7 @@
 
 # Bump this per push
 
-version="0.22"
+version="0.23"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -504,10 +504,10 @@ echo "Now cd to $targetdir/the-ant and enter 'idf.py flash'"
 echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
 echo "Use cntrl ] to break out of monitor when you no longer need it."
 echo "Then edit file $targetdir/aardvark/src/api/project.js and replace"
-echo "TARGETBASEURL with the IP address in your clipboard."
+echo "192.168.100.150" on line 56 with the IP copied to your clipboard.
 echo "Then cd to $targetdir/aardvark and enter 'npm run build'."
+echo "Then 'npm run serve'."
 echo "Then point your browser to http://localhost:8080"
-echo "Now ready to enter $targetdir/aardvark and enter 'npm run serve'"
 
 rm -f /tmp/log.$$ /tmp/tmp.$$
 
