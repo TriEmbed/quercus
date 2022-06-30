@@ -1,4 +1,4 @@
-!/bin/bash -x
+#!/bin/bash -x
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
@@ -37,15 +37,17 @@
 
 # Bump this per push
 
-version="0.18"
+version="0.19"
 
 # Add your email here and append your name to the copyright list with commas
 
 # pete@soper.us
+# rob.mackie@gmail.com
 
 # MIT License
 #
 # Copyright 2022 Peter James Soper
+# Copyright 2022 Robert Andrew Mackie
 #
 # Permission is hereby granted, free of charge, to any person 
 # obtaining a copy of this software and associated 
@@ -90,7 +92,7 @@ targetdevice="ESP32C3"
 # Todo rename thetools to triembedtools?
 # NEED A NAME FOR THE WHOLE PROJECT!!!
 
-targetdir=~
+targetdir=~/
 
 # The git branch label for the exact version of tools to
 # install. If this variable does not match the branch of an
@@ -206,30 +208,45 @@ fi
 while [ $# -ge 2 ] ; do
   switch=$1
   shift
+  echo "The flag: $switch"
+  echo "The value: $1"
   case $switch in
-    -targetbranch) targetbranch=$1;
-             $shift;
-	     break;;
-    -targetdir) targetdir=$1;
+
+    -targetbranch)
+         targetbranch=$1;
+         shift;
+#	     break;;
+        ;;
+    -targetdir)
+         targetdir=$1;
  	     shift;
-	     break;;
-    -targetdevice) targetdevice=$1;
+#	     break;;
+        ;;
+    -targetdevice)
+         targetdevice=$1;
  	     shift;
-             if [ ! $targetdevice = "ESP32" && ! $targetdevice = "ESP32S2" && 
-                ! $targetdevice = "ESP32C3" ] ; then
-               usage "unrecognized ESP32";
-             fi
-	     break;;
-    -c3board) c3board=$1;
+#             if [ ! $targetdevice = "ESP32" && ! $targetdevice = "ESP32S2" &&
+#                  ! $targetdevice = "ESP32C3" ] ; then
+#               usage "unrecognized ESP32";
+#             fi
+#	     break;;
+        ;;
+    -c3board)
+             c3board=$1;
              shift;
-             if $c3board -ne 70 & $c3board -ne 60 ; then
+             if [ $c3board -ne 70 && $c3board -ne 60 ] ; then
                fatal "-c3board value must be either 60 or 70"
              fi
-             break;;
-    -version) echo "version: $version";
+#             break;;
+             echo "chosen board == $c3board was chosen"
+            ;;
+    -version)
+         echo "version: $version";
 	     exit 0;;
-    -help) help;;
-    *) usage "unknown option switch: $1";
+    -help)
+        help;;
+    *)
+         usage "unknown option switch: $1";
 	     exit 1;;
   esac
 done
@@ -246,10 +263,10 @@ if [ $# -gt 0 ] ; then
 fi
 
 case $targetdevice in
-  ESP32C3) if $c3board -eq 60 ; then
+  ESP32C3) if [ $c3board -eq 60 ] ; then
              targetsda=18;
              targetscl=19;
-           elif $c3board -eq 70; then
+           elif [ $c3board -eq 70 ] ; then
              targetsda=1;
              targetscl=0;
            else
