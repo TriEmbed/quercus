@@ -30,7 +30,7 @@
 
 # Bump this per push
 
-version="0.20"
+version="0.22"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -184,6 +184,7 @@ getyes() {
 fatal() {
   echo $1
   rm -f /tmp/log.$$
+  rm -f /tmp/tmp.$$
   exit 1
 }
 
@@ -278,12 +279,15 @@ echo "targetsda: $targetsda"
 echo "targetscl: $targetscl"
 
 echo "Install the required packages. Harmless and fast if they are already there"
-
+apt list --installed >/tmp/tmp.$$ 2>&1
 for package in $packages ; do
-  $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
+  grep "^$package" /tmp/tmp.$$ >/dev/null 2>&1
   if [ $? -ne 0 ] ; then
-    cat /tmp/log.$$
-    fatal "Could not install $package"
+    $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
+    if [ $? -ne 0 ] ; then
+      cat /tmp/log.$$
+      fatal "Could not install $package"
+    fi
   fi
 done
 
@@ -303,7 +307,6 @@ if [ $present -eq 1 ] ; then
   cd $targetdir/esp-idf
   git branch | grep $targetbranch >/dev/null
   if [ $? -eq 0 ] && [ -e $targetdir/esp-idf/.cloned ] && [ -e $targetdir/esp-idf/.submodules ] ; then
-    echo "$targetdir/esp-idf is present and usable."
       present=1
   else
     getyes "$targetdir/esp-idf is not usable: recreate it? (y/n)"
@@ -356,6 +359,14 @@ fi
 
 echo "valid esp-idf repo"
 
+echo "clone or pull aardvark and the-ant"
+
+# For a future otimization can seaarch for "[up to date]" in output of
+# git fetch -v --dry-run to determine if an already present is up to date
+# with its remote copy. If we can figure out how to answer the question
+# "has an npm install been done already?" and "has an npm run build?" been
+# done already then the script can be further optimized.
+
 for repo in aardvark the-ant ; do
   cd $targetdir
   if [ -d $targetdir/$repo ] ; then
@@ -390,8 +401,9 @@ fi
 
 # Adding direnv hook to .bashrc
 
-grep "direnv hook bash" ~/.bashrc
+grep "direnv hook bash" ~/.bashrc  >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
+  echo "" >>~/.bashrc
   echo 'eval "$(direnv hook bash)"' >>~/.bashrc
   if [ $? -ne 0 ] ; then
     fail "could not edit ~/.bashrc"
@@ -407,16 +419,18 @@ if [ ! -d $HOME/.nvm ] ; then
   fi
 fi
 
-. ~/.bashrc >/dev/null 2>&1
+# Make nvm visible to this script
 
 export NVM_DIR=$HOME/.nvm
 source $NVM_DIR/nvm.sh >/dev/null 2>&1
+
 echo "install node version $nodeversion"
 nvm install $nodeversion >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not install nvm version $nodeversion"
 fi
+
 
 cd $targetdir/aardvark
 echo "installing npm in aardvark"
@@ -453,14 +467,14 @@ echo "idf set-target and Kconfig edits"
 # Edit main/Kconfig.projbuild for SSID, password, SDA and SCL pins
 
 cd $targetdir/the-ant/components/apsta
-sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp1.$$
-sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp1.$$ >Kconfig.projbuild
+sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp.$$
+sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp.$$ >Kconfig.projbuild
 
 touch $targetdir/the-ant/sdkconfig
 
 cd $targetdir/the-ant/main
-sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp1.$$
-sed -e"s/.*TARGETSCL.*$/                default $targetscl/" /tmp/tmp1.$$ >Kconfig.projbuild
+sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp.$$
+sed -e"s/.*TARGETSCL.*$/                default $targetscl/" /tmp/tmp.$$ >Kconfig.projbuild
 
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 
@@ -486,11 +500,15 @@ fi
 echo "installation complete"
 echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
 echo ". $targetdir/esp-idf/export.sh" >/dev/null 2>&1
-echo "Now ready to enter $targetdir/aardvark and enter 'npm run serve'"
+echo "Now cd to $targetdir/the-ant and enter 'idf.py flash'"
+echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
+echo "Use cntrl ] to break out of monitor when you no longer need it."
+echo "Then edit file $targetdir/aardvark/src/api/project.js and replace"
+echo "TARGETBASEURL with the IP address in your clipboard."
+echo "Then cd to $targetdir/aardvark and enter 'npm run build'."
 echo "Then point your browser to http://localhost:8080"
-echo "Then cd to $targetdir/the-ant and enter 'idf.py flash'"
-echo "Then enter 'idf.py monitor' (use cntrl ] to break out of monitor)"
+echo "Now ready to enter $targetdir/aardvark and enter 'npm run serve'"
 
-rm -f log.$$
+rm -f /tmp/log.$$ /tmp/tmp.$$
 
 exit 0
