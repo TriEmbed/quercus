@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # Add -x to above line for more verbose output
 #
 # TriEmbed ESP32/Dialog FPGA Project
@@ -16,28 +16,21 @@
 #  0) SSID, password not set in the-ant. Freaking sdkconfig? who knows.
 #     but apsta/Kconfig* DOES have the specified SSID/password.
 #     Praying we can fix this with menuconfig
-#  1) The I2C SDA and SCL pins are hard-wired in the-ant/main/i2c.c (first function).
-#     There are conditionally compiled definitions based on target ESP32 that need
-#     to be corrected. But the ass-kicker is that for the m80 dev board the pin
-#     assignments changed between versions 0.60 and 0.70. Users of the 0.60 boar
-#     must manually force the needed pin numbers in i2c.c (will be there with 
-#     comments) after the first part of this bug is fixed.
-#     Partially fixed.
-#  2) .envrc still not right
-#  3) Use chip id to eliminate need for targetdevice? Depends on the device
-#     being plugged in. Probably best to use both.
  
 #
 # Todo:
 #  1) Should be able to detect and elide redundant package
 #     installs and perhaps npm install and npm run build
-#  2) Use esptool to get ESP32 type and the mac address
+#  2) Use esptool to get chip type and the mac address
 #  3) Executable code comes AFTER all the function declarations
 #  4) Add a function to handle the tmp log and operation result idiom
+#  5) Use getopt
+#  6) Use chip id to eliminate need for targetdevice? Depends on the device
+#     being plugged in. Probably best to use both.
 
 # Bump this per push
 
-version="0.19"
+version="0.20"
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -208,49 +201,44 @@ fi
 while [ $# -ge 2 ] ; do
   switch=$1
   shift
-  echo "The flag: $switch"
-  echo "The value: $1"
   case $switch in
-
     -targetbranch)
-         targetbranch=$1;
-         shift;
-#	     break;;
+        targetbranch=$1
+        shift
         ;;
     -targetdir)
-         targetdir=$1;
- 	     shift;
-#	     break;;
+        targetdir=$1
+ 	shift
         ;;
     -targetdevice)
-         targetdevice=$1;
- 	     shift;
-#             if [ ! $targetdevice = "ESP32" && ! $targetdevice = "ESP32S2" &&
-#                  ! $targetdevice = "ESP32C3" ] ; then
-#               usage "unrecognized ESP32";
-#             fi
-#	     break;;
+        targetdevice=$1
+        shift
+        if [ ! $targetdevice = "ESP32" ] && [ ! $targetdevice = "ESP32S2" ] && [ ! $targetdevice = "ESP32C3" ] ; then
+          usage "unrecognized ESP32"
+        fi
         ;;
     -c3board)
-             c3board=$1;
-             shift;
-             if [ $c3board -ne 70 && $c3board -ne 60 ] ; then
-               fatal "-c3board value must be either 60 or 70"
-             fi
-#             break;;
-             echo "chosen board == $c3board was chosen"
-            ;;
+        c3board=$1
+        shift
+        if [ $c3board -ne 70 ] && [ $c3board -ne 60 ] ; then
+          fatal "-c3board value must be either 60 or 70"
+        fi
+        ;;
     -version)
-         echo "version: $version";
-	     exit 0;;
+        echo "version: $version"
+        exit 0
+        ;;
     -help)
-        help;;
+        help
+        ;;
     *)
-         usage "unknown option switch: $1";
-	     exit 1;;
+        usage "unknown option switch: $1"
+        exit 1
+        ;;
   esac
 done
 
+# Take care of a dangling single option switch
 if [ $# -gt 0 ] ; then
   if [ $1 = "-version" ] ; then
     echo "version: $version"
@@ -264,49 +252,32 @@ fi
 
 case $targetdevice in
   ESP32C3) if [ $c3board -eq 60 ] ; then
-             targetsda=18;
-             targetscl=19;
+             targetsda=18
+             targetscl=19
            elif [ $c3board -eq 70 ] ; then
-             targetsda=1;
-             targetscl=0;
+             targetsda=1
+             targetscl=0
            else
              fatal "unknown ESP32C3 board version number"
            fi;
-           break;;
-  ESP32)  targetsda=18;
-          targetscl=19;
-          break;;
-  ESP32S2) targetsda=1;
-           targetscl=0;
-           break;;
+           ;;
+  ESP32)  targetsda=18
+          targetscl=19
+          ;;
+  ESP32S2) targetsda=1
+           targetscl=0
+           ;;
   *) fatal "unknown targetdevice: $targetdevice";;
 esac
 
-echo "targetdir: $targetdir
+echo "targetdir: $targetdir"
 echo "targetdevice: $targetdevice"
 echo "targetbranch: $targetbranch"
 echo "node version: $nodeversion"
 echo "targetsda: $targetsda"
 echo "targetscl: $targetscl"
 
-# Install the required packages
-# Todo need to just point a finger at the packages that did
-# not install properly
-
-#if "$getpackages " -eq " " ] ; then
-#  fatal "must uncomment one package install line"
-#fi
-
-#$getpackages >/tmp/log.$$ 2>&1
-#if [ $? -ne 0 ] ; then
-#  Grep this to flag package names?
-#  cat /tmp/log.$$
-#  fatal "packages did not all install properly"
-#else
-#  echo "packages installed
-#fi
-
-echo "installing packages"
+echo "Install the required packages. Harmless and fast if they are already there"
 
 for package in $packages ; do
   $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
@@ -315,7 +286,6 @@ for package in $packages ; do
     fatal "Could not install $package"
   fi
 done
-ls -la $targetdir/the-ant
 
 echo "Prerequisite packages installed"
 
@@ -333,19 +303,10 @@ if [ $present -eq 1 ] ; then
   cd $targetdir/esp-idf
   git branch | grep $targetbranch >/dev/null
   if [ $? -eq 0 ] && [ -e $targetdir/esp-idf/.cloned ] && [ -e $targetdir/esp-idf/.submodules ] ; then
-    getyes "$targetdir/esp-idf is present and usable. Skip erasing and doing a new clone? use current repo? (Y/N)"
-    if [ $? -eq 0 ] ; then
+    echo "$targetdir/esp-idf is present and usable."
       present=1
-    else
-      rm -rf $targetdir/esp-idf
-      if [ $? -ne 0 ] ; then
-	fatal "Could not erase $targetdir/esp-idf"
-      else
-	present=0
-      fi
-    fi
   else
-    getyes "$targetdir/esp-idf is on the wrong branch: delete and recreate it? (y/n)"
+    getyes "$targetdir/esp-idf is not usable: recreate it? (y/n)"
     if [ $? -eq 0 ] ; then
       rm -rf $targetdir/esp-idf
       if [ $? -ne 0 ] ; then
@@ -353,6 +314,8 @@ if [ $present -eq 1 ] ; then
       else
 	present=0
       fi
+    else
+      fatal "stash or correct esp-idf and run the script again"
     fi
   fi  
 fi
@@ -396,7 +359,7 @@ echo "valid esp-idf repo"
 for repo in aardvark the-ant ; do
   cd $targetdir
   if [ -d $targetdir/$repo ] ; then
-    echo "pull on $repo"
+    echo "git pull in $repo to bring it up to date"
     cd $targetdir/$repo
     git pull >/tmp/log.$$
     if [ $? -ne 0 ] ; then
@@ -492,6 +455,8 @@ echo "idf set-target and Kconfig edits"
 cd $targetdir/the-ant/components/apsta
 sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp1.$$
 sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp1.$$ >Kconfig.projbuild
+
+touch $targetdir/the-ant/sdkconfig
 
 cd $targetdir/the-ant/main
 sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp1.$$
