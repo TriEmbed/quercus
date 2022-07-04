@@ -23,6 +23,7 @@
 #include "esp_vfs.h"
 #include "cJSON.h"
 #include "i2c.h"
+#include "esp_mac.h"
 static const char *TAG = __FILE__;
 
 #include "apsta.h"
@@ -56,8 +57,19 @@ esp_err_t start_rest_server (const char *base_path);
 static void
 initialise_mdns (void)
 {
+uint8_t derived_mac_addr[6] = {0};
+  //Get MAC address for Ethernet
+  ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_ETH));
+  ESP_LOGI("Ethernet MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
+  derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
+  derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
+
+  char  tmp[32];
+  sprintf( tmp,"%s-%02x%02x",
+  CONFIG_EXAMPLE_MDNS_HOST_NAME,derived_mac_addr[4], derived_mac_addr[5] );
+  printf("mdns name %s.local\n",tmp);
   mdns_init ();
-  mdns_hostname_set (CONFIG_EXAMPLE_MDNS_HOST_NAME);
+  mdns_hostname_set (tmp);
   mdns_instance_name_set (MDNS_INSTANCE);
 
   mdns_txt_item_t serviceTxtData[] = {
@@ -374,6 +386,7 @@ app_main ()
 
   initialise_wifi ();
 
+
 #if CONFIG_WIFI_CONNECT_AP
   ESP_LOGW (TAG, "Start AP Mode");
   wifi_ap ();
@@ -426,6 +439,8 @@ cJSON_Delete (response);
   printf ("%s\n", cJSON_Print (response));
 cJSON_Delete (response);
 #endif
+
+  initialise_mdns();
 
   //  setup_slg ();
   ESP_ERROR_CHECK (init_fs ());
