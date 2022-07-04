@@ -51,14 +51,14 @@ menu "Wifi Connection"
 	config STA_WIFI_SSID
 		depends on WIFI_CONNECT_STA || WIFI_CONNECT_APSTA
 		string "WiFi SSID of STA mode"
-		default "dlink-018E"
+		default ROUTERSSID
 		help
 			SSID (network name) for the example to connect to.
 
 	config STA_WIFI_PASSWORD
 		depends on WIFI_CONNECT_STA || WIFI_CONNECT_APSTA
 		string "WiFi Password of STA mode"
-		default "qwertyui"
+		default ROUTERPASSWORD
 		help
 			WiFi password (WPA or WPA2) for the example to use.
 
