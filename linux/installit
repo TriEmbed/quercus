@@ -13,34 +13,33 @@
 # IP hack goes in aardvark/src/api/project.js
 
 # Bugs:
-#  0) SSID, password not set in the-ant. Freaking sdkconfig? who knows.
-#     but apsta/Kconfig* DOES have the specified SSID/password.
-#     Praying we can fix this with menuconfig
+#  0) MDNS not working
  
 #
 # Todo:
-#  1) Should be able to detect and elide redundant package
-#     installs and perhaps npm install and npm run build
-#  2) Use esptool to get chip type and the mac address
+#  1) Should be able to detect and elide redundant perhaps npm operations
 #  3) Executable code comes AFTER all the function declarations
 #  4) Add a function to handle the tmp log and operation result idiom
 #  5) Use getopt
-#  6) Use chip id to eliminate need for targetdevice? Depends on the device
-#     being plugged in. Probably best to use both.
+#  6) Check cmake version and update as needed. CMake version 3.16 or newer is 
+#     required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to 
+#     install a suitable version if your OS version doesn’t have one.
 
 # Bump this per push
 
-version="0.23"
+version="0.24"
+
+Authors and maintainers
 
 # Add your email here and append your name to the copyright list with commas
 
 # pete@soper.us
 # rob.mackie@gmail.com
+# nickedgington@gmail.com
 
 # MIT License
 #
-# Copyright 2022 Peter James Soper
-# Copyright 2022 Robert Andrew Mackie
+# Copyright 2022 Peter James Soper, Robert Andrew Mackie, Nicholas John Edgington
 #
 # Permission is hereby granted, free of charge, to any person 
 # obtaining a copy of this software and associated 
@@ -102,33 +101,14 @@ targetdir=~/
 
 targetbranch="v4.4"
 
-# This is a todo. Just use raw list for Ubuntu until later
-# Uncomment ONE of these three variable assignments below enable the prerequsite package installation for your system
-# Todo automate the OS detection
-# Todo May have to use while for per package to avoid spewage
-# Todo if idf version 5.0 install Python 3.10
-
-# Ubuntu and Debian:
-
 # The nvm version
 nodeversion="14"
 
-#getpackages="sudo apt-get install git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
-
-# CentOS 7 & 8:
-
-#CentOS 7 is still supported but CentOS version 8 is recommended for a better user experience.
-
-#getpackages="sudo yum -y update && sudo yum install git wget flex bison gperf python3 cmake ninja-build ccache dfu-util libusbx direnv curl"
+# Ubuntu dependencies
+# todo: add support for other Linux distros when needed
 
 packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
 
-#Arch:
-
-#getpackages="sudo pacman -S --needed gcc git make flex bison gperf python cmake ninja ccache dfu-util libusb direnv"
-
-#NOTE:  CMake version 3.16 or newer is required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to install a suitable version if your OS version doesn’t have one.
-#todo automate this
 
 #### Do not change lines below here
 
@@ -277,6 +257,8 @@ echo "targetbranch: $targetbranch"
 echo "node version: $nodeversion"
 echo "targetsda: $targetsda"
 echo "targetscl: $targetscl"
+echo "targetSSID: $targetSSID"
+echo "targetpassword: $targetpassword"
 
 echo "Install the required packages. Harmless and fast if they are already there"
 apt list --installed >/tmp/tmp.$$ 2>&1
@@ -359,7 +341,11 @@ fi
 
 echo "valid esp-idf repo"
 
-echo "clone or pull aardvark and the-ant"
+# It's become too error prone to determine whether the-ant and/or aardvark
+# have been mutated by a previous run of the script. Just always clone fresh
+# copies for now.
+
+echo "clone aardvark and the-ant"
 
 # For a future otimization can seaarch for "[up to date]" in output of
 # git fetch -v --dry-run to determine if an already present is up to date
@@ -369,7 +355,8 @@ echo "clone or pull aardvark and the-ant"
 
 for repo in aardvark the-ant ; do
   cd $targetdir
-  if [ -d $targetdir/$repo ] ; then
+  #if [ -d $targetdir/$repo ] ; then
+  if [ 0 -eq 1 ] ; then
     echo "git pull in $repo to bring it up to date"
     cd $targetdir/$repo
     git pull >/tmp/log.$$
@@ -379,6 +366,7 @@ for repo in aardvark the-ant ; do
     fi
   else
     echo "clone of $repo"
+    rm -rf $repo
     git clone http://github.com/triembed/$repo.git >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
       cat log.$$
@@ -386,8 +374,6 @@ for repo in aardvark the-ant ; do
     fi
   fi
 done
-
-echo "aardvark and the-ant repos are present and up to date"
 
 # setting up direnv to automatically run IDF export.sh and steer node version
 # when the-ant is cd'd to.
@@ -431,6 +417,16 @@ if [ $? -ne 0 ] ; then
   fatal "could not install nvm version $nodeversion"
 fi
 
+# Creating mdns-findable URL for Aardvark
+
+cd $targetdir/aardvark/src
+
+. $targetdir/esp-idf/export.sh >/dev/null 2>&1
+f1=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 6`
+f2=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 7`
+echo "const localurl='http://the-ant-$f1$f2.local'" >autoconfiguration.js
+echo -n "micro DNS url for the-ant: "
+cat autoconfiguration.js
 
 cd $targetdir/aardvark
 echo "installing npm in aardvark"
@@ -446,7 +442,7 @@ if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not npm run build in aardvark"
 fi
-  
+
 cd $targetdir/the-ant/ant
 echo "installing npm in the-ant"
 npm install >/tmp/log.$$ 2>&1
@@ -467,14 +463,14 @@ echo "idf set-target and Kconfig edits"
 # Edit main/Kconfig.projbuild for SSID, password, SDA and SCL pins
 
 cd $targetdir/the-ant/components/apsta
-sed -e"s/.*dlink-018E.*$/                default $targetSSID/" Kconfig.projbuild >/tmp/tmp.$$
-sed -e"s/.*qwerty.*$/                default $targetpassword/" /tmp/tmp.$$ >Kconfig.projbuild
+sed -e"s/.*ROUTERSSID.*$/               default $targetSSID/" Kconfig.projbuild >/tmp/tmp.$$
+sed -e"s/.*ROUTERPASSWORD.*$/               default $targetpassword/" /tmp/tmp.$$ >Kconfig.projbuild
 
 touch $targetdir/the-ant/sdkconfig
 
 cd $targetdir/the-ant/main
-sed -e"s/.*TARGETSDA.*$/                default $targetsda/" Kconfig.projbuild >/tmp/tmp.$$
-sed -e"s/.*TARGETSCL.*$/                default $targetscl/" /tmp/tmp.$$ >Kconfig.projbuild
+sed -e"s/.*TARGETSDA.*$/		default $targetsda/" Kconfig.projbuild >/tmp/tmp.$$
+sed -e"s/.*TARGETSCL.*$/		default $targetscl/" /tmp/tmp.$$ >Kconfig.projbuild
 
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 
@@ -502,6 +498,8 @@ echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
 echo ". $targetdir/esp-idf/export.sh" >/dev/null 2>&1
 echo "Now cd to $targetdir/the-ant and enter 'idf.py flash'"
 echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
+echo "The IP address will look something like this:"
+echo "esp_netif_handlers: sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1"
 echo "Use cntrl ] to break out of monitor when you no longer need it."
 echo "Then edit file $targetdir/aardvark/src/api/project.js and replace"
 echo "192.168.100.150" on line 56 with the IP copied to your clipboard.
