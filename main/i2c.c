@@ -83,9 +83,6 @@ i2c-tools> i2cdetect
 static esp_err_t
 i2c_master_driver_initialize (void)
 {
-   i2c_gpio_scl = 0;
-   i2c_gpio_sda = 1;
-
   i2c_config_t conf = {
     .mode = I2C_MODE_MASTER,
     .sda_io_num = i2c_gpio_sda,
