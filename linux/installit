@@ -27,7 +27,7 @@
 
 # Bump this per push
 
-version="0.25"
+version="0.26"
 
 # Authors and maintainers
 
@@ -171,7 +171,17 @@ fatal() {
 # Brute force handling of option switches
 
 if [ $# -lt 2 ] ; then
-  usage "insufficient arguments"
+  # Take care of a dangling single option switch
+  if [ $# -gt 0 ] ; then
+    if [ $1 = "-version" ] ; then
+      echo "version: $version"
+      exit 0
+    elif [ $1 = "-help" ] ; then
+      help
+    else
+      usage "unknown command line option: $1"
+    fi
+  fi
 else
   targetSSID=$1
   shift
