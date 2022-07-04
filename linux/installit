@@ -27,9 +27,9 @@
 
 # Bump this per push
 
-version="0.24"
+version="0.25"
 
-Authors and maintainers
+# Authors and maintainers
 
 # Add your email here and append your name to the copyright list with commas
 
@@ -213,7 +213,7 @@ while [ $# -ge 2 ] ; do
         help
         ;;
     *)
-        usage "unknown option switch: $1"
+        usage "unknown option switch: $switch"
         exit 1
         ;;
   esac
