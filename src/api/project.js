@@ -55,10 +55,10 @@ export const getProjectList = function (query = {}, _data) {
 }
 
 // This currently doesn't work
-// let BaseURL = localurl + '/api/v1'
+// let BaseURL = localurl + '/api/v1/'
 
 // The IP here has to be manually replaced from the ESP32 IP published via monitor output
-let BaseURL ='http://192.168.100.150/api/v1'
+let BaseURL ='http://192.168.100.150/api/v1/'
 
 // eslint-disable-next-line no-unused-vars
 export const getESPInfo = function (query = {} ,_data) {
