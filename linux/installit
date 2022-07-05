@@ -13,7 +13,6 @@
 # IP hack goes in aardvark/src/api/project.js
 
 # Bugs:
-#  0) MDNS not working
  
 #
 # Todo:
@@ -27,7 +26,7 @@
 
 # Bump this per push
 
-version="0.26"
+version="0.27"
 
 # Authors and maintainers
 
@@ -434,9 +433,10 @@ cd $targetdir/aardvark/src
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 f1=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 6`
 f2=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 7`
-echo "const localurl='http://the-ant-$f1$f2.local'" >autoconfiguration.js
-echo -n "micro DNS url for the-ant: "
-cat autoconfiguration.js
+echo "export default {" >autoconfiguration.js
+echo "  localurl:  'http://the-ant-$f1$f2.local'" >>autoconfiguration.js
+echo "}" >>autoconfiguration.js
+echo "micro DNS url for the-ant: http://the-ant-$f1$f2.local"
 
 cd $targetdir/aardvark
 echo "installing npm in aardvark"
