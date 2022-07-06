@@ -106,7 +106,7 @@ nodeversion="14"
 # Ubuntu dependencies
 # todo: add support for other Linux distros when needed
 
-packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl"
+packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl libnss-mdns"
 
 
 #### Do not change lines below here
