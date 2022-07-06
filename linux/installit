@@ -505,7 +505,7 @@ fi
 
 echo "installation complete"
 echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
-echo ". $targetdir/esp-idf/export.sh" >/dev/null 2>&1
+echo ". $targetdir/esp-idf/export.sh" >/dev/null 2>&1"
 echo "Now cd to $targetdir/the-ant and enter 'idf.py flash'"
 echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
 echo "The IP address will look something like this:"
