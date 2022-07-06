@@ -512,7 +512,7 @@ echo "The IP address will look something like this:"
 echo "esp_netif_handlers: sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1"
 echo "Use cntrl ] to break out of monitor when you no longer need it."
 echo "Then edit file $targetdir/aardvark/src/api/project.js and replace"
-echo "192.168.100.150" on line 56 with the IP copied to your clipboard.
+echo "192.168.100.150" on line 56 with the IP copied to your clipboard."
 echo "Then cd to $targetdir/aardvark and enter 'npm run build'."
 echo "Then 'npm run serve'."
 echo "Then point your browser to http://localhost:8080"
