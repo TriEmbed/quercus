@@ -26,7 +26,7 @@
 
 # Bump this per push
 
-version="0.27"
+version="0.28"
 
 # Authors and maintainers
 
@@ -389,7 +389,7 @@ done
 
 if [ ! -f $targetdir/the-ant/.envrc ] ; then
   echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
-  echo ". $targetdir/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
+  echo ". $HOME/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
   cd $targetdir/the-ant
   direnv allow
 fi
