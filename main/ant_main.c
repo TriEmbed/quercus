@@ -16,7 +16,7 @@
 #include "esp_netif.h"
 #include "esp_event.h"
 #include "esp_log.h"
-#include "mdns.h"
+// waiting for Espressif to fix their esp-idf repo #include "mdns.h"
 #include "esp_wifi.h"
 #include "lwip/apps/netbiosns.h"
 #include "esp_system.h"
@@ -57,6 +57,7 @@ esp_err_t start_rest_server (const char *base_path);
 static void
 initialise_mdns (void)
 {
+/* Waiting for Espressif esp-idf repo fix
 uint8_t derived_mac_addr[6] = {0};
   //Get MAC address for Ethernet
   ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_WIFI_STA));
@@ -78,6 +79,7 @@ uint8_t derived_mac_addr[6] = {0};
   };
 
   ESP_ERROR_CHECK (mdns_service_add ("ESP32-WebServer", "_http", "_tcp", 80, serviceTxtData, sizeof (serviceTxtData) / sizeof (serviceTxtData[0])));
+*/
 }
 
 
