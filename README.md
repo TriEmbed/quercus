@@ -1,6 +1,6 @@
 ﻿# Triangle Embedded Interest Group (TriEmbed) M80 Standalone ESP32/FPGA Board
-![Repo logo](/images/m80.png)
-## m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
+![Repo logo](/images/que_m80.png)
+## que_m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
 ![v0.70 Prototype with FPGA DIP Adapter](/images/v0.70-DIP-adapter.jpg)
 ![v0.70 Prototype with SMD Adapter](/images/v0.70-SMD-adapter.jpg)
@@ -11,11 +11,11 @@
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
 
-This project is designed in concert with Nick Edgington's "aardvark" ESP32 firmware project in a different repository. The aardvark firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool.
+This project is designed in concert with Nick Edgington's "que_aardvark" node.js web application and "que_ant" ESP32 firmware project in different repositories. The que_ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool.
 
 ## Project Status
 
-m80 versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aaardvark".
+que_m80 versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aaardvark".
 
 A version 0.80 board is being planned for TBD release with the following changes:
 1. Name change to "M80"
@@ -84,6 +84,6 @@ See the "firedeck" repository for information about the 10x10cm "motherboard" ha
 
 ## Parts issues
 
-As of 6/2/2022 most parts are in hand to build about a dozen more m80 boards. Notable exception is the pushbutton switches. Hopefully other parts availability improving with the lessening pandemic crisis in China. 
+As of 6/2/2022 most parts are in hand to build about a dozen more que_m80 boards. Notable exception is the pushbutton switches. Hopefully other parts availability improving with the lessening pandemic crisis in China. 
 
 
