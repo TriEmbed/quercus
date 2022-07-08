@@ -26,7 +26,7 @@
 
 # Bump this per push
 
-version="0.27"
+version="0.28"
 
 # Authors and maintainers
 
@@ -389,7 +389,7 @@ done
 
 if [ ! -f $targetdir/the-ant/.envrc ] ; then
   echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
-  echo ". $targetdir/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
+  echo ". $HOME/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
   cd $targetdir/the-ant
   direnv allow
 fi
@@ -505,14 +505,14 @@ fi
 
 echo "installation complete"
 echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
-echo ". $targetdir/esp-idf/export.sh" >/dev/null 2>&1"
+echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1"
 echo "Now cd to $targetdir/the-ant and enter 'idf.py flash'"
 echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
 echo "The IP address will look something like this:"
 echo "esp_netif_handlers: sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1"
 echo "Use cntrl ] to break out of monitor when you no longer need it."
 echo "Then edit file $targetdir/aardvark/src/api/project.js and replace"
-echo "192.168.100.150" on line 56 with the IP copied to your clipboard."
+echo "192.168.100.150 on line 56 with the IP copied to your clipboard."
 echo "Then cd to $targetdir/aardvark and enter 'npm run build'."
 echo "Then 'npm run serve'."
 echo "Then point your browser to http://localhost:8080"
