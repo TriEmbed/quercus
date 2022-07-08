@@ -7,6 +7,3 @@
     1. minutes - main group and breakout group meeting notes
     2. whiteboards - graphics typically supporting minutes (often linked to from minutes or elsewhere)
 
-Don't put vendor code under here: use the top level src/contrib/vendorname subdirectory
-
-##### README.md version 1.0.0 (bump third number with minor changes that should be noted, second number  with changes that require process changes, first number for "Sea Changes" calling for retraining
