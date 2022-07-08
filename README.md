@@ -1,6 +1,6 @@
 ﻿# Triangle Embedded Interest Group (TriEmbed) M80 Standalone ESP32/FPGA Board
-![Repo logo](/images/que_m80.png)
-## que_m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
+![Repo logo](/images/m80.png)
+## m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
 ![v0.70 Prototype with FPGA DIP Adapter](/images/v0.70-DIP-adapter.jpg)
 ![v0.70 Prototype with SMD Adapter](/images/v0.70-SMD-adapter.jpg)
@@ -11,11 +11,11 @@
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
 
-This project is designed in concert with Nick Edgington's "que_aardvark" node.js web application and "que_ant" ESP32 firmware project in different repositories. The que_ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool.
+This project is designed in concert with Nick Edgington's "que_aardvark" node.js web application repo and "que_ant" ESP32 firmware project repo. The ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool. This allows change of FPGA personality under programmatic control.
 
 ## Project Status
 
-que_m80 versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aaardvark".
+m80 versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aardvark". This will change with future versions.
 
 A version 0.80 board is being planned for TBD release with the following changes:
 1. Name change to "M80"
@@ -24,11 +24,11 @@ A version 0.80 board is being planned for TBD release with the following changes
 4. Provision for a strap to tie the USB connector down and reduce the chance of broken solder joints.
 5. Considering connection of SMD adapter pins to Dialog DIP pins if a compatible set of connections can be worked out. This would allow an SMD part in the adapter to be used for in circuit testing and not just programming.
 
-See the "firedeck" repository for information about the 10x10cm "motherboard" hardware design being planned.
+See the "que_firedeck" repository for information about the 10x10cm "motherboard" hardware design being planned.
 
 ### Release notes
 
-**0.70** ETA 2/11/2022 - Second prototype. Pure superset of 0.60:
+**0.70** 2/11/2022 - Second prototype. Pure superset of 0.60:
 
 1. Set of female headers to accept a Dialog programming adapter. The adapter and the SLG4704V-DIP cannot be on the board at the same time.
 2. CH340C USB interface chip that obviates the need for a dongle for programming via USB.
@@ -36,7 +36,7 @@ See the "firedeck" repository for information about the 10x10cm "motherboard" ha
 4. Reset pushbutton with a 4.7uF cap across it to stretch time it takes enable to return to a high level
 5. Aluminum electrolytic cap for regulator output
 6. Four position header for connecting ESP32's I2C bus to an outboard Dialog chip for programming. 
-7. C3 module firmware creating access point to provide a wireless web interface for uploading and programming a Dialog synthesis file.
+7. C3 module firmware creating access point to provide a wireless web interface for fetching FPGA images from the aarvark application.
 8. Shorter and narrower slot for C3 board to fit more tightly
 9. Dialog board cannot be plugged in backwards
 
@@ -64,11 +64,13 @@ See the "firedeck" repository for information about the 10x10cm "motherboard" ha
 5. Todo: Provision for additional Dialog chips?
 6. Wish: Pet peripheral footprints
 7. Bug: No consensus about licensing. 0.70 board has "CC By-SA 2.00" on underside but we need concensus for 0.80 as it will be released to the public unless it requires a lot of bodge wires. 
+8. Relocate female headers to prevent interference between DIP board and C3 module.
 
 ### Version 0.70 bug/todo list: 
 
 1. Bug: Decoupling/bypass cap for CH340C overlooked: 100nF cap has to be added on top of the USB chip manually as part of assembly.
 2. Todo: The reset circuit is incomplete. Have to cut the traces from !DTR (pin 14) and !RTS (pin 13) under the chip them through a pair of NPN resistors to EN and GP9. A boot switch will be added by gluing it to the board.
+3. DIP board comes too close to C3 module, requiring a notch to be cut into the edge of the DIP board.
 
 ### Version 0.60 Bug/Todo/wish list.
 
