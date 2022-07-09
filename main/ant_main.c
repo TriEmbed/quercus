@@ -344,7 +344,7 @@ readNVmemory (void)
     err = nvs_flash_init ();
   }
 
-#ifdef ARDVARK_ERASE_FLASH
+#ifdef ANT_ERASE_FLASH
     ESP_ERROR_CHECK (nvs_flash_erase ());
 
 #endif    
@@ -401,7 +401,7 @@ app_main ()
 #endif
 
 
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
   cJSON *response = wifi_scan ();
 
   printf ("%s\n", cJSON_Print (response));

@@ -1,16 +1,16 @@
-menu "ARDVARK Configuration"
+menu "ANT Configuration"
 
-    config AARDVARK_CORS
+    config ANT_CORS
         bool
         default n
         prompt "Use Cors "
 
-    config AARDVARK_VERBOSE
+    config ANT_VERBOSE
         bool
         default n
         prompt "Use Cors "
 
-    config AARDVARK_TEST
+    config ANT_TEST
         bool
         default n
         prompt "ren tests"    
@@ -21,7 +21,7 @@ menu "Example Configuration"
 
     config EXAMPLE_MDNS_HOST_NAME
         string "mDNS Host Name"
-        default "the-ant"
+        default "ant"
         help
             Specify the domain name used in the mDNS service.
             Note that webpage also take it as a part of URL where it will send GET/POST requests to.
@@ -70,13 +70,13 @@ menu "Example Configuration"
 
   config I2C_MASTER_SCL
         int "SCL GPIO Num"
-        default TARGETSCL
+		default 19
         help
             GPIO number for I2C Master clock line.
 
     config I2C_MASTER_SDA
         int "SDA GPIO Num"
-        default TARGETSDA
+		default 18
         help
             GPIO number for I2C Master data line.
 

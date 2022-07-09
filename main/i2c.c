@@ -177,14 +177,14 @@ i2cget (uint8_t chip_addr, uint8_t data_addr, uint8_t len)
     for (int i = 0; i < len; i++) {
       cJSON *x_json = cJSON_CreateNumber (data[i]);
       cJSON_AddItemToArray (response, x_json);
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
       printf ("0x%02x ", data[i]);
       if ((i + 1) % 16 == 0) {
 	printf ("\r\n");
       }
 #endif
     }
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
     if (len % 16) {
       printf ("\r\n");
     }
@@ -263,7 +263,7 @@ i2cDump (uint8_t chip_addr, uint8_t size)
   xSemaphoreTake (SemaphoreHandle, portMAX_DELAY);
   response = NULL;		// necessary for error handling
 
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
   ESP_LOGW (TAG, "int chip_addr=%d, int size=%d", chip_addr, size);
 #endif
   response = cJSON_CreateArray ();
@@ -273,15 +273,15 @@ i2cDump (uint8_t chip_addr, uint8_t size)
   uint8_t data_addr;
   uint8_t data[4];
   int32_t block[16];
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
   printf ("     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f" "    0123456789abcdef\r\n");
 #endif
   for (int i = 0; i < 0x100; i += 16) {
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
     printf ("%02x: ", i);
 #endif
     for (int j = 0; j < 16; j += size) {
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
       fflush (stdout);
 #endif
       data_addr = i + j;
@@ -300,7 +300,7 @@ i2cDump (uint8_t chip_addr, uint8_t size)
       i2c_cmd_link_delete (cmd);
       if (ret == ESP_OK) {
 	for (int k = 0; k < size; k++) {
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
 	  printf ("%02x ", data[k]);
 #endif
 	  block[j + k] = data[k];
@@ -309,7 +309,7 @@ i2cDump (uint8_t chip_addr, uint8_t size)
 	}
       } else {
 
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
 	for (int k = 0; k < size; k++) {
 	  printf ("XX ");
 	  block[j + k] = -1;
@@ -317,7 +317,7 @@ i2cDump (uint8_t chip_addr, uint8_t size)
 #endif
       }
     }
-#ifdef CONFIG_AARDVARK_VERBOSE
+#ifdef CONFIG_ANT_VERBOSE
     printf ("   ");
     for (int k = 0; k < 16; k++) {
       if (block[k] < 0) {

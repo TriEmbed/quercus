@@ -499,7 +499,7 @@ start_rest_server (const char *base_path)
   ESP_LOGI (REST_TAG, "Starting HTTP Server");
   REST_CHECK (httpd_start (&server, &config) == ESP_OK, "Start server failed", err_start);
 
-#ifdef   CONFIG_AARDVARK_TEST
+#ifdef   CONFIG_ANT_TEST
   i2cDump (8, 4);
   i2cDump (9, 4);
 #endif
@@ -514,7 +514,7 @@ start_rest_server (const char *base_path)
     };
     httpd_register_uri_handler (server, &uri);
   }
-#ifdef CONFIG_AARDVARK_CORS
+#ifdef CONFIG_ANT_CORS
   setup_cors (server);
 #endif
   return ESP_OK;
