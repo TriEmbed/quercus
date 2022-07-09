@@ -10,7 +10,7 @@
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
 
-# IP hack goes in aardvark/src/api/project.js
+# IP hack goes in que_aardvark/src/api/project.js
 
 # Bugs:
  
@@ -63,8 +63,8 @@ version="0.28"
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # The target WIFI router SSID
-# NOTICE: These strings will be in plain text in the-ant repo. They will be
-# encrypted eventually but for the time being remove the-ant after flashing to
+# NOTICE: These strings will be in plain text in que_ant repo. They will be
+# encrypted eventually but for the time being remove que_ant after flashing to
 # maintain security.
 
 targetSSID=""
@@ -77,11 +77,9 @@ c3board=0
 targetdevice="ESP32C3"
 
 # The pathname to the Espressif esp-idf tools. 
-# NOTE WELL that the aardvrk, the-ant, and triembedtools repos
+# NOTE WELL that the que_aardvrk, que_ant, and que_tools repos
 # will be placed along side esp-idf, not within esp-idf
 # The default is installation in the user's home directory
-# Todo rename thetools to triembedtools?
-# NEED A NAME FOR THE WHOLE PROJECT!!!
 
 targetdir=~/
 
@@ -350,11 +348,10 @@ fi
 
 echo "valid esp-idf repo"
 
-# It's become too error prone to determine whether the-ant and/or aardvark
+# It's become too error prone to determine whether que_ant and/or que_aardvark
 # have been mutated by a previous run of the script. Just always clone fresh
 # copies for now.
 
-echo "clone aardvark and the-ant"
 
 # For a future otimization can seaarch for "[up to date]" in output of
 # git fetch -v --dry-run to determine if an already present is up to date
@@ -362,7 +359,8 @@ echo "clone aardvark and the-ant"
 # "has an npm install been done already?" and "has an npm run build?" been
 # done already then the script can be further optimized.
 
-for repo in aardvark the-ant ; do
+echo "clone que_aardvark and que_ant"
+for repo in que_aardvark que_ant ; do
   cd $targetdir
   #if [ -d $targetdir/$repo ] ; then
   if [ 0 -eq 1 ] ; then
@@ -385,12 +383,12 @@ for repo in aardvark the-ant ; do
 done
 
 # setting up direnv to automatically run IDF export.sh and steer node version
-# when the-ant is cd'd to.
+# when que_ant is cd'd to.
 
-if [ ! -f $targetdir/the-ant/.envrc ] ; then
-  echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/the-ant/.envrc
-  echo ". $HOME/.nvm/nvm.sh use $nodeversion" >>$targetdir/the-ant/.envrc
-  cd $targetdir/the-ant
+if [ ! -f $targetdir/que_ant/.envrc ] ; then
+  echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/que_ant/.envrc
+  echo ". $HOME/.nvm/nvm.sh use $nodeversion" >>$targetdir/que_ant/.envrc
+  cd $targetdir/que_ant
   direnv allow
 fi
 
@@ -428,92 +426,93 @@ fi
 
 # Creating mdns-findable URL for Aardvark
 
-cd $targetdir/aardvark/src
+cd $targetdir/que_aardvark/src
 
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 f1=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 6`
 f2=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 7`
 echo "export default {" >autoconfiguration.js
-echo "  localurl:  'http://the-ant-$f1$f2.local'" >>autoconfiguration.js
+echo "  localurl:  'http://ant-$f1$f2.local'" >>autoconfiguration.js
 echo "}" >>autoconfiguration.js
-echo "micro DNS url for the-ant: http://the-ant-$f1$f2.local"
+echo "micro DNS url for ant: http://ant-$f1$f2.local"
 
-cd $targetdir/aardvark
-echo "installing npm in aardvark"
+cd $targetdir/que_aardvark
+echo "installing npm in que_aardvark"
 npm install >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not intall npm in aardvark"
+  fatal "could not intall npm in que_aardvark"
 fi
 
-echo "building npm in aardvark"
+echo "building npm in que_aardvark"
 npm run build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not npm run build in aardvark"
+  fatal "could not npm run build in que_aardvark"
 fi
 
-cd $targetdir/the-ant/ant
-echo "installing npm in the-ant"
+cd $targetdir/que_ant/ant
+echo "installing npm in que_ant"
 npm install >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not intall npm in the-ant/ant"
+  fatal "could not intall npm in que_ant/ant"
 fi
   
-echo "building npm in the-ant"
+echo "building npm in que_ant"
 npm run build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not npm run build in the-ant"
+  fatal "could not npm run build in que_ant"
 fi
 
 echo "idf set-target and Kconfig edits"
 
 # Edit main/Kconfig.projbuild for SSID, password, SDA and SCL pins
 
-cd $targetdir/the-ant/components/apsta
+cd $targetdir/que_ant/components/apsta
 sed -e"s/.*ROUTERSSID.*$/               default $targetSSID/" Kconfig.projbuild >/tmp/tmp.$$
 sed -e"s/.*ROUTERPASSWORD.*$/               default $targetpassword/" /tmp/tmp.$$ >Kconfig.projbuild
 
-touch $targetdir/the-ant/sdkconfig
+# What is this doing? Probably superstious. Ask Nick.
+touch $targetdir/que_ant/sdkconfig
 
-cd $targetdir/the-ant/main
+cd $targetdir/que_ant/main
 sed -e"s/.*TARGETSDA.*$/		default $targetsda/" Kconfig.projbuild >/tmp/tmp.$$
 sed -e"s/.*TARGETSCL.*$/		default $targetscl/" /tmp/tmp.$$ >Kconfig.projbuild
 
 . $targetdir/esp-idf/export.sh >/dev/null 2>&1
 
-cd $targetdir/the-ant
+cd $targetdir/que_ant
 idf.py set-target $targetdevice >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not do idf.py set-target"
 fi
 
-cd $targetdir/the-ant
+cd $targetdir/que_ant
 rm -rf build
 rm -rf ant/dist/js/*.map
 
-echo "idf build of the-ant"
-cd $targetdir/the-ant
+echo "idf build of que_ant"
+cd $targetdir/que_ant
 idf.py build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not do idf.py build in the-ant"
+  fatal "could not do idf.py build in que_ant"
 fi
 
 echo "installation complete"
 echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
 echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1"
-echo "Now cd to $targetdir/the-ant and enter 'idf.py flash'"
+echo "Now cd to $targetdir/que_ant and enter 'idf.py flash'"
 echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
 echo "The IP address will look something like this:"
 echo "esp_netif_handlers: sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1"
 echo "Use cntrl ] to break out of monitor when you no longer need it."
-echo "Then edit file $targetdir/aardvark/src/api/project.js and replace"
+echo "Then edit file $targetdir/que_aardvark/src/api/project.js and replace"
 echo "192.168.100.150 on line 56 with the IP copied to your clipboard."
-echo "Then cd to $targetdir/aardvark and enter 'npm run build'."
+echo "Then cd to $targetdir/que_aardvark and enter 'npm run build'."
 echo "Then 'npm run serve'."
 echo "Then point your browser to http://localhost:8080"
 

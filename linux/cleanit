@@ -6,7 +6,7 @@
 
 # Bump this per push
 
-version="0.03"
+version="0.04"
 
 # Append your email addr here and append your name to the 
 # copyright list with commas. 
@@ -71,6 +71,6 @@ if [ ! $USER = "root" ] ; then
 fi
 
 rm -rf $targetdir/esp-idf
-rm -rf $targetdir/aardvark
-rm -rf $targetdir/the-ant
+rm -rf $targetdir/que_aardvark
+rm -rf $targetdir/que_ant
 
