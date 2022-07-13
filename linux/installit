@@ -26,7 +26,7 @@
 
 # Bump this per push
 
-version="0.29"
+version="0.30"
 
 # Authors and maintainers
 
@@ -280,8 +280,6 @@ for package in $packages ; do
   fi
 done
 
-# source .bashrc again in case direnv was installed to get the competion enabled
-. $HOME/.bashrc >/dev/null 2>&1
 
 echo "Prerequisite packages installed"
 
@@ -405,6 +403,9 @@ if [ $? -ne 0 ] ; then
     fail "could not edit ~/.bashrc"
   fi
 fi
+
+# source .bashrc again in case direnv was installed to get the competion enabled
+. $HOME/.bashrc >/dev/null 2>&1
 
 if [ ! -d $HOME/.nvm ] ; then
   echo "installing nvm"
