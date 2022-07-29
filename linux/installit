@@ -26,7 +26,7 @@
 
 # Bump this per push
 
-version="0.30"
+version="0.31"
 
 # Authors and maintainers
 
@@ -96,7 +96,7 @@ targetdir=~/
 # submodule operations are needed: neither of which are done
 # by this script.
 
-targetbranch="v4.4"
+targetbranch="remotes/origin/release/v4.4"
 
 # The nvm version
 nodeversion="14"
@@ -323,7 +323,11 @@ if [ $present -eq 0 ] ;then
   else
     cd esp-idf
     touch .cloned
-    git branch $targetbranch
+    git checkout $targetbranch >/tmp/log.$$ 2>&1
+    if [ $? -ne 0 ] ; then
+      cat /tmp/log.$$
+      fatal "Could not change branch to $targetbranch"
+    fi
     echo "loading submodules: this takes longer than the repo clone, be patient"
     git submodule update --init --recursive >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
