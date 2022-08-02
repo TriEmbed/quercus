@@ -1,0 +1,192 @@
+<template>
+  <div class="fill-height fill-width overflow-hidden">
+    <NumberTable
+      :default-options="{
+        sortBy: ['lastModifyTime'],
+        sortDesc: [true],
+      }"
+      hash="scan"
+      item-key="id"
+      :load-data="loadData"
+
+      ref="table"
+    >
+      <template #search>
+        <v-row class="px-4">
+          <v-col class="py-0" cols="12">
+            <v-text-field autofocus placeholder="Please enter a keyword query" v-model="query.name" clearable />
+          </v-col>
+        </v-row>
+      </template>
+
+      <template #actions>
+        <v-btn class="mr-2" depressed tile @click="handleAdd">
+          Add item
+        </v-btn>
+      </template>
+
+      <template #[`item.number`]="{ index }">
+        {{ index + 1 }}
+      </template>
+
+      <template #[`item.time`]="{ item }">
+        <v-chip :color="item.time >= 60 ? 'primary' : 'dark'">
+          {{ item.time }}
+        </v-chip>
+      </template>
+
+      <template #[`item.occupy`]="{ item }">
+        {{ item.occupy ? 'Yes' : 'No' }}
+      </template>
+
+      <template #[`item.actions`]="{ item }">
+        <v-tooltip top>
+          <template #activator="{ on, attrs }">
+            <v-icon v-bind="attrs" v-on="on" color="blue darken-3" class="mr-4" @click="handleEdit(item.id)">
+              edit
+            </v-icon>
+          </template>
+          <span>edit</span>
+        </v-tooltip>
+
+        <v-tooltip top>
+          <template #activator="{ on, attrs }">
+            <v-icon v-bind="attrs" v-on="on" color="red" @click="handleDelete(item.id)">
+              delete
+            </v-icon>
+          </template>
+          <span>delete</span>
+        </v-tooltip>
+      </template>
+    </NumberTable>
+
+    <ProjectSchema
+      ref="projectSchema"
+      @editSuccess="handleEditSuccess"
+      @addSuccess="handleAddSuccess"
+    />
+  </div>
+</template>
+
+<script>
+import ProjectSchema from './modules/ProjectSchema.vue'
+import {deleteProject, testI2C} from '@/api/project'
+
+import toast from '@/utils/toast'
+const item = (id = 1,a,b) => ({
+  id: id,
+  name: a,
+  type: b,
+})
+
+export default {
+  name: 'Status',
+  components: {
+    ProjectSchema,
+  },
+  data: () => ({
+    query: {
+      name: '',
+    },
+  }),
+
+
+  computed: {
+    headers () {
+      return [
+        {
+          text: 'Number',
+          align: 'center',
+          sortable: false,
+          value: 'number',
+          width: 100,
+          fixed: true,
+        },
+        {
+          text: 'Name',
+          align: 'left',
+          sortable: false,
+          value: 'name',
+        },
+        {
+          text: 'data',
+          align: 'center',
+          value: 'type',
+          width: 100,
+        },
+        {
+          text: 'Operation',
+          align: 'center',
+          sortable: false,
+          value: 'actions',
+          width: 110,
+          fixed: true,
+        },
+      ]
+    },
+  },
+  methods: {
+    format (r)
+    {
+      console.log("r.data",r)
+      return { total: 0 ,items: r}
+    },
+    /**
+     * Call the interface data and initialize the table
+     * @return {Promise<Undefined>}
+     */
+    async loadData (options = {}) {
+      const pos = location.hash.lastIndexOf("/");
+      const page =location.hash.slice(pos+1);
+      console.log("location:",pos,page,location.hash)
+
+      return testI2C({ ...this.query, ...options },'dump',[8,4]).then(r => this.format (r.data))
+    },
+    /**
+     * Added items
+     * @return {Undefined}
+     */
+    handleAdd () {
+      this.$refs['projectSchema'].open()
+    },
+    /**
+     * Added aardvark successfully
+     * @return {Undefined}
+     */
+    handleAddSuccess () {
+      toast.success({ message: 'Add item successfully' })
+      this.query = this.$options.data.apply(this).query
+      this.$refs['table'].refresh(true)
+    },
+    /**
+     * Edit item
+     * @param {Number | String} id item id
+     * @return {Undefined}
+     */
+    handleEdit (id) {
+      this.$refs['projectSchema'].open(id)
+    },
+    /**
+     * Edit aardvark success
+     * @return {Undefined}
+     */
+    handleEditSuccess () {
+      toast.success({ message: 'Editing aardvark successful' })
+      this.$refs['table'].refresh()
+    },
+    /**
+     * delete item
+     * @param {Number | String} id
+     * @return {Promise<Undefined>}
+     */
+    async handleDelete (id) {
+      await deleteProject(id)
+      toast.success({ message: 'Delete the item successfully' })
+      await this.$refs.table.refresh()
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+</style>
