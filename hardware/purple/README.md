@@ -1,30 +1,28 @@
-﻿# Triangle Embedded Interest Group (TriEmbed) M80 Standalone ESP32/FPGA Board
-![Repo logo](/images/m80.png)
-## m80: Making Dialog Semiconductor mixed signal FPGA chips more accessible
+﻿# Triangle Embedded Interest Group (TriEmbed) purple standalone ESP32/FPGA board
+![Repo logo](/images/purple.png)
+## purple: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
 ![v0.70 Prototype with FPGA DIP Adapter](/images/v0.70-DIP-adapter.jpg)
 ![v0.70 Prototype with SMD Adapter](/images/v0.70-SMD-adapter.jpg)
 
-1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be a programmer for the Dialog SLGxxxxx ICs and also run applications with an onboard SLG47004V-DIP. 
+1. A stand alone, easy to use Espressif ESP32 C3-based dev board that can be a programmer for the Dialog SLGxxxxx ICs and also run applications with an onboard SLG47004V-DIP.
 2. Cache of Dialog info resources
    1. Only resources specifically relevant to the board design and application
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
 
-This project is designed in concert with Nick Edgington's "que_aardvark" node.js web application repo and "que_ant" ESP32 firmware project repo. The ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool. This allows change of FPGA personality under programmatic control.
+This board series is designed in concert with Nick Edgington's "aardvark" node.js web application repo and the "ant" ESP32 firmware project repo. The ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool. This allows change of FPGA personality under programmatic control. An I2C expansion connector allows bus connection of additional FPGAs.
 
 ## Project Status
 
-m80 versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aardvark". This will change with future versions.
+Purple versions 0.60 and 0.70 were released and are still in a testing phase. The board silkscreen labels the boards with the name "Aardvark". This will change with future versions.
 
-A version 0.80 board is being planned for TBD release with the following changes:
-1. Name change to "M80"
+A version 1.00 board is being planned for TBD release with the following changes:
+1. Name change to "TBD"
 2. ECO elimination
 3. Updates to reset and boot circuitry
 4. Provision for a strap to tie the USB connector down and reduce the chance of broken solder joints.
 5. Considering connection of SMD adapter pins to Dialog DIP pins if a compatible set of connections can be worked out. This would allow an SMD part in the adapter to be used for in circuit testing and not just programming.
-
-See the "que_firedeck" repository for information about the 10x10cm "motherboard" hardware design being planned.
 
 ### Release notes
 
@@ -39,6 +37,7 @@ See the "que_firedeck" repository for information about the 10x10cm "motherboard
 7. C3 module firmware creating access point to provide a wireless web interface for fetching FPGA images from the aarvark application.
 8. Shorter and narrower slot for C3 board to fit more tightly
 9. Dialog board cannot be plugged in backwards
+10. There is a SEVERE issue with mechanical integrity of solder joints with the mini-USB connector on the board. Numerous fractured joints have taken place with normal usage. 
 
 **0.60 Initial prototype 1/24/2022
 
