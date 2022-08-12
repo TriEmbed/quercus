@@ -10,23 +10,37 @@
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
 
-# IP hack goes in que_aardvark/src/api/project.js
+# See https://github.com/TriEmbed/quercus/issues for bugs/enhancements
 
-# Bugs:
- 
-#
-# Todo:
-#  1) Should be able to detect and elide redundant perhaps npm operations
-#  3) Executable code comes AFTER all the function declarations
-#  4) Add a function to handle the tmp log and operation result idiom
-#  5) Use getopt
-#  6) Check cmake version and update as needed. CMake version 3.16 or newer is 
+# Todo (not baked well enough for an issue):
+#  1) Should be able to detect and elide redundant clones and npm 
+#     operations (use hidden files for latter). Repo issue #1 should enable this.
+#  2) OK to delete que_ant/ant and corresponding Cmake stuff after these 
+#     changes with help from Nick (Pete can't make it work and it isn't a
+#     priority)
+#  3) Add a function to handle the tmp log and operation result idiom
+#  4) Use getopt(1). This page may be sufficient to understand how to
+#     do it: https://www.tutorialspoint.com/unix_commands/getopt.html
+#  5) Check cmake version and update as needed. CMake version 3.16 or newer is 
 #     required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to 
 #     install a suitable version if your OS version doesn’t have one.
+#  6) In getyes use a signal handler to ensure exit 1 with ctrl-C if we
+#     don't get this for free
+#  7) Use a signal handler to avoid getting hosed by a random ^C.
+#  8) Add support for other Linux distros when needed. See here:
+# https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html
+#  9) Validate -targetbranch argument against git branch -a to make sure
+#     the branch exists
+#
 
 # Bump this per push
 
-version="0.31"
+version="0.33"
+
+# capture the tools directory
+
+temp=`dirname $0`
+rootpath=`readlink -f $temp`
 
 # Authors and maintainers
 
@@ -36,85 +50,63 @@ version="0.31"
 # rob.mackie@gmail.com
 # nickedgington@gmail.com
 
-# MIT License
-#
-# Copyright 2022 Peter James Soper, Robert Andrew Mackie, Nicholas John Edgington
-#
-# Permission is hereby granted, free of charge, to any person 
-# obtaining a copy of this software and associated 
-# documentation files (the "Software"), to deal in the
-# Software without restriction, including without limitation
-# the rights to use, copy, modify, merge, publish, 
-# distribute, sublicense, and/or sell copies of the
-# Software, and to permit persons to whom the Software is 
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall
-# be included in all copies or substantial portions of the 
-# Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY 
-# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
-# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-# PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
-# OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-# The target WIFI router SSID
-# NOTICE: These strings will be in plain text in que_ant repo. They will be
-# encrypted eventually but for the time being remove que_ant after flashing to
-# maintain security.
-
-targetSSID=""
-targetpassword=""
-
-c3board=0
+# Note: there should be discussion about the fact that the users's WIFI
+# password is passed in plain text and held in plain text in source files and
+# the ESP32 binary.
 
 # The default target ESP32 device
 
 targetdevice="ESP32C3"
 
-# The pathname to the Espressif esp-idf tools. 
-# NOTE WELL that the que_aardvrk, que_ant, and que_tools repos
-# will be placed along side esp-idf, not within esp-idf
-# The default is installation in the user's home directory
+# The default version of que_purple board. Currently 60 and 70 are identical:
+# no need to use -c3board option.
 
-targetdir=~/
+c3board=70
 
-# The git branch label for the exact version of tools to
-# install. If this variable does not match the branch of an
-# existing esp-idf the script must be aborted because there
-# is the likelihood that the submodules are not right.
-# The v4.4 branch is the latest Espressif stable branch.
-# the v5.0 branch is the bleeding edge branch that is used
-# by the Arduino runtime. NOTE that the TriEmbed project is
-# currently committed to the stable branch. Also note that
-# the v5.0 branch is updated frequently, so it is not safe to
-# assume it is stable and frequent git pull operations and
-# submodule operations are needed: neither of which are done
-# by this script.
+# The directory pathname for the user's Quercus repositories
 
-targetbranch="remotes/origin/release/v4.4"
+targetdir=~/.quercus
+
+# The directory pathname for the Espressif IDF directory
+# Note this cannot be currently changed from the command line. 
+# Be careful about having multiple instances of esp-idf because the most
+# recent invocation of install.sh governs which is used, NOT which one contained
+# the export.sh file that was sourced. (Is this completely correct? It is for
+# sure partially correct because install.sh mutates ~/.expressif but export.sh
+# does not).
+
+
+# The git branch labels for the exact version of tools to install. If this 
+# variable does not match the branch of an  existing esp-idf the script must
+# be aborted because there is the likelihood that the submodules are not right.
+# The required order is 1) clone, 2) checkout branch, 3) load submodules
+# The remotes/origin/release/v4.4 branch is the latest Espressif stable branch.
+# the remotes/origin/release/v5.0 branch is the bleeding edge development 
+# branch. 
+
+idfdir=~/.quercus
+
+# Git is weird with respect to git branch -a output vs actual branch names
+# The correct branch name is $targetbranchprefix$targetbranch
+
+targetbranchprefix="remotes/"
+
+# The base part of the branch name shown by git branch -a
+targetbranch="origin/release/v4.4"
+
+#### Do not change lines below here
 
 # The nvm version
 nodeversion="14"
 
 # Ubuntu dependencies
-# todo: add support for other Linux distros when needed
 
 packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl libnss-mdns"
 
 
-#### Do not change lines below here
-
-# No need for sudo if root
-if [ $USER = "root" ] ; then
-  SUDO=""
-else
-  SUDO="sudo"
-fi
+# Flags to put out additional info at end
+neednewterminal=0
+needtologout=0
 
 # Detail proper usage of the script command and error exit
 
@@ -136,15 +128,14 @@ help() {
   usage ""
 }
 
-# Get a Y or y or N or n after a prompt. Return true if Y or
-# y, false if N or n. Cannot escape until an acceptable 
+# Put out a prompt, then ask for a Y, y, N or n response.
+# Return true if Y or y, false if N or n. Cannot escape until an acceptable 
 # answer is input. Use ctrl-C to break out.
-# Todo signal handler to ensure exit 1 with ctrl-C if we
-# don't get this for free
 
 getyes() {
   while [ 1 -eq 1 ] ; do
     echo "$1"
+    echo "enter Y, y, N, or n"
     read ans
     if [ $ans = "Y" ] || [ $ans = "y" ] ; then
       return 0
@@ -189,6 +180,7 @@ fi
 while [ $# -ge 2 ] ; do
   switch=$1
   shift
+  
   case $switch in
     -targetbranch)
         targetbranch=$1
@@ -201,8 +193,9 @@ while [ $# -ge 2 ] ; do
     -targetdevice)
         targetdevice=$1
         shift
-        if [ ! $targetdevice = "ESP32" ] && [ ! $targetdevice = "ESP32S2" ] && [ ! $targetdevice = "ESP32C3" ] ; then
-          usage "unrecognized ESP32"
+        if [ ! $targetdevice = "ESP32" ] && [ ! $targetdevice = "ESP32S2" ] &&
+         [ ! $targetdevice = "ESP32C3" ] ; then
+          usage "unrecognized target device: $targetdevice"
         fi
         ;;
     -c3board)
@@ -267,43 +260,69 @@ echo "targetscl: $targetscl"
 echo "targetSSID: $targetSSID"
 echo "targetpassword: $targetpassword"
 
-echo "Install the required packages. Harmless and fast if they are already there"
-apt list --installed >/tmp/tmp.$$ 2>&1
-for package in $packages ; do
-  grep "^$package" /tmp/tmp.$$ >/dev/null 2>&1
-  if [ $? -ne 0 ] ; then
-    $SUDO apt-get install -y $package >/tmp/log.$$ 2>&1
-    if [ $? -ne 0 ] ; then
-      cat /tmp/log.$$
-      fatal "Could not install $package"
+# Create $targetdir and $HOME/.quercus if they do not exist
+
+for d in $targetdir $idfdir ; do
+  if [ ! -d $d ] ; then
+    if getyes "$d does not exist: create it?" ; then
+      mkdir $d
+      if [ $? -ne 0 ] ; then
+	fatal "could not create $d" 
+      fi
     fi
   fi
 done
 
+# Get the user into dialout group if not already in it
 
-echo "Prerequisite packages installed"
+groups | grep dialout >/dev/null
+if [ $? -ne 0 ] ; then
+  echo "Adding user to dialout group for USB device access: logout/login needed"
+  sudo usermod -a -G dialout $USER # BE CAREFUL TO DO THIS RIGHT!
+  needtologout=1 
+fi  
 
-# Is the directory present and not empty?
+echo "Installing required Linux packages"
 
-if [ -d $targetdir/esp-idf ] ; then
-  present=1
-else
-  present=0
+apt list --installed >/tmp/tmp.$$ 2>&1
+for package in $packages ; do
+  grep "^$package" /tmp/tmp.$$ >/dev/null 2>&1
+  if [ $? -ne 0 ] ; then
+    sudo apt-get install -y $package >/tmp/log.$$ 2>&1
+    if [ $? -eq 0 ] ; then
+      echo "installed Linux package $package"
+    else
+      cat /tmp/log.$$
+      fatal "Could not install Linux package $package"
+    fi
+  fi
+done
+
+# Add direnv hook to .bashrc if not already there
+grep "direnv hook bash" ~/.bashrc  >/dev/null 2>&1
+if [ $? -ne 0 ] ; then
+  echo "" >>~/.bashrc
+  echo 'eval "$(direnv hook bash)"' >>~/.bashrc
+  if [ $? -ne 0 ] ; then
+    fail "could not edit ~/.bashrc"
+  fi
+  neednewterminal=1
+  echo "direnv has been set up but a new terminal is required"
 fi
-# If dir is present then qualify it. If user wants to bail
-# then error exit
 
-if [ $present -eq 1 ] ; then
-  cd $targetdir/esp-idf
-  git branch | grep $targetbranch >/dev/null
-  if [ $? -eq 0 ] && [ -e $targetdir/esp-idf/.cloned ] && [ -e $targetdir/esp-idf/.submodules ] ; then
+# Determine if Espressif IDF already present and ready to use. If present but
+# not usable, offer to recreate it.
+
+if [ -d $idfdir/esp-idf ] ; then
+  cd $idfdir/esp-idf
+  git branch -a | grep '^\*' | grep $targetbranch >/dev/null
+  if [ $? -eq 0 ] && [ -e .cloned ] && [ -e .submodules ] && [ -e .installed ] ; then
       present=1
   else
-    getyes "$targetdir/esp-idf is not usable: recreate it? (y/n)"
-    if [ $? -eq 0 ] ; then
-      rm -rf $targetdir/esp-idf
+    if getyes "$idfdir/esp-idf is present but not usable: recreate it?" ; then
+      rm -rf $idfdir/esp-idf
       if [ $? -ne 0 ] ; then
-	fatal "Could not erase $targetdir/esp-idf"
+	fatal "Could not erase $idfdir/esp-idf"
       else
 	present=0
       fi
@@ -313,20 +332,20 @@ if [ $present -eq 1 ] ; then
   fi  
 fi
 
-if [ $present -eq 0 ] ;then
-  cd $targetdir
+if [ ! $present ] ; then
+  cd $idfdir
   echo "cloning esp-idf"
-  git clone http://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
+  git clone https://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
   if [ $? -ne 0 ] ; then
     cat /tmp/log.$$
     fatal "Could not clone espressif esp-idf repository"
   else
     cd esp-idf
     touch .cloned
-    git checkout $targetbranch >/tmp/log.$$ 2>&1
+    git checkout $targetbranchprefix$targetbranch >/tmp/log.$$ 2>&1
     if [ $? -ne 0 ] ; then
       cat /tmp/log.$$
-      fatal "Could not change branch to $targetbranch"
+      fatal "git checkout $targetbranchprefix$targetbranch failed"
     fi
     echo "loading submodules: this takes longer than the repo clone, be patient"
     git submodule update --init --recursive >/tmp/log.$$ 2>&1
@@ -336,20 +355,26 @@ if [ $present -eq 0 ] ;then
     else
       touch .submodules
     fi
-    ./install.sh >/tmp/log.$$
-    if [ $? -ne 0 ] ; then
-      cat /tmp/log.$$
-      fatal "esp-idf/intall.sh failed"
-    fi
 
     # install source of export.sh in esp-idf/examples so power users can have 
     # multiple esp-idf dirs with different branches
 
-    echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/esp-idf/examples/.envrc
-    cd $targetdir/esp-idf/examples
+    cd $idfdir/esp-idf/examples
+    echo ". $idfdir/esp-idf/export.sh" >.envrc
     direnv allow
   fi
 fi
+
+# Do a fresh install of the idf because we cannot know whether or not another
+# instance has been installed by the user. 
+
+cd $idfdir/esp-idf
+./install.sh >/tmp/log.$$
+if [ $? -ne 0 ] ; then
+  cat /tmp/log.$$
+  fatal "esp-idf/install.sh failed"
+fi
+touch .installed
 
 echo "valid esp-idf repo"
 
@@ -365,25 +390,14 @@ echo "valid esp-idf repo"
 # done already then the script can be further optimized.
 
 echo "clone que_aardvark and que_ant"
-for repo in que_aardvark que_ant ; do
-  cd $targetdir
-  #if [ -d $targetdir/$repo ] ; then
-  if [ 0 -eq 1 ] ; then
-    echo "git pull in $repo to bring it up to date"
-    cd $targetdir/$repo
-    git pull >/tmp/log.$$
-    if [ $? -ne 0 ] ; then
-      cat /tmp/log.$$
-      fatal "could not update existing $repo repo"
-    fi
+cd $targetdir
+for repo in aardvark ant ; do
+  if [ -d que_$repo ] && [ -e que_$repo/.copied ] ; then
+    echo "" # hack
   else
-    echo "clone of $repo"
-    rm -rf $repo
-    git clone http://github.com/triembed/$repo.git >/tmp/log.$$ 2>&1
-    if [ $? -ne 0 ] ; then
-      cat log.$$
-      fatal "could not clone $repo"
-    fi
+    rm -rf que_$repo
+    cp -r $rootpath/../../$repo que_$repo
+    touch que_$repo/.copied
   fi
 done
 
@@ -391,22 +405,12 @@ done
 # when que_ant is cd'd to.
 
 if [ ! -f $targetdir/que_ant/.envrc ] ; then
-  echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/que_ant/.envrc
+  echo ". $idfdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/que_ant/.envrc
   echo ". $HOME/.nvm/nvm.sh use $nodeversion" >>$targetdir/que_ant/.envrc
   cd $targetdir/que_ant
   direnv allow
 fi
 
-# Adding direnv hook to .bashrc
-
-grep "direnv hook bash" ~/.bashrc  >/dev/null 2>&1
-if [ $? -ne 0 ] ; then
-  echo "" >>~/.bashrc
-  echo 'eval "$(direnv hook bash)"' >>~/.bashrc
-  if [ $? -ne 0 ] ; then
-    fail "could not edit ~/.bashrc"
-  fi
-fi
 
 # source .bashrc again in case direnv was installed to get the competion enabled
 . $HOME/.bashrc >/dev/null 2>&1
@@ -436,62 +440,75 @@ fi
 
 cd $targetdir/que_aardvark/src
 
-. $targetdir/esp-idf/export.sh >/dev/null 2>&1
+. $idfdir/esp-idf/export.sh >/dev/null 2>&1
 f1=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 6`
 f2=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 7`
+if [ $? -ne 0 ] ; then
+  echo "dev board not connected: using 0000 as MAC address low order digits"
+  f1="00"
+  f2="00"
+fi
 echo "export default {" >autoconfiguration.js
-echo "  localurl:  'http://ant-$f1$f2.local'" >>autoconfiguration.js
+#echo "  localurl:  'http://ant_$f1$f2.local'" >>autoconfiguration.js
+echo "  localurl:  'http://ant_0000.local'" >>autoconfiguration.js
 echo "}" >>autoconfiguration.js
-echo "micro DNS url for ant: http://ant-$f1$f2.local"
+#echo "micro DNS url for ant: http://ant_$f1$f2.local"
+echo "micro DNS url for ant: http://ant_0000.local"
+
+echo "preparing node in que_aardvark"
 
 cd $targetdir/que_aardvark
-echo "installing npm in que_aardvark"
-npm install >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not intall npm in que_aardvark"
+if [ ! -e .installed ] ; then
+  echo "installing npm in que_aardvark"
+  npm install >/tmp/log.$$ 2>&1
+  if [ $? -ne 0 ] ; then
+    cat /tmp/log.$$
+    fatal "could not install npm in que_aardvark"
+  fi
+  touch .installed
 fi
 
-echo "building npm in que_aardvark"
 npm run build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not npm run build in que_aardvark"
 fi
 
+echo "preparing node in que_ant"
+
 cd $targetdir/que_ant/ant
 echo "installing npm in que_ant"
 npm install >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
-  fatal "could not intall npm in que_ant/ant"
+  fatal "could not install npm in que_ant/ant"
 fi
   
-echo "building npm in que_ant"
 npm run build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not npm run build in que_ant"
 fi
 
-echo "idf set-target and Kconfig edits"
+echo "Kconfig.projbuild edits in que_ant"
 
 # Edit main/Kconfig.projbuild for SSID, password, SDA and SCL pins
 
 cd $targetdir/que_ant/components/apsta
-sed -e"s/.*ROUTERSSID.*$/               default $targetSSID/" Kconfig.projbuild >/tmp/tmp.$$
-sed -e"s/.*ROUTERPASSWORD.*$/               default $targetpassword/" /tmp/tmp.$$ >Kconfig.projbuild
+sed -e"s+.*ROUTERSSID.*$+               default $targetSSID   # ROUTERSSID+" Kconfig.projbuild >/tmp/tmp.$$
+sed -e"s+.*ROUTERPASSWORD.*$+               default $targetpassword   # ROUTERPASSWORD+" /tmp/tmp.$$ >Kconfig.projbuild
 
 # What is this doing? Probably superstious. Ask Nick.
 touch $targetdir/que_ant/sdkconfig
 
 cd $targetdir/que_ant/main
-sed -e"s/.*TARGETSDA.*$/		default $targetsda/" Kconfig.projbuild >/tmp/tmp.$$
-sed -e"s/.*TARGETSCL.*$/		default $targetscl/" /tmp/tmp.$$ >Kconfig.projbuild
+sed -e"s+.*TARGETSDA.*$+		default $targetsda   # TARGETSDA+" Kconfig.projbuild >/tmp/tmp.$$
+sed -e"s+.*TARGETSCL.*$+		default $targetscl   # TARGETSCL+" /tmp/tmp.$$ >Kconfig.projbuild
 
-. $targetdir/esp-idf/export.sh >/dev/null 2>&1
+. $idfdir/esp-idf/export.sh >/dev/null 2>&1
 
 cd $targetdir/que_ant
+rm -rf build
 idf.py set-target $targetdevice >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
@@ -499,20 +516,37 @@ if [ $? -ne 0 ] ; then
 fi
 
 cd $targetdir/que_ant
-rm -rf build
+
+# Remove this when Nick confirms it is no longer needed. Can't remember if his
+# fix is in the repos or not
 rm -rf ant/dist/js/*.map
 
 echo "idf build of que_ant"
 cd $targetdir/que_ant
+rm -rf build
 idf.py build >/tmp/log.$$ 2>&1
 if [ $? -ne 0 ] ; then
   cat /tmp/log.$$
   fatal "could not do idf.py build in que_ant"
 fi
 
-echo "installation complete"
+if [ $neednewterminal -eq 1 ] || [ $needtologout -eq 1 ] ; then
+  echo "installation almost complete"
+  if [ $needtologout -eq 1 ] ; then
+    echo "In order to be able to access USB hardware you must log out of"
+    echo "your Linux session and log back in with your user id/password before"
+    echo "proceeding with the next steps."
+  elif [ $neednewterminal ] ; then
+    echo "Before proceeding with the next steps below open a new terminal"
+    echo "and use it for for the steps or else exit this terminal session and"
+    echo "begin a new one."
+  fi
+else
+  echo "installation complete"
+fi
+
 echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
-echo ". $targetdir/esp-idf/export.sh >/dev/null 2>&1"
+echo ". $idfdir/esp-idf/export.sh >/dev/null 2>&1"
 echo "Now cd to $targetdir/que_ant and enter 'idf.py flash'"
 echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
 echo "The IP address will look something like this:"
