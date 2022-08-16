@@ -1,5 +1,5 @@
 ## Pull Request How To
-version 0.02
+version 0.03
 
 Here are the steps to follow to modify the TriEmbed Quercus project repository at https://github.com/TriEmbed/quercus
 
@@ -33,7 +33,18 @@ The following steps describe the complete process in detail. Send questions and 
 6. git commit -m "commit message" 
     1. The last commit should begin with the text "issueN" where N is the specific issue being resolved. 
     2. To see changes made in a branch use "git log". The "git status" command will not show any changes.
-7. Use the command "git push origin <branchname>:main" to push changes to the parent repo in the user's account.
+7. Use the command "git push origin <branchname>:main" to push changes to the parent repo in your account.
     1. SPECIAL NOTE: Out in the world both "origin" and "main" might be different labels. This advanced topic might be covered in a future revision of these notes.
+
+The "git push" should create output like this:
+
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote: 
+remote: Create a pull request for 'issue25' on GitHub by visiting:
+############# This is an example, not a link to visit
+remote:      https://github.com/petesoper/quercusdoc/pull/new/issue25
+remote: 
+
+8. Go to the specific link in the your account
 
 Versions of this how-to that are designed for popular GUI interfaces to git/github welcome!
