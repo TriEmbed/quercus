@@ -7,4 +7,7 @@ https://smile.amazon.com/gp/product/B08MFCC4SR/ref=ppx_yo_dt_b_search_asin_title
 
 File "esp32pinout.odt" in this directory shows the TOP VIEW of the pins. The lable "CONN" is in the position of the board's USB micro connector.
 
-Need photo(s)
+File "board-top-view.jpg" in this directory shows a top view of the board with wire connections for the "BLINKY" application.
+
+File "SLG47004V_DIP_Proto_Board_Quick_Start_Guide.pdf" shows a diagram of the FPGA DIP board. Note well that while "Pin 1 (vcc)" is in position 1 of the 20 position DIP connector most (possibly) all other pins have labels that DO NOT reflect their connector positions. One must look at the actual connector pin position using the red or blue connection line to orient a connection.
+
