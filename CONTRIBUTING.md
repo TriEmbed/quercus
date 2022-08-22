@@ -16,29 +16,19 @@ As a contributor, here are the guidelines we would like you to follow:
 ## <a name="coc"></a> Code of Conduct
 
 Help us keep Quercus open and inclusive.
-Please read and follow our [Code of Conduct][coc].
+Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 
 ## <a name="question"></a> Got a Question or Problem?
 
-Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests.
-Instead, we recommend using [Stack Overflow](https://stackoverflow.com/questions/tagged/triembed-quercus) to ask support-related questions. 
-When creating a new question on Stack Overflow, make sure to add the `triembed-quercus` tag.
+For the time being, we will answer general support questions that are submitted using the **Support Question** issue template.
+The team reserves the right to alter this method of support as needed. Updates will be available here.
 
-Stack Overflow is a much better place to ask questions since:
-
-- there are thousands of people willing to help on Stack Overflow
-- questions and answers stay available for public viewing so your question/answer might help someone else
-- Stack Overflow's voting system assures that the best answers are prominently visible.
-
-To save your and our time, we will systematically close all issues that are requests for general support and redirect people to Stack Overflow.
-
-If you would like to chat about the question in real-time, you can reach out via [our Discord server][discord].
-
+Live realtime chat for support issues is not available at this time.
 
 ## <a name="issue"></a> Found a Bug?
 
-If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our [GitHub Repository][github].
+If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our [GitHub Repository](https://github.com/triembed/quercus).
 Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
 
@@ -407,3 +397,8 @@ The following documents can help you sort out issues with GitHub accounts and mu
 [plunker]: https://plnkr.co/edit
 [runnable]: https://runnable.com/
 [stackoverflow]: https://stackoverflow.com/questions/tagged/angular
+
+## Attribution
+
+This is adapted from the [CONTRIBUTING.md](https://www.github.com/angular) file of the same name, 
+available at https://github.com/angular/angular/blob/main/CONTRIBUTING.md
