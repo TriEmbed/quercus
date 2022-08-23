@@ -18,7 +18,7 @@ body:
       label: "Board"
       description: "On which board does this issue occur?"
       placeholder: "e.g., ESP32 Dev Module, ESP32-S2, ..."
-      validations:
+    validations:
         required: true
   - type: textarea
     id: "what-happened"
