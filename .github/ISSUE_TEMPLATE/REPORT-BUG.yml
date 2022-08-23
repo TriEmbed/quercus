@@ -1,34 +1,31 @@
-name: Bug Report
-description: File a bug report
-title: "[Bug]: "
-labels: ["bug", "triage"]
-assignees:
-  - FrugalGuy
+name: Issue report
+description: Report any problem here
+labels: ["Status: Awaiting triage"]
 body:
   - type: markdown
     attributes:
       value: |
-         * Before reporting a new issue please check and search in List of existing issues 
-         * Please check Online Documentation 
-         * Take a look at the Troubleshooting guide 
-         * If still experiencing the issue, please provide as many details as possible below about your hardware, computer setup and code.
+        * Before reporting a new issue please check and search in [List of existing issues](https://github.com/espressif/arduino-esp32/issues?q=is%3Aissue) 
+        * Please check [Online Documentation](https://docs.espressif.com/projects/arduino-esp32/en/latest/index.html)
+        * Take a look on [Troubleshooting guide](https://docs.espressif.com/projects/arduino-esp32/en/latest/troubleshooting.html)
+        * If still experiencing the issue, please provide as many details as possible below about your hardware, computer setup and code.
   - type: input
-    id: board
+    id: Board
     attributes:
-      label: "Board"
-      description: "On which board does this issue occur?"
-      placeholder: "e.g., ESP32 Dev Module, ESP32-S2, ..."
+      label: Board
+      description: On which Board does this issue occur?
+      placeholder: eg. ESP32 Dev Module, ESP32-S2, LilyGo TTGO LoRa32...
     validations:
-        required: true
+      required: true
   - type: textarea
     id: devboard
     attributes:
-      label: "Device Description?"
-      description: "What development board or other hardware is the chip attached to?"
-      value: "e.g., DevKit A, plain module on breadboard, etc. If custom or unusual, please attach a photo."
+      label: Device Description
+      description: What development board or other hardware is the chip attached to?
+      placeholder: ex. DevKitC, plain module on breadboard, etc. If your hardware is custom or unusual, please attach a photo.
     validations:
-      required: true
- - type: textarea
+       required: true
+  - type: textarea
     id: other-hw
     attributes:
       label: Hardware Configuration
@@ -56,11 +53,11 @@ body:
   - type: input
     id: IDE
     attributes:
-      label: IDE Name
-      description: What IDE are you using?
-      placeholder: eg. Arduino IDE, PlatformIO, Sloeber...
+     label: IDE Name
+     description: What IDE are you using?
+     placeholder: eg. Arduino IDE, PlatformIO, Sloeber...
     validations:
-      required: true
+     required: true
   - type: input
     id: os
     attributes:
@@ -135,4 +132,3 @@ body:
       options:
         - label: I confirm I have checked existing issues, online documentation and Troubleshooting guide.
           required: true
-  
