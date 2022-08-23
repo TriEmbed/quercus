@@ -34,12 +34,11 @@ Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
 
 ## <a name="feature"></a> Missing a Feature?
-You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub Repository.
+You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub Repository.  
 If you would like to *implement* a new feature, please consider the size of the change in order to determine the right steps to proceed:
 
-* For a **Major Feature**, first open a Feature Request issue and outline your proposal so that it can be discussed.
-  This process allows us to better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
-
+* For a **Major Feature**, first open a [Feature Request issue](https://github.com/triembed/quercus/issues/new/choose) and outline your proposal so that it can be discussed.
+  This process allows us to better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.  
   **Note**: Adding a new topic to the documentation, or significantly re-writing a topic, counts as a major feature.
 
 * **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
@@ -50,11 +49,12 @@ If you would like to *implement* a new feature, please consider the size of the 
 
 ### <a name="submit-issue"></a> Submitting an Issue
 
-Before you submit an bug report or a feature request, please search the issue tracker. An issue for your problem might
+Before you submit an bug report or a feature request, please search the [issue tracker](https://github.com/TriEmbed/quercus/issues). An issue for your problem might
 already exist and the discussion might inform you of workarounds readily available.
 
 [ **TODO: Is the following okay, or are there more or more-specific instructions needed?** ]
-We want to fix all the issues as soon as possible, but before fixing a bug, we need to reproduce and confirm it.
+
+We want to fix issues as soon as possible, but before fixing a bug, we need to reproduce and confirm it.
 In order to reproduce bugs, we require that you provide a minimal reproduction.
 Having a minimal reproducible scenario gives us a wealth of important information without going back and forth to you with additional questions.
 
@@ -370,12 +370,9 @@ The content of the commit message body should contain:
 
 ## <a name="cla"></a> Signing the CLA
 
-Please agree to our Contributor License Agreement (CLA) when sending pull requests. For any code
+Please agree to our [Contributor License Agreement (CLA)](doc/contributor_license_agreement.md) when sending pull requests. For any code
 changes to be accepted, the CLA must be accepted.  A link to the CLA is in the pull requests template. 
 
-* For individuals, we have a [simple click-through form][individual-cla].
-* For corporations, we'll need you to
-  [print, sign and one of scan+email, fax or mail the form][corporate-cla].
 
 
 
