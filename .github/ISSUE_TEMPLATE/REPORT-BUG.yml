@@ -56,11 +56,11 @@ body:
   - type: input
     id: IDE
     attributes:
-     label: IDE Name
-     description: What IDE are you using?
-     placeholder: eg. Arduino IDE, PlatformIO, Sloeber...
+      label: IDE Name
+      description: What IDE are you using?
+      placeholder: eg. Arduino IDE, PlatformIO, Sloeber...
     validations:
-     required: true
+      required: true
   - type: input
     id: os
     attributes:
