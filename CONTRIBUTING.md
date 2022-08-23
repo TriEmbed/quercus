@@ -377,9 +377,6 @@ changes to be accepted, the CLA must be accepted.  A link to the CLA is in the p
 
 
 [commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#
-[corporate-cla]: https://cla.developers.google.com/about/google-corporate
-[dev-doc]: https://github.com/angular/angular/blob/main/docs/DEVELOPER.md
-[individual-cla]: https://cla.developers.google.com/about/google-individual
 [js-style-guide]: https://google.github.io/styleguide/jsguide.html
 
 ## Attribution
