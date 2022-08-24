@@ -1,7 +1,7 @@
 # white dev board
 The "white board" is a Quercus hardware that can be made with off the shelf parts: an ESP32 dev board described below and a SLG47004V-DIP on a long (830 point) solderless breadboard. 
 
-![alt text](https://white-with-LEDs.jpg)
+![alt text](white-with-LEDs.jpg)
 Here is a suitable ESP32 "WROOM" board:
 
 https://smile.amazon.com/gp/product/B08MFCC4SR/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1
