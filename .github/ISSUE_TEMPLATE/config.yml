@@ -1,7 +1,7 @@
 blank_issues_enabled: true
 contact_links:
   - name: Frequently Asked Questions (FAQ)
-    url: doc/faq.md
+    url: https://github.com/triembed/quercus/blob/main/doc/faq.md
     about: Most frequently asked questions
   - name: **PLACEHOLDER EXAMPLE** Arduino ESP32 Gitter Channel
     url: https://gitter.im/espressif/arduino-esp32
