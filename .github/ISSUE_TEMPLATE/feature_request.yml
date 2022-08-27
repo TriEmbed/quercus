@@ -6,18 +6,10 @@ labels: [
 ]
 body:
   - type: input
-    id: start_date
-    attributes:
-      label: "Start Date"
-      description: Start of development
-      placeholder: "month/day/year"
-    validations:
-      required: false
-  - type: textarea
     id: implementation_pr
     attributes:
       label: "Implementation PR"
-      description: Pull request used to contribute code, if any.
+      description: Pull request used to contribute code, if any
       placeholder: "#Pull Request ID"
     validations:
       required: false
@@ -25,26 +17,29 @@ body:
     id: reference_issues
     attributes:
       label: "Reference Issues"
-      description: Common issues
+      description: Common issues associated with this feature
       placeholder: "#Issues IDs"
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: "---"
   - type: textarea
     id: summary
     attributes:
       label: "Summary"
-      description: Provide a brief explanation of the feature
-      placeholder: Describe in a few lines your feature request
+      description: Provide a brief explanation of the feature/enhancement.
+      placeholder: Describe the feature/enhancement request
     validations:
       required: true
   - type: textarea
-    id: basic_example
+    id: example
     attributes:
       label: "Basic Example"
       description: Indicate here some basic examples of your feature.
       placeholder: A few specific words about your feature request.
     validations:
-      required: true
+      required: false
   - type: textarea
     id: drawbacks
     attributes:
@@ -52,9 +47,9 @@ body:
       description: What are the drawbacks/impacts of your feature request ?
       placeholder: Identify the drawbacks and impacts while being neutral on your feature request
     validations:
-      required: true
+      required: false
   - type: textarea
-    id: unresolved_question
+    id: unresolved_questions
     attributes:
       label: "Unresolved questions"
       description: What questions still remain unresolved ?
