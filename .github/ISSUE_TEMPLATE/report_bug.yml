@@ -6,16 +6,18 @@ body:
   - type: markdown
     attributes:
       value: |
-        * Before reporting a new issue please check and search in [List of existing issues](https://github.com/espressif/arduino-esp32/issues?q=is%3Aissue) 
-        * Please check [Online Documentation](https://docs.espressif.com/projects/arduino-esp32/en/latest/index.html)
-        * Take a look on [Troubleshooting guide](https://docs.espressif.com/projects/arduino-esp32/en/latest/troubleshooting.html)
+        * Before reporting a new issue please check and search in [List of existing issues](https://github.com/triembed/quercus/issues?q=is%3Aissue) 
+        * Please check *PLACEHOLDER* [Online Documentation](https://docs.espressif.com/projects/arduino-esp32/en/latest/index.html)
+        * Take a look on *PLACEHOLDER* [Troubleshooting guide](https://docs.espressif.com/projects/arduino-esp32/en/latest/troubleshooting.html)
         * If still experiencing the issue, please provide as many details as possible below about your hardware, computer setup and code.
+        ---
+###
   - type: input
-    id: Board
+    id: fpga
     attributes:
-      label: Board
-      description: On which Board does this issue occur?
-      placeholder: eg. ESP32 Dev Module, ESP32-S2, LilyGo TTGO LoRa32...
+      label: FPGAs
+      description: Which FPGA(s) are you using?
+      placeholder: eg. SLG47004V-DIP...
     validations:
       required: true
   - type: textarea
@@ -23,7 +25,7 @@ body:
     attributes:
       label: Device Description
       description: What development board or other hardware is the chip attached to?
-      placeholder: ex. DevKitC, plain module on breadboard, etc. If your hardware is custom or unusual, please attach a photo.
+      placeholder: ex. Quercus purple v0.6 or v0.7, Quercus white, custom with ____ Dev board, plain module on breadboard, etc. If your hardware is custom or unusual, please attach a photo by clicking in this field then drag/drop files.
     validations:
        required: true
   - type: textarea
@@ -34,29 +36,19 @@ body:
       placeholder: ex. GPIO 18 & 19 are connected to I2C devices.
     validations:
       required: true
-  - type: dropdown
-    id: version
+  - type: input
+    id: esp32-version
     attributes:
-      label: Version
-      description: What version of Arduino ESP32 are you running? If possible, consider updating to the latest version.
-      options:
-        - latest master (checkout manually)
-        - latest development Release Candidate (RC-X)
-        - v2.0.4
-        - v2.0.3
-        - v2.0.2
-        - v2.0.1
-        - v2.0.0
-        - v1.0.6
-        - other
+      label: ESP32 Version
+      description: What ESP32 are you running?
     validations:
-      required: true
+      required: false
   - type: input
     id: IDE
     attributes:
      label: IDE Name
      description: What IDE are you using?
-     placeholder: eg. Arduino IDE, PlatformIO, Sloeber...
+     placeholder: eg. PLACEHOLDER ...
     validations:
      required: true
   - type: input
@@ -68,7 +60,7 @@ body:
     validations:
       required: true
   - type: input
-    id: Flash
+    id: flash
     attributes:
       label: Flash frequency
       description: What flash frequency is used?
