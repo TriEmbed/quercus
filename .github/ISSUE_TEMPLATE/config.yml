@@ -1,11 +1,11 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Frequently Asked Questions (FAQ)
+  - name: "Frequently Asked Questions (FAQ)"
     url: https://github.com/triembed/quercus/blob/main/doc/faq.md
     about: Most frequently asked questions
-  - name: **PLACEHOLDER EXAMPLE** Arduino ESP32 Gitter Channel
+  - name: "**PLACEHOLDER EXAMPLE** Arduino ESP32 Gitter Channel"
     url: https://gitter.im/espressif/arduino-esp32
-    about: Community channel for questions and help
-  - name: **PLACEHOLDER EXAMPLE** ESP32 Forum - Arduino
+    about: "Community channel for questions and help"
+  - name: "**PLACEHOLDER EXAMPLE** ESP32 Forum - Arduino"
     url: https://esp32.com/viewforum.php?f=19
     about: Official Forum for questions
