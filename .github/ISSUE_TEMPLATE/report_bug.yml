@@ -66,7 +66,7 @@ body:
       description: What flash frequency is used?
       placeholder: eg. 40Mhz
     validations:
-      required: true
+      required: false
   - type: dropdown
     id: PSRAM 
     attributes:
@@ -76,7 +76,7 @@ body:
         - 'yes'
         - 'no' 
     validations:
-      required: true
+      required: false
   - type: input
     id: Upload
     attributes:
@@ -84,7 +84,7 @@ body:
       description: What upload speed is used?
       placeholder: eg. 115200
     validations:
-      required: true
+      required: false
   - type: textarea
     id: Description
     attributes:
