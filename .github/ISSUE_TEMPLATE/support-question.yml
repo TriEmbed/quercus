@@ -5,18 +5,20 @@ labels: [
   'support question'
 ]
 body:
+- type: markdown
+  attributes:
+    value: "We reserve the right to change how we offer support. \
+For now, please review the resources below, and *then* if you still have a question, go ahead and ask.\
+---\
+## Other Support Resources\
+* Slack Community Chat: https://babeljs.slack.com (you can sign-up at https://slack.babeljs.io/ for an invite)\
+* StackOverflow: https://stackoverflow.com/questions/tagged/triembed-quercus using the tag `triembed-quercus`\
+* Twitter: If it's just a quick question you can ping our Twitter: https://twitter.com/babeljs\
+* Also have a look at the readme for more information on how to get support:\
+  https://github.com/triembed/quercus/blob/master/README.md"
 - type: checkboxes
   attributes:
     label: Have you checked other resources for this?
-    description: "We reserve the right to change how we offer support. 
-For now, please review the resources below, and *then* if you still have a question, go ahead and ask.
----
-## Other Support Resources
-* Slack Community Chat: https://babeljs.slack.com (you can sign-up at https://slack.babeljs.io/ for an invite)
-* StackOverflow: https://stackoverflow.com/questions/tagged/triembed-quercus using the tag `triembed-quercus`
-* Twitter: If it's just a quick question you can ping our Twitter: https://twitter.com/babeljs
-* Also have a look at the readme for more information on how to get support:
-  https://github.com/triembed/quercus/blob/master/README.md"
     options:
     - label: I have searched the suggested resources
       required: true
@@ -25,4 +27,4 @@ For now, please review the resources below, and *then* if you still have a quest
     label: Your Question
     description: Your general support question
   validations:
-    required: false
+    required: true
