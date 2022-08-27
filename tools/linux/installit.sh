@@ -112,7 +112,7 @@ needtologout=0
 
 usage() {
   echo $1
-  echo "usage: installit WIFISSID WIFIpassword [ -targetdevice <ESP32 | ESP32C3 | ESP32S2> ] [ -targetdir <path> ] [ -branch <branch id> ] [ -c3board <60 | 70> ] [ -version ] [ -help ]"
+  echo "usage: $0 WIFISSID WIFIpassword [ -targetdevice <ESP32 | ESP32C3 | ESP32S2> ] [ -targetdir <path> ] [ -branch <branch id> ] [ -c3board <60 | 70> ] [ -version ] [ -help ]"
   echo "default targetdir: $targetdir"
   echo "default branch: $targetbranch"
   echo "default device: $targetdevice"
