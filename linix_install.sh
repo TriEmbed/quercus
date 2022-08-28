@@ -19,10 +19,12 @@ DEF_CONFIG=".quercusrc"
 CONFIG_FILE=""
 CONFIG_FULL_PATH=""
 REWRITE_CONFIG=0
-WIFISSID=""
-WIFI_PASSWORD=""
+WIFI_SSID=""
+WIFI_PASSWD=""
 DEVICE="ESP32C3"
 TARGET_DIR="$HOME/.quercus"
+C3BOARD=70
+TARGET_BRANCH="origin/release/v4.4"
 
 
 #
@@ -32,10 +34,12 @@ TARGET_DIR="$HOME/.quercus"
 # be preceeded by a $ in order for the debug function to work properly.
 #
 function debug() {
-    for val in "$@"; do
-        eval tmp="\$$val"
-        printf "%16s: %s\n" "$val" "$tmp"
-    done
+    if [ "$DEBUG" != "0" ]; then
+        for val in "$@"; do
+            eval tmp="\$$val"
+            printf "%16s: %s\n" "$val" "$tmp"
+        done
+    fi
 }
 
 
@@ -43,8 +47,9 @@ function debug() {
 # help
 #
 function help() {
+    local name=$(basename "$0")
     local help=$(cat << EOF
-Usage: linux_install.sh
+Usage: %s
     -c FILE | --config FILE             - Optional config file, defaults to %s
     -d DEVICE | --device DEVICE         - Can be one of ESP32 | ESP32C3 | ESP32S2.
     -r | --rewrite-config               - Rewrites the config file.
@@ -53,7 +58,7 @@ Usage: linux_install.sh
     -h | --help                         - This screen.\n\n
 EOF
 )
-    printf "$help" "$DEF_CONFIG" "$HOME"
+    printf "$help" "$name" "$DEF_CONFIG" "$HOME"
 }
 
 
@@ -63,8 +68,8 @@ EOF
 # Pass $* as the only argument.
 #
 function get_opts() {
-    local opts="c:d:t:Dhr"
-    local long="config::,device::,target-dir::,help,debug,rewrite-config"
+    local opts="c:s:p:d:t:Dhr"
+    local long="config::,wifi-ssid::,wifi-passwd::,device::,target-dir::,help,debug,rewrite-config"
     local options=$(getopt -o $opts --long $long -- "$@")
     eval set -- "$options"
 
@@ -74,12 +79,28 @@ function get_opts() {
                 CONFIG_FILE=$2
                 shift 2
                 ;;
+            -s|--wifi-ssid)
+                WIFI_SSID=$2
+                shift 2
+                ;;
+            -p|--wifi-passwd)
+                WIFI_PASSWD=$2
+                shift 2
+                ;;
             -d|--device)
-                DEVICE==$2
+                DEVICE=$2
                 shift 2
                 ;;
             -t|--target-dir)
                 TARGET_DIR=$2
+                shift 2
+                ;;
+            -3|--c3board)
+                C3BOARD=$2
+                shift 2
+                ;;
+            -b|--target-branch)
+                TARGET_BRANCH=$2
                 shift 2
                 ;;
             -r|--rewrite-config)
@@ -92,7 +113,7 @@ function get_opts() {
                 ;;
             -h|--help)
                 help
-                $(printf "%s -help\n" $INSTALLIT)
+                $(printf "%s -help\n" "$INSTALLIT")
                 exit 2
                 ;;
             --)
@@ -111,7 +132,7 @@ function get_opts() {
 #
 # Get config file
 #
-function get_config() {
+function find_config() {
     local path_dir dflag=0
     local paths=("$ABS_PATH" "$HOME")
     local files=("$CONFIG_FILE" "$DEF_CONFIG")
@@ -143,7 +164,9 @@ function get_config() {
 # Read the config file.
 #
 function read_file() {
-    source $CONFIG_FULL_PATH
+    if [ -f "$CONFIG_FULL_PATH" ]; then
+        source $CONFIG_FULL_PATH
+    fi
 }
 
 
@@ -161,22 +184,30 @@ function ask_for_args() {
 
     done
 
-    #printf "%s\n" $CONFIG_FULL_PATH
+    #printf "%s\n%s\n%s\n" "$CONFIG_FULL_PATH" "$WIFI_SSID" "$WIFI_PASSWD"
 
     while true; do
-        read -p "Enter WiFi SSID: " tmp
+        read -p "Enter WiFi SSID or if exists Default ($WIFI_SSID) [Dd]: " tmp
 
-        if [ "$tmp" != "" ]; then
-            WIFISSID=$tmp
+        if [ "${tmp^^}" = "D" ]; then
+            if [ "$WIFI_SSID" != "" ]; then
+                break
+            fi
+        elif [ "$tmp" != "" ]; then
+            WIFI_SSID=$tmp
             break
         fi
     done
 
     while true; do
-        read -p "Enter WiFi password: " tmp
+        read -p "Enter WiFi passwd or if exists Default ($WIFI_PASSWD) [Dd]: " tmp
 
-        if [ "$tmp" != "" ]; then
-            WIFI_PASSWORD=$tmp
+        if [ "${tmp^^}" = "D" ]; then
+            if [ "$WIFI_PASSWD" != "" ]; then
+                break
+            fi
+        elif [ "$tmp" != "" ]; then
+            WIFI_PASSWD=$tmp
             break
         fi
     done
@@ -203,10 +234,34 @@ function ask_for_args() {
         fi
     done
 
-    printf 'WIFISSID="%s"\n' "$WIFISSID" > "$CONFIG_FULL_PATH"
-    printf 'WIFI_PASSWORD="%s"\n' "$WIFI_PASSWORD" >> "$CONFIG_FULL_PATH"
+    while true; do
+        read -p "Enter C3 board ID or Default ($C3BOARD) [Dd]: " tmp
+
+        if [ "${tmp^^}" = "D" ]; then
+            break
+        elif [ "$tmp" != "" ]; then
+            C3BOARD=$tmp
+            break
+        fi
+    done
+
+    while true; do
+        read -p "Enter target branch or Default ($TARGET_BRANCH) [Dd]: " tmp
+
+        if [ "${tmp^^}" = "D" ]; then
+            break
+        elif [ "$tmp" != "" ]; then
+            TARGET_BRANCH=$tmp
+            break
+        fi
+    done
+
+    printf 'WIFI_SSID="%s"\n' "$WIFI_SSID" > "$CONFIG_FULL_PATH"
+    printf 'WIFI_PASSWD="%s"\n' "$WIFI_PASSWD" >> "$CONFIG_FULL_PATH"
     printf 'DEVICE="%s"\n' "$DEVICE" >> "$CONFIG_FULL_PATH"
     printf 'TARGET_DIR="%s"\n' "$TARGET_DIR" >> "$CONFIG_FULL_PATH"
+    printf 'C3BOARD="%s"\n' "$C3BOARD" >> "$CONFIG_FULL_PATH"
+    printf 'TARGET_BRANCH="%s"\n' "$TARGET_BRANCH" >> "$CONFIG_FULL_PATH"
 }
 
 
@@ -214,19 +269,21 @@ function ask_for_args() {
 # Start Execution Here |
 #======================+
 get_opts $*
-get_config
+find_config
+read_file
 
-if [ "$DEBUG" != "0" ]; then
-    debug "INSTALLIT" "CURRENT_DIR" "ABS_PATH" "HOME" "DEF_CONFIG" \
-          "CONFIG_FILE" "REWRITE_CONFIG"
-fi
+debug "INSTALLIT" "CURRENT_DIR" "ABS_PATH" "HOME" "DEF_CONFIG" "CONFIG_FILE" \
+      "CONFIG_FULL_PATH" "REWRITE_CONFIG"
 
-if [ "$CONFIG_FULL_PATH" != "" ] && [ "$REWRITE_CONFIG" -le 0 ]; then
-    read_file
-else
+if [ "$CONFIG_FULL_PATH" = "" ] || [ "$REWRITE_CONFIG" -eq 1 ]; then
     ask_for_args
 fi
 
-if [ "$DEBUG" != "0" ]; then
-    debug "CONFIG_FULL_PATH" "WIFISSID" "WIFI_PASSWORD" "DEVICE" "TARGET_DIR"
+debug "WIFI_SSID" "WIFI_PASSWD" "DEVICE" "TARGET_DIR" "C3BOARD" "TARGET_BRANCH"
+
+if [ ! -f "$TARGET_DIR" ]; then
+    mkdir -p "$TARGET_DIR"
 fi
+
+$(printf '%s "%s" "%s" -targetdevice "%s" -targetdir "%s"' "$INSTALLIT" \
+         "$WIFI_SSID" "$WIFI_PASSWD" "$DEVICE" "$TARGET_DIR")
