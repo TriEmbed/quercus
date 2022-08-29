@@ -198,6 +198,7 @@ while [ $# -ge 2 ] ; do
         if [[ "${esp_types[*]}" != *"$targetdevice"* ]] ; then
           usage "unrecognized target device: $targetdevice"
         fi
+        unset esp_types
         ;;
     -c3board)
         c3board=$1
@@ -262,8 +263,7 @@ echo "targetSSID: $targetSSID"
 echo "targetpassword: $targetpassword"
 
 # Create $targetdir and $HOME/.quercus if they do not exist
-dir_array=($targetdir $idfdir)
-for d in "${dir_array[@]}"; do
+for d in $targetdir $idfdir ; do
   if [ ! -d $d ] ; then
     if getyes "$d does not exist: create it?" ; then
       mkdir $d
@@ -273,7 +273,6 @@ for d in "${dir_array[@]}"; do
     fi
   fi
 done
-unset dir_array
 
 # Get the user into dialout group if not already in it
 
