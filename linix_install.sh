@@ -265,9 +265,9 @@ function ask_for_args() {
 }
 
 
-#======================+
-# Start Execution Here |
-#======================+
+#======================#
+# Start Execution Here #
+#======================#
 get_opts $*
 find_config
 read_file
@@ -280,10 +280,6 @@ if [ "$CONFIG_FULL_PATH" = "" ] || [ "$REWRITE_CONFIG" -eq 1 ]; then
 fi
 
 debug "WIFI_SSID" "WIFI_PASSWD" "DEVICE" "TARGET_DIR" "C3BOARD" "TARGET_BRANCH"
-
-if [ ! -f "$TARGET_DIR" ]; then
-    mkdir -p "$TARGET_DIR"
-fi
 
 $(printf '%s %s %s -targetdevice %s -targetdir %s -targetbranch %s -c3board %s' \
          "$INSTALLIT" "$WIFI_SSID" "$WIFI_PASSWD" "$DEVICE" "$TARGET_DIR" \
