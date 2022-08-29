@@ -285,5 +285,6 @@ if [ ! -f "$TARGET_DIR" ]; then
     mkdir -p "$TARGET_DIR"
 fi
 
-$(printf '%s "%s" "%s" -targetdevice "%s" -targetdir "%s"' "$INSTALLIT" \
-         "$WIFI_SSID" "$WIFI_PASSWD" "$DEVICE" "$TARGET_DIR")
+$(printf '%s %s %s -targetdevice %s -targetdir %s -targetbranch %s -c3board %s' \
+         "$INSTALLIT" "$WIFI_SSID" "$WIFI_PASSWD" "$DEVICE" "$TARGET_DIR" \
+         "$TARGET_BRANCH" "$C3BOARD")

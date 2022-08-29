@@ -65,7 +65,9 @@ c3board=70
 
 # The directory pathname for the user's Quercus repositories
 
-targetdir=~/.quercus
+idfdir=~/.quercus
+
+targetdir=$idfdir
 
 # The directory pathname for the Espressif IDF directory
 # Note this cannot be currently changed from the command line. 
@@ -83,8 +85,6 @@ targetdir=~/.quercus
 # The remotes/origin/release/v4.4 branch is the latest Espressif stable branch.
 # the remotes/origin/release/v5.0 branch is the bleeding edge development 
 # branch. 
-
-idfdir=~/.quercus
 
 # Git is weird with respect to git branch -a output vs actual branch names
 # The correct branch name is $targetbranchprefix$targetbranch
@@ -194,8 +194,8 @@ while [ $# -ge 2 ] ; do
     -targetdevice)
         targetdevice=$1
         shift
-        if [ ! $targetdevice = "ESP32" ] && [ ! $targetdevice = "ESP32S2" ] &&
-           [ ! $targetdevice = "ESP32C3" ] ; then
+        esp_types=("ESP32" "ESP32S2" "ESP32C3")
+        if [[ "${esp_types[*]}" != *"$targetdevice"* ]] ; then
           usage "unrecognized target device: $targetdevice"
         fi
         ;;
@@ -262,8 +262,8 @@ echo "targetSSID: $targetSSID"
 echo "targetpassword: $targetpassword"
 
 # Create $targetdir and $HOME/.quercus if they do not exist
-
-for d in $targetdir $idfdir ; do
+dir_array=($targetdir $idfdir)
+for d in "${dir_array[@]}"; do
   if [ ! -d $d ] ; then
     if getyes "$d does not exist: create it?" ; then
       mkdir $d
@@ -273,6 +273,7 @@ for d in $targetdir $idfdir ; do
     fi
   fi
 done
+unset dir_array
 
 # Get the user into dialout group if not already in it
 
