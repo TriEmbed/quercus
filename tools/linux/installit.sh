@@ -263,6 +263,7 @@ echo "targetSSID: $targetSSID"
 echo "targetpassword: $targetpassword"
 
 # Create $targetdir and $HOME/.quercus if they do not exist
+
 for d in $targetdir $idfdir ; do
   if [ ! -d $d ] ; then
     if getyes "$d does not exist: create it?" ; then
