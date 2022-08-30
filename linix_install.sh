@@ -50,12 +50,16 @@ function help() {
     local name=$(basename "$0")
     local help=$(cat << EOF
 Usage: %s
+    -3 NUM | --c3board NUM              - The version of the que_purple board either 60 or 70, defaults to 70.
+    -b PATH | --target-branch PATH      - The base path to the esp-idf branch.
     -c FILE | --config FILE             - Optional config file, defaults to %s
     -d DEVICE | --device DEVICE         - Can be one of ESP32 | ESP32C3 | ESP32S2.
+    -h | --help                         - This screen.\n\n
+    -p PASSWD | --wifi-passwd PASSWD    - The Password for the SSID.
     -r | --rewrite-config               - Rewrites the config file.
+    -s SSID | --wifi-ssid SSID          - The WiFi SSID in the current network.
     -t TARGET_DIR | --target TARGET_DIR - The directory where the build will reside, defaults to %s/.quercus.
     -D | --debug                        - Turn on DEBUG mode.
-    -h | --help                         - This screen.\n\n
 EOF
 )
     printf "$help" "$name" "$DEF_CONFIG" "$HOME"
