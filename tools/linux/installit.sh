@@ -14,33 +14,22 @@
 
 # Todo (not baked well enough for an issue):
 #  1) Should be able to detect and elide redundant clones and npm 
-#     operations (use hidden files for latter). Repo issue #1 should enable this.
-#  2) OK to delete que_ant/ant and corresponding Cmake stuff after these 
-#     changes with help from Nick (Pete can't make it work and it isn't a
-#     priority)
-#  3) Add a function to handle the tmp log and operation result idiom
-#  4) Use getopt(1). This page may be sufficient to understand how to
-#     do it: https://www.tutorialspoint.com/unix_commands/getopt.html
-#  5) Check cmake version and update as needed. CMake version 3.16 or newer is 
+#     operations (use hidden files for latter). Repo issue #1 should enable
+#     this.
+#  2) Add a function to handle the tmp log and operation result idiom
+#  3) Check cmake version and update as needed. CMake version 3.16 or newer is 
 #     required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to 
 #     install a suitable version if your OS version doesn’t have one.
-#  6) In getyes use a signal handler to ensure exit 1 with ctrl-C if we
-#     don't get this for free
-#  7) Use a signal handler to avoid getting hosed by a random ^C.
-#  8) Add support for other Linux distros when needed. See here:
+#  4) Use a signal handler to avoid getting hosed by a random ^C.
+#  5) Add support for other Linux distros when needed. See here:
 # https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html
-#  9) Validate -targetbranch argument against git branch -a to make sure
+#  6) Validate -d|--target-branch argument against git branch -a to make sure
 #     the branch exists
 #
 
 # Bump this per push
 
-version="0.33"
-
-# capture the tools directory
-
-temp=`dirname $0`
-rootpath=`readlink -f $temp`
+version="0.34"
 
 # Authors and maintainers
 
@@ -49,37 +38,21 @@ rootpath=`readlink -f $temp`
 # pete@soper.us
 # rob.mackie@gmail.com
 # nickedgington@gmail.com
+# carl.nobile@gmail.com
 
 # Note: there should be discussion about the fact that the users's WIFI
-# password is passed in plain text and held in plain text in source files and
-# the ESP32 binary.
+# password is passed in plain text and held in plain text in config,
+# source files, and the ESP32 binary.
 
-# The default target ESP32 device
-
-targetdevice="ESP32C3"
-
-# The default version of que_purple board. Currently 60 and 70 are identical:
-# no need to use -c3board option.
-
-c3board=70
-
-# The directory pathname for the user's Quercus repositories
-
-idfdir=~/.quercus
-
-targetdir=$idfdir
-
-# The directory pathname for the Espressif IDF directory
-# Note this cannot be currently changed from the command line. 
+# Concerning the directory pathname for the Espressif IDF directory.
 # Be careful about having multiple instances of esp-idf because the most
 # recent invocation of install.sh governs which is used, NOT which one contained
 # the export.sh file that was sourced. (Is this completely correct? It is for
 # sure partially correct because install.sh mutates ~/.expressif but export.sh
 # does not).
 
-
 # The git branch labels for the exact version of tools to install. If this 
-# variable does not match the branch of an  existing esp-idf the script must
+# variable does not match the branch of an existing esp-idf the script must
 # be aborted because there is the likelihood that the submodules are not right.
 # The required order is 1) clone, 2) checkout branch, 3) load submodules
 # The remotes/origin/release/v4.4 branch is the latest Espressif stable branch.
@@ -94,7 +67,21 @@ targetbranchprefix="remotes/"
 # The base part of the branch name shown by git branch -a
 targetbranch="origin/release/v4.4"
 
-#### Do not change lines below here
+##########################################################################
+# Do not change any lines below or you will find all the furure projects #
+# you work on for the rest of your life will fail. Just saying.          #
+##########################################################################
+
+# Internal variables
+LOG_PATH=""
+
+# Arguments from the command line
+WIFI_SSID=$1
+WIFI_PASSWD=$2
+DEVICE=$3
+TARGET_DIR=$4
+TARGET_BRANCH=$5
+C3BOARD=$6
 
 # The nvm version
 nodeversion="14"
@@ -110,147 +97,58 @@ needtologout=0
 
 # Detail proper usage of the script command and error exit
 
-usage() {
-  local name=$(basename "$0")
-  echo $1
-  echo "usage: $name WIFISSID WIFIpassword [ -targetdevice <ESP32 | ESP32C3 | ESP32S2> ] [ -targetdir <path> ] [ -branch <branch id> ] [ -c3board <60 | 70> ] [ -version ] [ -help ]"
-  echo "default targetdir: $targetdir"
-  echo "default branch: $targetbranch"
-  echo "default device: $targetdevice"
-  exit 1
-}
-
-help() {
-  echo "ESP32, ESP32S3 and ESPC3 supported"
-  echo "I2C pins as follows:"
-  echo "ESP32: SDA 18 SCL 19"
-  echo "ESP32S2: SDA 1 SCL 0"
-  echo "ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)"
-  usage ""
-}
-
-# Put out a prompt, then ask for a Y, y, N or n response.
-# Return true if Y or y, false if N or n. Cannot escape until an acceptable 
-# answer is input. Use ctrl-C to break out.
-
-getyes() {
-  while [ 1 -eq 1 ] ; do
-    echo "$1"
-    echo "enter Y, y, N, or n"
-    read ans
-    if [ $ans = "Y" ] || [ $ans = "y" ] ; then
-      return 0
-    elif [ $ans = "N" ] || [ $ans = "n" ] ; then
-      return 1
-    else
-      echo "Answer MUST be Y, y, N, or n"
-    fi
-  done
-}
-
 # Output a fatal error message and error exit
 
-fatal() {
-  echo $1
-  rm -f /tmp/log.$$
-  rm -f /tmp/tmp.$$
+#
+# create_log_dir
+#
+# Creates a log directory in /tmp
+#
+function create_log_dir() {
+    local username=$(whoami)
+    LOG_PATH=$(printf "/tmp/quercus-%s" "$username")
+    mkdir "$LOG_PATH"
+}
+
+
+#
+# fatal
+#
+# Removes the log files.
+#
+# $1 -- Message to print to the screen.
+#
+function fatal() {
+  printf "$1\n"
+  rm -rf "$LOG_PATH"
   exit 1
 }
 
-# Brute force handling of option switches
+#########################
+# Execution starts here #
+#########################
 
-if [ $# -lt 2 ] ; then
-  # Take care of a dangling single option switch
-  if [ $# -gt 0 ] ; then
-    if [ $1 = "-version" ] ; then
-      echo "version: $version"
-      exit 0
-    elif [ $1 = "-help" ] ; then
-      help
-    else
-      usage "unknown command line option: $1"
-    fi
-  fi
-else
-  targetSSID=$1
-  shift
-  targetpassword=$1
-  shift
-fi
-
-while [ $# -ge 2 ] ; do
-  switch=$1
-  shift
-  
-  case $switch in
-    -targetbranch)
-        targetbranch=$1
-        shift
+case "$DEVICE" in
+    ESP32C3)
+        if [ "$C3BOARD" -eq 60 ] ; then
+            targetsda=18
+            targetscl=19
+        elif [ "$C3BOARD" -eq 70 ] ; then
+            targetsda=1
+            targetscl=0
+        else
+            fatal "unknown ESP32C3 board version number"
+        fi;
         ;;
-    -targetdir)
-        targetdir=$1
- 	shift
+    ESP32)
+        targetsda=18
+        targetscl=19
         ;;
-    -targetdevice)
-        targetdevice=$1
-        shift
-        esp_types=("ESP32" "ESP32S2" "ESP32C3")
-        if [[ "${esp_types[*]}" != *"$targetdevice"* ]] ; then
-          usage "unrecognized target device: $targetdevice"
-        fi
-        unset esp_types
+    ESP32S2)
+        targetsda=1
+        targetscl=0
         ;;
-    -c3board)
-        c3board=$1
-        shift
-        if [ $c3board -ne 70 ] && [ $c3board -ne 60 ] ; then
-          fatal "-c3board value must be either 60 or 70"
-        fi
-        ;;
-    -version)
-        echo "version: $version"
-        exit 0
-        ;;
-    -help)
-        help
-        ;;
-    *)
-        usage "unknown option switch: $switch"
-        exit 1
-        ;;
-  esac
-done
-
-# Take care of a dangling single option switch
-if [ $# -gt 0 ] ; then
-  if [ $1 = "-version" ] ; then
-    echo "version: $version"
-    exit 0
-  elif [ $1 = "-help" ] ; then
-    help
-  else
-    usage "unknown command line option: $@"
-  fi
-fi
-
-case $targetdevice in
-  ESP32C3) if [ $c3board -eq 60 ] ; then
-             targetsda=18
-             targetscl=19
-           elif [ $c3board -eq 70 ] ; then
-             targetsda=1
-             targetscl=0
-           else
-             fatal "unknown ESP32C3 board version number"
-           fi;
-           ;;
-  ESP32)  targetsda=18
-          targetscl=19
-          ;;
-  ESP32S2) targetsda=1
-           targetscl=0
-           ;;
-  *) fatal "unknown targetdevice: $targetdevice";;
+    *) fatal "unknown targetdevice: $targetdevice";;
 esac
 
 echo "targetdir: $targetdir"
