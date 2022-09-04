@@ -91,7 +91,7 @@ Usage: %s -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,
     -r | --rewrite-config               - Reprompts for entries then rewrites the config file.
     -s SSID | --wifi-ssid SSID          - The WiFi SSID in the current network.
     -t TARGET_DIR | --target TARGET_DIR - The directory where the build will reside, defaults to %s/.quercus.
-    -D | --debug                        - Turn on DEBUG mode.
+    -D | --debug                        - Turn on DEBUG mode (propagates to the installit.sh script)..
     -n | --noop                         - The installit.sh script will not run, but the config may still be created.
 
     I2C pins as follows
