@@ -243,18 +243,18 @@ debug "Internal variables" "TMP" "ROOT_PATH" "nodeversion" "targetsda" \
 
 printf "Installing required Linux packages.\n"
 
-apt list --installed > $LOG_PATH/tmp.$$ 2>&1
+apt list --installed > "$LOG_PATH/tmp.$$" 2>&1
 
 for package in $packages ; do
-    grep "^$package" $LOG_PATH/tmp.$$ > /dev/null 2>&1
+    grep "^$package" "$LOG_PATH/tmp.$$" > /dev/null 2>&1
 
     if [ $? -ne 0 ]; then
-        sudo apt-get install -y $package > $LOG_PATH/log.$$ 2>&1
+        sudo apt-get install -y $package > "$LOG_PATH/log.$$" 2>&1
 
         if [ $? -eq 0 ]; then
             printf "Installed Linux package %s\n" "$package"
         else
-            cat $LOG_PATH/log.$$
+            cat "$LOG_PATH/log.$$"
             fatal "Could not install Linux package $package"
         fi
     fi
@@ -393,7 +393,7 @@ fi
 
 if [ ! -d $HOME/.nvm ]; then
     printf "installing nvm\n"
-    curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh 2 > /dev/null | bash > "$LOG_PATH/log.$$ 2>&1"
+    curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh 2 > /dev/null | bash > "$LOG_PATH/log.$$" 2>&1
 
     if [ "$?" -ne 0 ]; then
         cat "$LOG_PATH/log.$$"
@@ -440,7 +440,7 @@ cd "$TARGET_DIR/que_aardvark"
 
 if [ ! -e .installed ]; then
     printf "Installing npm in que_aardvark\n"
-    npm install > $LOG_PATH/log.$$ 2>&1
+    npm install > "$LOG_PATH/log.$$" 2>&1
 
     if [ "$?" -ne 0 ]; then
         cat "$LOG_PATH/log.$$"
