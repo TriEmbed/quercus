@@ -101,8 +101,8 @@ Usage: %s -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,
     ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)\n\n
 EOF
 )
-    printf "$help" "$name" "${c3[*]:3}" "$C3BOARD" "$_DEF_CONF" \
-           "${devices[*]:3}" "$DEVICE" "$HOME"
+    printf "$help" "$name" "${c3[*]:3}" "$_C3BOARD" "$_DEF_CONF" \
+           "${devices[*]:3}" "$_DEVICE" "$HOME"
     exit 1
 }
 
