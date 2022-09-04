@@ -6,19 +6,19 @@
 # Tool chain installation script
 # The expectation is that much of this will be put under
 # ../common and sourced by the remainder of this script that
-# specializes it with arguments to the common script but 
+# specializes it with arguments to the common script but
 # discussion is needed as the WSL version takes shape and the
 # Windows version is thought through (by Windows developers).
 
 # See https://github.com/TriEmbed/quercus/issues for bugs/enhancements
 
 # Todo (not baked well enough for an issue):
-#  1) Should be able to detect and elide redundant clones and npm 
+#  1) Should be able to detect and elide redundant clones and npm
 #     operations (use hidden files for latter). Repo issue #1 should enable
 #     this.
 #  2) Add a function to handle the tmp log and operation result idiom
-#  3) Check cmake version and update as needed. CMake version 3.16 or newer is 
-#     required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to 
+#  3) Check cmake version and update as needed. CMake version 3.16 or newer is
+#     required for use with ESP-IDF. Run “tools/idf_tools.py install cmake” to
 #     install a suitable version if your OS version doesn’t have one.
 #  4) Use a signal handler to avoid getting hosed by a random ^C.
 #  5) Add support for other Linux distros when needed. See here:
@@ -51,13 +51,13 @@ version="0.34"
 # sure partially correct because install.sh mutates ~/.expressif but export.sh
 # does not).
 
-# The git branch labels for the exact version of tools to install. If this 
+# The git branch labels for the exact version of tools to install. If this
 # variable does not match the branch of an existing esp-idf the script must
 # be aborted because there is the likelihood that the submodules are not right.
 # The required order is 1) clone, 2) checkout branch, 3) load submodules
 # The remotes/origin/release/v4.4 branch is the latest Espressif stable branch.
-# the remotes/origin/release/v5.0 branch is the bleeding edge development 
-# branch. 
+# the remotes/origin/release/v5.0 branch is the bleeding edge development
+# branch.
 
 # Git is weird with respect to git branch -a output vs actual branch names
 # The correct branch name is $targetbranchprefix$targetbranch
@@ -80,8 +80,14 @@ WIFI_SSID=$1
 WIFI_PASSWD=$2
 DEVICE=$3
 TARGET_DIR=$4
-TARGET_BRANCH=$5
-C3BOARD=$6
+IDF_DIR=$5
+TARGET_BRANCH=$6
+DEBUG=$7
+C3BOARD=$8
+
+# Internal variables
+TMP=$(dirname "$0")
+ROOT_PATH=$(readlink -f "$TMP")
 
 # The nvm version
 nodeversion="14"
@@ -100,6 +106,56 @@ needtologout=0
 # Output a fatal error message and error exit
 
 #
+# Debug
+#
+# Arguments can be a list of strings or variables. All variable name cannot
+# be proceeded by a $ in order for the debug function to work properly.
+#
+# $1 -- Printed message before list.
+# $@ -- Any variables to print.
+#
+function debug() {
+    if [ "$DEBUG" != "0" ]; then
+        local dashes="--------------------------------------------------"
+        printf "%s\n%s\n" "$1" "$dashes"
+        shift
+
+        for val in "$@"; do
+            eval tmp="\$$val"
+            printf "%15s: %s\n" "$val" "$tmp"
+        done
+
+        printf "\n"
+    fi
+}
+
+
+#
+# getyes
+#
+# Display a prompt, then ask for a Y, y, N or n response.
+# Return true if Y or y, else return false if N or n.
+# Will loop until either a yes or no response. Use ctrl-C to break out.
+#
+# $1 -- Prompt
+#
+getyes() {
+    while true; do
+        read -p "$1 [YyNn]: " ans
+
+        if [ $ans = "Y" ] || [ $ans = "y" ] ; then
+            return 0
+        elif [ $ans = "N" ] || [ $ans = "n" ] ; then
+            return 1
+        else
+            printf "Answer MUST be Y, y, N, or n\n"
+        fi
+
+    done
+}
+
+
+#
 # create_log_dir
 #
 # Creates a log directory in /tmp
@@ -107,7 +163,10 @@ needtologout=0
 function create_log_dir() {
     local username=$(whoami)
     LOG_PATH=$(printf "/tmp/quercus-%s" "$username")
-    mkdir "$LOG_PATH"
+
+    if [ ! -f "$LOG_PATH" ]; then
+        mkdir "$LOG_PATH"
+    fi
 }
 
 
@@ -127,6 +186,7 @@ function fatal() {
 #########################
 # Execution starts here #
 #########################
+create_log_dir
 
 case "$DEVICE" in
     ESP32C3)
@@ -151,137 +211,153 @@ case "$DEVICE" in
     *) fatal "unknown targetdevice: $targetdevice";;
 esac
 
-echo "targetdir: $targetdir"
-echo "targetdevice: $targetdevice"
-echo "targetbranch: $targetbranch"
-echo "node version: $nodeversion"
-echo "targetsda: $targetsda"
-echo "targetscl: $targetscl"
-echo "targetSSID: $targetSSID"
-echo "targetpassword: $targetpassword"
+debug "Command line variables" "WIFI_SSID" "WIFI_PASSWD" "DEVICE" \
+      "C3BOARD" "TARGET_DIR" "IDF_DIR" "TARGET_BRANCH" "DEBUG"
 
-# Create $targetdir and $HOME/.quercus if they do not exist
+# Create $TARGET_DIR and $HOME/.quercus if they do not exist
 
-for d in $targetdir $idfdir ; do
-  if [ ! -d $d ] ; then
-    if getyes "$d does not exist: create it?" ; then
-      mkdir $d
-      if [ $? -ne 0 ] ; then
-	fatal "could not create $d" 
-      fi
+for d in "$TARGET_DIR" "$IDF_DIR"; do
+    if [ ! -d "$d" ]; then
+        if getyes "$d does not exist: create it?"; then
+            mkdir "$d"
+
+            if [ $? -ne 0 ]; then
+	        fatal "Could not create $d"
+            fi
+        fi
     fi
-  fi
 done
 
 # Get the user into dialout group if not already in it
 
-groups | grep dialout >/dev/null
+groups | grep dialout > /dev/null
+
 if [ $? -ne 0 ] ; then
-  echo "Adding user to dialout group for USB device access: logout/login needed"
-  sudo usermod -a -G dialout $USER # BE CAREFUL TO DO THIS RIGHT!
-  needtologout=1 
-fi  
+    printf "Adding user to dialout group for USB device access: logout/login needed.\n"
+    sudo usermod -a -G dialout $USER # BE CAREFUL TO DO THIS RIGHT!
+    needtologout=1
+fi
 
-echo "Installing required Linux packages"
+debug "Internal variables" "TMP" "ROOT_PATH" "nodeversion" "targetsda" \
+      "targetscl" "needtologout"
 
-apt list --installed >/tmp/tmp.$$ 2>&1
+printf "Installing required Linux packages.\n"
+
+apt list --installed > $LOG_PATH/tmp.$$ 2>&1
+
 for package in $packages ; do
-  grep "^$package" /tmp/tmp.$$ >/dev/null 2>&1
-  if [ $? -ne 0 ] ; then
-    sudo apt-get install -y $package >/tmp/log.$$ 2>&1
-    if [ $? -eq 0 ] ; then
-      echo "installed Linux package $package"
-    else
-      cat /tmp/log.$$
-      fatal "Could not install Linux package $package"
+    grep "^$package" $LOG_PATH/tmp.$$ > /dev/null 2>&1
+
+    if [ $? -ne 0 ]; then
+        sudo apt-get install -y $package > $LOG_PATH/log.$$ 2>&1
+
+        if [ $? -eq 0 ]; then
+            printf "Installed Linux package %s\n" "$package"
+        else
+            cat $LOG_PATH/log.$$
+            fatal "Could not install Linux package $package"
+        fi
     fi
-  fi
 done
 
 # Add direnv hook to .bashrc if not already there
-grep "direnv hook bash" ~/.bashrc  >/dev/null 2>&1
-if [ $? -ne 0 ] ; then
-  echo "" >>~/.bashrc
-  echo 'eval "$(direnv hook bash)"' >>~/.bashrc
-  if [ $? -ne 0 ] ; then
-    fail "could not edit ~/.bashrc"
-  fi
-  neednewterminal=1
-  echo "direnv has been set up but a new terminal is required"
+grep "direnv hook bash" ~/.bashrc  > /dev/null 2>&1
+
+if [ $? -ne 0 ]; then
+    echo "" >>~/.bashrc
+    echo 'eval "$(direnv hook bash)"' >>~/.bashrc
+
+    if [ $? -ne 0 ] ; then
+        fail "Could not edit ~/.bashrc"
+    fi
+
+    neednewterminal=1
+    printf "direnv has been set up but a new terminal is required.\n"
 fi
 
-# Determine if Espressif IDF already present and ready to use. If present but
-# not usable, offer to recreate it.
+# Determine if Espressif IDF already present and ready to use.
+# If present but not usable, offer to recreate it.
 
-if [ -d $idfdir/esp-idf ] ; then
-  cd $idfdir/esp-idf
-  git branch -a | grep '^\*' | grep $targetbranch >/dev/null
-  if [ $? -eq 0 ] && [ -e .cloned ] && [ -e .submodules ] && [ -e .installed ] ; then
-      present=1
-  else
-    if getyes "$idfdir/esp-idf is present but not usable: recreate it?" ; then
-      rm -rf $idfdir/esp-idf
-      if [ $? -ne 0 ] ; then
-	fatal "Could not erase $idfdir/esp-idf"
-      else
-	present=0
-      fi
+if [ -d "$IDF_DIR/esp-idf" ]; then
+    cd "$IDF_DIR/esp-idf"
+    git branch -a | grep '^\*' | grep "$TARGET_BRANCH" > /dev/null
+
+    if [ $? -eq 0 ] && [ -e .cloned ] && [ -e .submodules ] && [ -e .installed ]
+    then
+        present=1
     else
-      fatal "stash or correct esp-idf and run the script again"
+        if getyes "$IDF_DIR/esp-idf is present but not usable: recreate it?"
+        then
+            rm -rf "$IDF_DIR/esp-idf"
+
+            if [ $? -ne 0 ] ; then
+	        fatal "Could not erase $IDF_DIR/esp-idf"
+            else
+	        present=0
+            fi
+        else
+            fatal "stash or correct esp-idf and run the script again"
+        fi
     fi
-  fi  
 fi
 
-if [ ! $present ] ; then
-  cd $idfdir
-  echo "cloning esp-idf"
-  git clone https://github.com/espressif/esp-idf.git >/tmp/log.$$ 2>&1
-  if [ $? -ne 0 ] ; then
-    cat /tmp/log.$$
-    fatal "Could not clone espressif esp-idf repository"
-  else
-    cd esp-idf
-    touch .cloned
-    git checkout $targetbranchprefix$targetbranch >/tmp/log.$$ 2>&1
-    if [ $? -ne 0 ] ; then
-      cat /tmp/log.$$
-      fatal "git checkout $targetbranchprefix$targetbranch failed"
-    fi
-    echo "loading submodules: this takes longer than the repo clone, be patient"
-    git submodule update --init --recursive >/tmp/log.$$ 2>&1
-    if [ $? -ne 0 ] ; then
-      cat /tmp/log.$$
-      fatal "git submodule update --init --recursive failed"
+debug "Internal variables" "neednewterminal" "present"
+
+if [ ! $present ]; then
+    cd "$IDF_DIR"
+    printf "Cloning esp-idf\n"
+    git clone https://github.com/espressif/esp-idf.git > "$LOG_PATH/log.$$" 2>&1
+
+    if [ $? -ne 0 ]; then
+        cat "$LOG_PATH/log.$$"
+        fatal "Could not clone espressif esp-idf repository."
     else
-      touch .submodules
+        cd esp-idf
+        touch .cloned
+        git checkout $TARGET_BRANCHprefix$TARGET_BRANCH > "$LOG_PATH/log.$$" 2>&1
+
+        if [ $? -ne 0 ] ; then
+            cat "$LOG_PATH/log.$$"
+            fatal "git checkout $TARGET_BRANCHprefix$TARGET_BRANCH failed"
+        fi
+
+        printf "Loading submodules: This takes longer than the repo clone, be patient.\n"
+        git submodule update --init --recursive > "$LOG_PATH/log.$$" 2>&1
+
+        if [ $? -ne 0 ]; then
+            cat "$LOG_PATH/log.$$"
+            fatal "git submodule update --init --recursive failed"
+        else
+            touch .submodules
+        fi
+
+        # install source of export.sh in esp-idf/examples so power users
+        # can have multiple esp-idf dirs with different branches
+
+        cd "$IDF_DIR/esp-idf/examples"
+        echo ". $IDF_DIR/esp-idf/export.sh" > .envrc
+        direnv allow
     fi
-
-    # install source of export.sh in esp-idf/examples so power users can have 
-    # multiple esp-idf dirs with different branches
-
-    cd $idfdir/esp-idf/examples
-    echo ". $idfdir/esp-idf/export.sh" >.envrc
-    direnv allow
-  fi
 fi
 
 # Do a fresh install of the idf because we cannot know whether or not another
-# instance has been installed by the user. 
+# instance has been installed by the user.
 
-cd $idfdir/esp-idf
-./install.sh >/tmp/log.$$
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "esp-idf/install.sh failed"
+cd "$IDF_DIR/esp-idf"
+./install.sh > "$LOG_PATH/log.$$"
+
+if [ "$?" -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "esp-idf/install.sh failed"
 fi
+
 touch .installed
 
-echo "valid esp-idf repo"
+printf "Valid esp-idf repo\n"
 
 # It's become too error prone to determine whether que_ant and/or que_aardvark
 # have been mutated by a previous run of the script. Just always clone fresh
 # copies for now.
-
 
 # For a future otimization can seaarch for "[up to date]" in output of
 # git fetch -v --dry-run to determine if an already present is up to date
@@ -289,175 +365,188 @@ echo "valid esp-idf repo"
 # "has an npm install been done already?" and "has an npm run build?" been
 # done already then the script can be further optimized.
 
-echo "clone que_aardvark and que_ant"
-cd $targetdir
-for repo in aardvark ant ; do
-  if [ -d que_$repo ] && [ -e que_$repo/.copied ] ; then
-    echo "" # hack
-  else
-    rm -rf que_$repo
-    cp -r $rootpath/../../$repo que_$repo
-    touch que_$repo/.copied
-  fi
+printf "Cloning que_aardvark and que_ant\n"
+cd "$TARGET_DIR"
+
+for repo in aardvark ant; do
+    if [ -d que_$repo ] && [ -e que_$repo/.copied ]; then
+        printf "\n" # hack
+    else
+        rm -rf que_$repo
+        cp -r $ROOT_PATH/../../$repo que_$repo
+        touch que_$repo/.copied
+    fi
 done
 
-# setting up direnv to automatically run IDF export.sh and steer node version
-# when que_ant is cd'd to.
+# Setting up direnv to automatically run IDF export.sh
+# and steer node version when que_ant is cd'd to.
 
-if [ ! -f $targetdir/que_ant/.envrc ] ; then
-  echo ". $idfdir/esp-idf/export.sh >/dev/null 2>&1" >$targetdir/que_ant/.envrc
-  echo ". $HOME/.nvm/nvm.sh use $nodeversion" >>$targetdir/que_ant/.envrc
-  cd $targetdir/que_ant
-  direnv allow
+if [ ! -f "$TARGET_DIR/que_ant/.envrc" ]; then
+    echo ". $IDF_DIR/esp-idf/export.sh >/dev/null 2>&1" > "$TARGET_DIR/que_ant/.envrc"
+    echo ". $HOME/.nvm/nvm.sh use $nodeversion" >> "$TARGET_DIR/que_ant/.envrc"
+    cd "$TARGET_DIR/que_ant"
+    direnv allow
 fi
 
-
 # source .bashrc again in case direnv was installed to get the competion enabled
-. $HOME/.bashrc >/dev/null 2>&1
+. $HOME/.bashrc > /dev/null 2>&1
 
-if [ ! -d $HOME/.nvm ] ; then
-  echo "installing nvm"
-  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh 2>/dev/null | bash >/tmp/log.$$ 2>&1
-  if [ $? -ne 0 ] ; then
-    cat /tmp/log.$$
-    fatal "nvm could not be installed"
-  fi
+if [ ! -d $HOME/.nvm ]; then
+    printf "installing nvm\n"
+    curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh 2 > /dev/null | bash > "$LOG_PATH/log.$$ 2>&1"
+
+    if [ "$?" -ne 0 ]; then
+        cat "$LOG_PATH/log.$$"
+        fatal "nvm could not be installed"
+    fi
 fi
 
 # Make nvm visible to this script
 
 export NVM_DIR=$HOME/.nvm
-source $NVM_DIR/nvm.sh >/dev/null 2>&1
+source $NVM_DIR/nvm.sh > /dev/null 2>&1
 
-echo "install node version $nodeversion"
-nvm install $nodeversion >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not install nvm version $nodeversion"
+printf "Install node version %s\n" "$nodeversion"
+nvm install $nodeversion > "$LOG_PATH/log.$$" 2>&1
+
+if [ "$?" -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "Could not install nvm version $nodeversion"
 fi
 
 # Creating mdns-findable URL for Aardvark
 
-cd $targetdir/que_aardvark/src
+cd "$TARGET_DIR/que_aardvark/src"
 
-. $idfdir/esp-idf/export.sh >/dev/null 2>&1
-f1=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 6`
-f2=`esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 7`
-if [ $? -ne 0 ] ; then
-  echo "dev board not connected: using 0000 as MAC address low order digits"
-  f1="00"
-  f2="00"
-fi
-echo "export default {" >autoconfiguration.js
-#echo "  localurl:  'http://ant_$f1$f2.local'" >>autoconfiguration.js
-echo "  localurl:  'http://ant_0000.local'" >>autoconfiguration.js
-echo "}" >>autoconfiguration.js
-#echo "micro DNS url for ant: http://ant_$f1$f2.local"
-echo "micro DNS url for ant: http://ant_0000.local"
+. "$IDF_DIR/esp-idf/export.sh" > /dev/null 2>&1
+f1=$(esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 6)
+f2=$(esptool.py chip_id | grep MAC: | head -1 | cut -d: -f 7)
 
-echo "preparing node in que_aardvark"
-
-cd $targetdir/que_aardvark
-if [ ! -e .installed ] ; then
-  echo "installing npm in que_aardvark"
-  npm install >/tmp/log.$$ 2>&1
-  if [ $? -ne 0 ] ; then
-    cat /tmp/log.$$
-    fatal "could not install npm in que_aardvark"
-  fi
-  touch .installed
+if [ "$?" -ne 0 ]; then
+    printf "Dev board not connected: using 0000 as MAC address low order digits.\n"
+    f1="00"
+    f2="00"
 fi
 
-npm run build >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not npm run build in que_aardvark"
+echo "export default {" > autoconfiguration.js
+#echo "  localurl:  'http://ant_$f1$f2.local'" >> autoconfiguration.js
+echo "  localurl:  'http://ant_0000.local'" >> autoconfiguration.js
+echo "}" >> autoconfiguration.js
+#printf "Micro DNS url for ant: http://ant_$f1$f2.local\n"
+printf "Micro DNS url for ant: http://ant_0000.local\n"
+printf "Preparing node in que_aardvark.\n"
+
+cd "$TARGET_DIR/que_aardvark"
+
+if [ ! -e .installed ]; then
+    printf "Installing npm in que_aardvark\n"
+    npm install > $LOG_PATH/log.$$ 2>&1
+
+    if [ "$?" -ne 0 ]; then
+        cat "$LOG_PATH/log.$$"
+        fatal "Could not install npm in que_aardvark."
+    fi
+
+    touch .installed
 fi
 
-echo "preparing node in que_ant"
+npm run build > "$LOG_PATH/log.$$" 2>&1
 
-cd $targetdir/que_ant/ant
-echo "installing npm in que_ant"
-npm install >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not install npm in que_ant/ant"
-fi
-  
-npm run build >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not npm run build in que_ant"
+if [ "$?" -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "Could not npm run build in que_aardvark"
 fi
 
-echo "Kconfig.projbuild edits in que_ant"
+printf "Preparing node in que_ant.\n"
+
+cd "$TARGET_DIR/que_ant/ant"
+printf "Installing npm in que_ant.\n"
+npm install > "$LOG_PATH/log.$$" 2>&1
+
+if [ "$?" -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "Could not install npm in que_ant/ant.\n"
+fi
+
+npm run build > "$LOG_PATH/log.$$" 2>&1
+
+if [ "$?" -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "Could not npm run build in que_ant/\n"
+fi
+
+printf "Kconfig.projbuild edits in que_ant.\n"
 
 # Edit main/Kconfig.projbuild for SSID, password, SDA and SCL pins
 
-cd $targetdir/que_ant/components/apsta
-sed -e"s+.*ROUTERSSID.*$+               default $targetSSID   # ROUTERSSID+" Kconfig.projbuild >/tmp/tmp.$$
-sed -e"s+.*ROUTERPASSWORD.*$+               default $targetpassword   # ROUTERPASSWORD+" /tmp/tmp.$$ >Kconfig.projbuild
+cd "$TARGET_DIR/que_ant/components/apsta"
+sed -e"s+.*ROUTERSSID.*$+               default $WIFI_SSID   # ROUTERSSID+" Kconfig.projbuild > "$LOG_PATH/tmp.$$"
+sed -e"s+.*ROUTERPASSWORD.*$+               default $WIFI_PASSWD   # ROUTERPASSWORD+" "$LOG_PATH/tmp.$$" > Kconfig.projbuild
 
 # What is this doing? Probably superstious. Ask Nick.
-touch $targetdir/que_ant/sdkconfig
+touch "$TARGET_DIR/que_ant/sdkconfig"
 
-cd $targetdir/que_ant/main
-sed -e"s+.*TARGETSDA.*$+		default $targetsda   # TARGETSDA+" Kconfig.projbuild >/tmp/tmp.$$
-sed -e"s+.*TARGETSCL.*$+		default $targetscl   # TARGETSCL+" /tmp/tmp.$$ >Kconfig.projbuild
+cd "$TARGET_DIR/que_ant/main"
+sed -e"s+.*TARGETSDA.*$+		default $targetsda   # TARGETSDA+" Kconfig.projbuild > "$LOG_PATH/tmp.$$"
+sed -e"s+.*TARGETSCL.*$+		default $targetscl   # TARGETSCL+" "$LOG_PATH/tmp.$$" > Kconfig.projbuild
 
-. $idfdir/esp-idf/export.sh >/dev/null 2>&1
+. "$IDF_DIR/esp-idf/export.sh" > /dev/null 2>&1
 
-cd $targetdir/que_ant
+cd "$TARGET_DIR/que_ant"
 rm -rf build
-idf.py set-target $targetdevice >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not do idf.py set-target"
+idf.py set-target "$DEVICE" > "$LOG_PATH/log.$$" 2>&1
+
+if [ $? -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "Could not do idf.py set-target."
 fi
 
-cd $targetdir/que_ant
+cd "$TARGET_DIR/que_ant"
 
 # Remove this when Nick confirms it is no longer needed. Can't remember if his
 # fix is in the repos or not
 rm -rf ant/dist/js/*.map
 
-echo "idf build of que_ant"
-cd $targetdir/que_ant
+printf "idf build of que_ant\n"
+cd "$TARGET_DIR/que_ant"
 rm -rf build
-idf.py build >/tmp/log.$$ 2>&1
-if [ $? -ne 0 ] ; then
-  cat /tmp/log.$$
-  fatal "could not do idf.py build in que_ant"
+idf.py build > "$LOG_PATH/log.$$" 2>&1
+
+if [ $? -ne 0 ]; then
+    cat "$LOG_PATH/log.$$"
+    fatal "Could not do idf.py build in que_ant.\n"
 fi
 
-if [ $neednewterminal -eq 1 ] || [ $needtologout -eq 1 ] ; then
-  echo "installation almost complete"
-  if [ $needtologout -eq 1 ] ; then
-    echo "In order to be able to access USB hardware you must log out of"
-    echo "your Linux session and log back in with your user id/password before"
-    echo "proceeding with the next steps."
-  elif [ $neednewterminal ] ; then
-    echo "Before proceeding with the next steps below open a new terminal"
-    echo "and use it for for the steps or else exit this terminal session and"
-    echo "begin a new one."
-  fi
+if [ $neednewterminal -eq 1 ] || [ $needtologout -eq 1 ]; then
+    printf "Installation almost complete.\n"
+
+    if [ $needtologout -eq 1 ]; then
+        printf "In order to be able to access USB hardware you must log\n"
+        printf "out of your Linux session and log back in with your user\n"
+        printf "id/password before proceeding with the next steps.\n"
+    elif [ $neednewterminal ]; then
+        printf "Before proceeding with the next steps below open a new\n"
+        printf "terminal and use it for for the steps or else exit this\n"
+        printf "terminal session and begin a new one.\n"
+    fi
 else
-  echo "installation complete"
+    printf "Installation complete\n"
 fi
 
-echo "To use the IDF in arbitrary places add this line to ~/.bashrc:"
-echo ". $idfdir/esp-idf/export.sh >/dev/null 2>&1"
-echo "Now cd to $targetdir/que_ant and enter 'idf.py flash'"
-echo "Then enter 'idf.py monitor' and copy the IP address into your clipboard."
-echo "The IP address will look something like this:"
-echo "esp_netif_handlers: sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1"
-echo "Use cntrl ] to break out of monitor when you no longer need it."
-echo "Then edit file $targetdir/que_aardvark/src/api/project.js and replace"
-echo "192.168.100.150 on line 56 with the IP copied to your clipboard."
-echo "Then cd to $targetdir/que_aardvark and enter 'npm run build'."
-echo "Then 'npm run serve'."
-echo "Then point your browser to http://localhost:8080"
+printf "\nTo use the IDF in arbitrary places add this line to ~/.bashrc:\n"
+printf ". %s/esp-idf/export.sh > /dev/null 2>&1\n" "$IDF_DIR"
+printf "Now cd to $TARGET_DIR/que_ant and enter 'idf.py flash'.\n"
+printf "Then enter 'idf.py monitor' and copy the IP address into your "
+printf "clipboard.\n"
+printf "The IP address will look something like this:\nesp_netif_handlers: "
+printf "sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1\n"
+printf "Use cntrl ] to break out of monitor when you no longer need it.\n"
+printf "Then edit file %s/que_aardvark/src/api/project.js and\n" "$TARGET_DIR"
+printf "replace 192.168.100.150 on line 56 with the IP copied to your "
+printf "clipboard.\n"
+printf "Then cd to %s/que_aardvark and enter 'npm run build'.\n" "$TARGET_DIR"
+printf "Then 'npm run serve'.\n"
+printf "Then point your browser to http://localhost:8080\n"
 
-rm -f /tmp/log.$$ /tmp/tmp.$$
-
+rm -rf "$LOG_PATH"
 exit 0

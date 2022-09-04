@@ -384,6 +384,7 @@ function ask_for_args() {
         printf 'X_C3BOARD="%s"\n' $C3BOARD >> "$_CONF_FULL_PATH"
     printf 'X_TARGET_DIR="%s"\n' "$TARGET_DIR" >> "$_CONF_FULL_PATH"
     printf 'X_TARGET_BRANCH="%s"\n' "$TARGET_BRANCH" >> "$_CONF_FULL_PATH"
+    printf "The config file %s was saved.\n" "$_CONF_FULL_PATH"
 }
 
 
@@ -398,20 +399,21 @@ debug "Command line arguments" "WIFI_SSID" "WIFI_PASSWD" "DEVICE" \
 find_config
 read_file
 
-debug "Constants or internal variables" \
-      "_DEVICE" "_C3BOARD" "_IDF_DIR" "_INSTALLIT" "_CURRENT_DIR" \
-      "_ABS_PATH" "_DEF_CONF" "_CONF_FULL_PATH" "HOME" "REWRITE_CONF" \
-      "NOOP" "OPT_CONF_FILE"
+debug "Constants or internal variables" "_DEVICE" "_C3BOARD" "_IDF_DIR" \
+      "_INSTALLIT" "_CURRENT_DIR" "_ABS_PATH" "_DEF_CONF" "_CONF_FULL_PATH" \
+      "HOME" "REWRITE_CONF" "NOOP" "OPT_CONF_FILE"
 
 debug "Config, default, or CLI arguments" "X_WIFI_SSID" "X_WIFI_PASSWD" \
       "X_DEVICE" "X_TARGET_DIR" "X_C3BOARD" "X_TARGET_BRANCH"
 
 ask_for_args
 
-debug "Final arguments" \
-      "WIFI_SSID" "WIFI_PASSWD" "DEVICE" "TARGET_DIR" "TARGET_BRANCH" \
-      "C3BOARD"
+debug "Final arguments" "WIFI_SSID" "WIFI_PASSWD" "DEVICE" "TARGET_DIR" \
+      "TARGET_BRANCH" "C3BOARD"
 
 [ "$NOOP" -eq 0 ] && \
-    $(printf '%s %s %s %s %s %s %s' "$_INSTALLIT" "$WIFI_SSID" "$WIFI_PASSWD" \
-             "$DEVICE" "$TARGET_DIR" "$TARGET_BRANCH" "$C3BOARD")
+    $(printf "%s %s %s %s %s %s %s %s %s" "$_INSTALLIT" "$WIFI_SSID" \
+             "$WIFI_PASSWD" "$DEVICE" "$TARGET_DIR" "$_IDF_DIR" \
+             "$TARGET_BRANCH" "$DEBUG" "$C3BOARD")
+
+exit 0
