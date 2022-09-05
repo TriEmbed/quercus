@@ -83,7 +83,6 @@ function help() {
     local help=$(cat << EOF
 Usage: %s -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,rewrite-config,target,debug]
     -3 NUM | --c3board NUM              - The version of the que_purple board either %s, defaults to %s.
-    -b PATH | --target-branch PATH      - The base path to the esp-idf branch.
     -c FILE | --config FILE             - Optional config file, defaults to %s
     -d DEVICE | --device DEVICE         - Can be one of %s defaults to %s.
     -h | --help                         - This screen.
@@ -113,8 +112,8 @@ EOF
 # Pass $* as the only argument.
 #
 function get_opts() {
-    local opts="3:c:s:p:d:t:Dhrn"
-    local long="c3board:,config:,wifi-ssid:,wifi-passwd:,device:,target-dir:,help,debug,rewrite-config,noop"
+    local opts="3:b:c:s:p:d:t:Dhrn"
+    local long="c3board:,target-branch:,config:,wifi-ssid:,wifi-passwd:,device:,target-dir:,help,debug,rewrite-config,noop"
     local options=$(getopt -o $opts --long $long -- "$@")
     eval set -- "$options"
 
@@ -140,13 +139,6 @@ function get_opts() {
             -d|--device)
                 DEVICE=$2
                 shift 2
-
-                if [[ "${_ESP_DEVICES[*]}" != *"$DEVICE"* ]]; then
-                    local devices=$(printf " | %s" "${_ESP_DEVICES[@]}")
-                    printf "\nInvalid device must be one of %s, found %s\n\n" \
-                           "${devices[*]:3}" "$DEVICE"
-                    help
-                fi
                 ;;
             -t|--target-dir)
                 TARGET_DIR=$2
@@ -155,12 +147,6 @@ function get_opts() {
             -3|--c3board)
                 C3BOARD=$2
                 shift 2
-
-                if [[ "${_C3_TYPES[*]}" -ne *"$C3BOARD"* ]]; then
-                    local c3=$(printf " | %s" "${_C3_TYPES[@]}")
-                    printf "\nInvalid c3board, must be one of %s, found %s\n\n"\
-                           "${c3[*]:3}" "$C3BOARD"
-                fi
                 ;;
             -b|--target-branch)
                 TARGET_BRANCH=$2
@@ -227,7 +213,7 @@ function find_config() {
 #
 function read_file() {
     if [ -f "$_CONF_FULL_PATH" ]; then
-        source $_CONF_FULL_PATH
+        source "$_CONF_FULL_PATH"
     fi
 }
 
@@ -403,6 +389,29 @@ function ask_for_args() {
 }
 
 
+#
+# sanity_checks
+#
+# Check that values from either the command line
+# or the config file pass some simple tests.
+#
+function sanity_checks() {
+    if [[ "${_ESP_DEVICES[*]}" != *"$DEVICE"* ]]; then
+        local devices=$(printf " | %s" "${_ESP_DEVICES[@]}")
+        printf "\nInvalid device must be one of %s, found %s\n\n" \
+               "${devices[*]:3}" "$DEVICE"
+        help
+    fi
+
+    if [ "$C3BOARD" != "" ] && [[ "${_C3_TYPES[*]}" != *"$C3BOARD"* ]]; then
+        local c3=$(printf " | %s" "${_C3_TYPES[@]}")
+        printf "\nInvalid c3board, must be one of %s, found %s\n\n"\
+               "${c3[*]:3}" "$C3BOARD"
+        help
+    fi
+}
+
+
 #======================#
 # Start Execution Here #
 #======================#
@@ -422,6 +431,7 @@ debug "Config, default, or CLI arguments" "X_WIFI_SSID" "X_WIFI_PASSWD" \
       "X_DEVICE" "X_TARGET_DIR" "X_C3BOARD" "X_TARGET_BRANCH"
 
 ask_for_args
+sanity_checks
 
 debug "Final arguments" "WIFI_SSID" "WIFI_PASSWD" "DEVICE" "TARGET_DIR" \
       "TARGET_BRANCH" "C3BOARD"

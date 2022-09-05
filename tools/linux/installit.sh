@@ -96,7 +96,6 @@ nodeversion="14"
 
 packages="git wget flex bison gperf python3 python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 direnv curl libnss-mdns"
 
-
 # Flags to put out additional info at end
 neednewterminal=0
 needtologout=0
@@ -404,7 +403,7 @@ fi
 # Make nvm visible to this script
 
 export NVM_DIR=$HOME/.nvm
-source $NVM_DIR/nvm.sh > /dev/null 2>&1
+source "$NVM_DIR/nvm.sh" > /dev/null 2>&1
 
 printf "Install node version %s\n" "$nodeversion"
 nvm install $nodeversion > "$LOG_PATH/log.$$" 2>&1
