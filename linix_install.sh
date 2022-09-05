@@ -237,6 +237,7 @@ function read_file() {
 #
 function ask_for_args() {
     local tmp files=("$OPT_CONF_FILE" "$_DEF_CONF")
+    local save_flag=0
 
     for file in "${files[@]}"; do
         if [ "$file" != "" ]; then
@@ -250,6 +251,8 @@ function ask_for_args() {
 
     if [ "$WIFI_SSID" = "" ] && [ "$X_WIFI_SSID" = "" ] || [ $REWRITE_CONF -eq 1 ]
     then
+        save_flag=1
+
         while true; do
             read -p "Enter WiFi SSID or if exists Default ($X_WIFI_SSID) [Dd]: " tmp
 
@@ -269,6 +272,8 @@ function ask_for_args() {
 
     if [ "$WIFI_PASSWD" = "" ] && [ "$X_WIFI_PASSWD" = "" ] || [ $REWRITE_CONF -eq 1 ]
     then
+        save_flag=1
+
         while true; do
             read -p "Enter WiFi passwd or if exists Default ($X_WIFI_PASSWD) [Dd]: " tmp
 
@@ -288,6 +293,8 @@ function ask_for_args() {
 
     if [ "$DEVICE" = "" ] && [ "$X_DEVICE" = "" ] || [ $REWRITE_CONF -eq 1 ]
     then
+        save_flag=1
+
         while true; do
             read -p "Enter target device or Default ($X_DEVICE) [Dd]: " tmp
 
@@ -311,6 +318,8 @@ function ask_for_args() {
     if [ "$DEVICE" = "$_DEVICE" ]; then
         if [ "$C3BOARD" = "" ] && [ "$X_C3BOARD" = "" ] || [ $REWRITE_CONF -eq 1 ]
         then
+        save_flag=1
+
             while true; do
                 read -p "Enter C3 board ID or Default ($X_C3BOARD) [Dd]: " tmp
 
@@ -334,6 +343,8 @@ function ask_for_args() {
 
     if [ "$TARGET_DIR" = "" ] && [ "$X_TARGET_DIR" = "" ] || [ $REWRITE_CONF -eq 1 ]
     then
+        save_flag=1
+
         while true; do
             read -p "Enter target directory or Default ($X_TARGET_DIR) [Dd]: " tmp
 
@@ -356,6 +367,8 @@ function ask_for_args() {
 
     if [ "$TARGET_BRANCH" = "" ] && [ "$X_TARGET_BRANCH" = "" ] || [ $REWRITE_CONF -eq 1 ]
     then
+        save_flag=1
+
         while true; do
             read -p "Enter target branch or Default ($X_TARGET_BRANCH) [Dd]: " tmp
 
@@ -376,15 +389,17 @@ function ask_for_args() {
         TARGET_BRANCH=$X_TARGET_BRANCH
     fi
 
-    printf "\n"
-    printf 'X_WIFI_SSID="%s"\n' "$WIFI_SSID" > "$_CONF_FULL_PATH"
-    printf 'X_WIFI_PASSWD="%s"\n' "$WIFI_PASSWD" >> "$_CONF_FULL_PATH"
-    printf 'X_DEVICE="%s"\n' "$DEVICE" >> "$_CONF_FULL_PATH"
-    [ "$DEVICE" = "$_DEVICE" ] && \
-        printf 'X_C3BOARD="%s"\n' $C3BOARD >> "$_CONF_FULL_PATH"
-    printf 'X_TARGET_DIR="%s"\n' "$TARGET_DIR" >> "$_CONF_FULL_PATH"
-    printf 'X_TARGET_BRANCH="%s"\n' "$TARGET_BRANCH" >> "$_CONF_FULL_PATH"
-    printf "The config file %s was saved.\n" "$_CONF_FULL_PATH"
+    if [ "$save_flag" -eq 1 ]; then
+        printf "\n"
+        printf 'X_WIFI_SSID="%s"\n' "$WIFI_SSID" > "$_CONF_FULL_PATH"
+        printf 'X_WIFI_PASSWD="%s"\n' "$WIFI_PASSWD" >> "$_CONF_FULL_PATH"
+        printf 'X_DEVICE="%s"\n' "$DEVICE" >> "$_CONF_FULL_PATH"
+        [ "$DEVICE" = "$_DEVICE" ] && \
+            printf 'X_C3BOARD="%s"\n' $C3BOARD >> "$_CONF_FULL_PATH"
+        printf 'X_TARGET_DIR="%s"\n' "$TARGET_DIR" >> "$_CONF_FULL_PATH"
+        printf 'X_TARGET_BRANCH="%s"\n' "$TARGET_BRANCH" >> "$_CONF_FULL_PATH"
+        printf "The config file %s was saved.\n" "$_CONF_FULL_PATH"
+    fi
 }
 
 
