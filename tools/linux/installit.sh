@@ -532,20 +532,27 @@ else
     printf "Installation complete\n"
 fi
 
-printf "\nTo use the IDF in arbitrary places add this line to ~/.bashrc:\n"
-printf ". %s/esp-idf/export.sh > /dev/null 2>&1\n" "$IDF_DIR"
-printf "Now cd to $TARGET_DIR/que_ant and enter 'idf.py flash'.\n"
-printf "Then enter 'idf.py monitor' and copy the IP address into your "
-printf "clipboard.\n"
-printf "The IP address will look something like this:\nesp_netif_handlers: "
-printf "sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1\n"
-printf "Use cntrl ] to break out of monitor when you no longer need it.\n"
-printf "Then edit file %s/que_aardvark/src/api/project.js and\n" "$TARGET_DIR"
-printf "replace 192.168.100.150 on line 56 with the IP copied to your "
-printf "clipboard.\n"
-printf "Then cd to %s/que_aardvark and enter 'npm run build'.\n" "$TARGET_DIR"
-printf "Then 'npm run serve'.\n"
-printf "Then point your browser to http://localhost:8080\n"
+end_message=$(cat << EOF
+
+1. To use the IDF in arbitrary places add the line below (without the quotes) to ~/.bashrc:
+   ". %s/esp-idf/export.sh > /dev/null 2>&1"
+2. cd to %s/que_ant
+   To flash the project execute: idf.py flash
+3. Then to display the serial output execute: idf.py monitor
+   When it completes copy the first IP address into your clipboard. It may stall
+   at the end for a while before displaying a line similar to the one below:
+   "esp_netif_handlers: sta ip: 192.168.12.196, mask: 255.255.255.0, gw: 192.168.12.1"
+   Use cntrl ] to break out of monitor session.
+4. Edit file %s/que_aardvark/src/api/project.js and replace 192.168.100.150 on line 63
+   with the IP copied to your clipboard.
+5. cd %s/que_aardvark
+   Then execute: npm run build
+6. To bring up the web server execute: npm run serve
+7. Lastly point your browser to http://localhost:8080\n
+EOF
+)
+
+printf "$end_message" "$IDF_DIR" "$TARGET_DIR" "$TARGET_DIR" "$TARGET_DIR"
 
 rm -rf "$LOG_PATH"
 exit 0
