@@ -11,3 +11,4 @@ Purple TODO:
 5. Bring all 20 SMD adapter pins out to male headers
 6. Thoroughly test reset and boot switches
 7. Up the footprint as much as possible for more silkscreen room and easier hand-soldering (But with funding and an assembler such as Macrofab hand soldering is made moot)
+8. Add DBUS connector
