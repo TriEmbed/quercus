@@ -2,6 +2,9 @@
 ![Repo logo](/images/purple.png)
 ## purple: Making Dialog Semiconductor mixed signal FPGA chips more accessible
 
+v1.00: Stretch of 0.70
+Requirements: All the ones listed in ../../README.md
+
 ![v0.70 Prototype with FPGA DIP Adapter](/images/v0.70-DIP-adapter.jpg)
 ![v0.70 Prototype with SMD Adapter](/images/v0.70-SMD-adapter.jpg)
 
@@ -11,7 +14,7 @@
    2. Local copies of frequently used docs
    3. Additional cookbooks for getting to blinky with Dialog FPGAs 
 
-This board series is designed in concert with Nick Edgington's "aardvark" node.js web application repo and the "ant" ESP32 firmware project repo. The ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool. This allows change of FPGA personality under programmatic control. An I2C expansion connector allows bus connection of additional FPGAs.
+This board series is designed in concert with Nick Edgington's "aardvark" node.js web application and the "ant" ESP32 firmware. The ant firmware is designed to allow the ESP32 to directly program a Dialog FPGA without the need for the synthesis tool. This allows change of FPGA personality under programmatic control. An I2C expansion connector allows bus connection of additional FPGAs.
 
 ## Project Status
 
