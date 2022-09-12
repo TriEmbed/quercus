@@ -12,3 +12,5 @@ Purple TODO:
 6. Thoroughly test reset and boot switches
 7. Up the footprint as much as possible for more silkscreen room and easier hand-soldering (But with funding and an assembler such as Macrofab hand soldering is made moot)
 8. Add DBUS connector
+9. Provide conditioned 5v rail, 8 chalnel I2C compatible level shifte
+
