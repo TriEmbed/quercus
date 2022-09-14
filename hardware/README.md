@@ -10,9 +10,9 @@ Purple 1.00 requirements:
 4. Test 0.70 SMD adapter 
 5. Bring all 20 SMD adapter pins out to male headers
 6. Thoroughly test reset and boot circuits
-7. Up the footprint for more silkscreen room and easier hand-soldering 
-8. Add DBUS connector
-9. Provide conditioned 5v rail, 8 channel I2C compatible level shifter
+7. Widen the board for more silkscreen room
+8. Add Digilent Pmod (AMP MODUL MTE) eight position I2C connector. No support for 6/12pos Pmod connectors, only I2C for now.
+9. Provide conditioned 5v rail, (4, 8?) channel I2C compatible level shifter
 10. Tesselated C3 module, not the one that fits in a slot. (Still AI-Thinker or Expressif?)
 11. Power switch between VBUS and rest of board
 12. Conditioned VBUS available as 5V source
@@ -20,5 +20,5 @@ Purple 1.00 requirements:
 14. Supply regulator must not burn finger at max current (finger guard?)
 15. Settle on power and user LEDs
 16. Jumper to disable user LED
-17. Dependency on decent 830 position solderless breadboard or else board is "insert only" and inexperienced people will not be able to get board out of breadboard without breaking a trace, breaking the board, bending pins, yada yada. Recommend Global Specialties or Twin Industries.
+17. Dependency on decent 830 position solderless breadboard or else board is "insert only" and inexperienced people will not be able to get board out of breadboard without breaking a trace, breaking the board, bending pins, etc. Recommend Global Specialties or Twin Industries.
 
