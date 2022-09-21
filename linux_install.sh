@@ -427,7 +427,7 @@ debug "Constants or internal variables" "_DEVICE" "_C3BOARD" "_IDF_DIR" \
       "_INSTALLIT" "_CURRENT_DIR" "_ABS_PATH" "_DEF_CONF" "_CONF_FULL_PATH" \
       "HOME" "REWRITE_CONF" "NOOP" "OPT_CONF_FILE"
 
-debug "Config, default, or CLI arguments" "X_WIFI_SSID" "X_WIFI_PASSWD" \
+debug "Config default values, or CLI arguments" "X_WIFI_SSID" "X_WIFI_PASSWD" \
       "X_DEVICE" "X_TARGET_DIR" "X_C3BOARD" "X_TARGET_BRANCH"
 
 ask_for_args
