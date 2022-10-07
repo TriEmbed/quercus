@@ -19,7 +19,7 @@ The user group kickoff meeting was held on 8/31/2022. Video here: https://youtu.
 The first thing that should be done is run the script below with it's help
 screen as such:
 
-```bash
+```
 $ ./linux_install.sh --help
 Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,rewrite-config,target,debug]
     -3 NUM | --c3board NUM              - The version of the que_purple board either 60 | 70, defaults to 70.
@@ -40,11 +40,11 @@ Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,hel
     ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)
 ```
 
-The ```linux_install.sh``` script can be run in multiple ways which I will
-review below. This script has the ability to create and use a config file. The
-config file ```.quercusrc``` can be located in either the base of the quarcus
-directory or in your person user directory. The script with find it in either
-place but will favor the quarcus directory. If you want the 
+The ```linux_install.sh``` script can be run in multiple ways which will be
+reviewed below. This script has the ability to create and use a config
+file. The config file ```.quercusrc``` can be located in either the base of the
+Quercus directory or in your person user directory. The script will find it in
+either place but will favor the Quercus directory.
 
 1. To create a config file run the script with no arguments on the first
    run. If you need to rewrite the config file use the ```-r``` or 
@@ -57,10 +57,10 @@ place but will favor the quarcus directory. If you want the
    ```bash
    $ ./linux_install.sh -r
    ```
-   The generated config filr will always be put in the base of the quarcus
+   The generated config file will always be put in the base of the Quercus
    repository, if you want it in your user home directory you will need to
-   manually move it there. The ```linux_install.sh``` script willo find it as
-   long as there isn't a config file in the quarcus directory.
+   manually move it there. The ```linux_install.sh``` script will find it as
+   long as there isn't a config file in the Quercus directory.
 
 2. You can also use a config file with a different name as shown below. This
    can allow you to have a config for many different physical environments.
@@ -69,9 +69,9 @@ place but will favor the quarcus directory. If you want the
    $ ./linux_install.sh -c my_my.conf
    ```
    Just enter the file name full paths will not be found. Once again it will be
-   put into the base of the quarcus repository. It is advisable to move any of
-   your own files to your user directory as it could be acedently be commited
-   to the repository.
+   put into the base of the Quercus repository. It is advisable to move any of
+   your own files to your user directory as it could be accidentally be
+   committed to the repository. 
 
 
 
