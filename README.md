@@ -35,7 +35,7 @@ Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,hel
 
     I2C pins as follows
     -------------------
-    ESP32: SDA 18 SCL 19
+      ESP32: SDA 18 SCL 19
     ESP32S2: SDA 1 SCL 0
     ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)
 ```
@@ -68,10 +68,30 @@ either place but will favor the Quercus directory.
    ```bash
    $ ./linux_install.sh -c my_my.conf
    ```
-   Just enter the file name full paths will not be found. Once again it will be
-   put into the base of the Quercus repository. It is advisable to move any of
-   your own files to your user directory as it could be accidentally be
-   committed to the repository. 
+   Just enter the filename **not** the full path as it will not be found. Once
+   again it will be put into the base of the Quercus repository. It is
+   advisable to move any of your own files to your user directory as it could
+   be accidentally committed to the repository.
+
+3. In all the cases above the script will run to completion after writing the
+   config file. If you just want to write out the config file add a ```-n``` to
+   the command line as below.
+
+    ```bash
+    $ ./linux_install.sh -n
+   ```
+   This can be used with any other arguments.
+
+4. You can also turn on debugging which can be used with any other arguments.
+
+   ```bash
+   $ ./linux_install.sh -nD
+   ```
+   Assuming there is already a config file the above will just print out all
+   the variable names and their values if any then exit. If you do not have a
+   config file it will prompt for all values that are required.
+
+
 
 
 

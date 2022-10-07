@@ -95,7 +95,7 @@ Usage: %s -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,
 
     I2C pins as follows
     -------------------
-    ESP32: SDA 18 SCL 19
+      ESP32: SDA 18 SCL 19
     ESP32S2: SDA 1 SCL 0
     ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)\n\n
 EOF
@@ -252,7 +252,7 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_WIFI_SSID" != "" ]; then
+    elif [ "$X_WIFI_SSID" != "" ]  && [ "$WIFI_SSID" = "" ]; then
         WIFI_SSID="$X_WIFI_SSID"
     fi
 
@@ -273,7 +273,7 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_WIFI_PASSWD" != "" ]; then
+    elif [ "$X_WIFI_PASSWD" != "" ] && [ "$WIFI_PASSWD" = "" ]; then
         WIFI_PASSWD="$X_WIFI_PASSWD"
     fi
 
@@ -297,7 +297,7 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_DEVICE" != "" ]; then
+    elif [ "$X_DEVICE" != "" ] && [ "$DEVICE" = "" ]; then
         DEVICE="$X_DEVICE"
     fi
 
@@ -322,7 +322,7 @@ function ask_for_args() {
                     break
                 fi
             done
-        elif [ "$X_C3BOARD" != "" ]; then
+        elif [ "$X_C3BOARD" != "" ] && [ "$C3BOARD" = "" ]; then
             C3BOARD=$X_C3BOARD
         fi
     fi
@@ -347,7 +347,7 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_TARGET_DIR" != "" ]; then
+    elif [ "$X_TARGET_DIR" != "" ] && [ "$TARGET_DIR" = "" ]; then
         TARGET_DIR="$X_TARGET_DIR"
     fi
 
@@ -371,7 +371,7 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_TARGET_BRANCH" != "" ]; then
+    elif [ "$X_TARGET_BRANCH" != "" ] && [ "$TARGET_BRANCH" = "" ]; then
         TARGET_BRANCH=$X_TARGET_BRANCH
     fi
 
