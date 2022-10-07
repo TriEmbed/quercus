@@ -1,5 +1,13 @@
 # Quercus (NOTE: Project name will change soon)
-Quercus is a standalone system for developing for and using the combination of a WIFI-capable ESP32 and one or more Renesas/Dialog mixed signal FPGA chips. The FPGA synthesis tool has a drag and drop GUI that involves zero Verilog or VHDL. It has a built in simulator and generates files that Quercus can program in place in the user's system for simple FPGA applications. These FPGAs are around one to two dollars in single quantity, even ones mounted on a DIP board that can plug into a wireless breadboard. Quercus is aimed at making FPGAs available to "the rest of us" while also creating a development ecosystem to augment the Espressif IDF and Arduino IDE.
+Quercus is a standalone system for developing for and using the combination of
+a WIFI-capable ESP32 and one or more Renesas/Dialog mixed signal FPGA
+chips. The FPGA synthesis tool has a drag and drop GUI that involves zero
+Verilog or VHDL. It has a built in simulator and generates files that Quercus
+can program in place in the user's system for simple FPGA applications. These
+FPGAs are around one to two dollars in single quantity, even ones mounted on a
+DIP board that can plug into a wireless breadboard. Quercus is aimed at making
+FPGAs available to "the rest of us" while also creating a development ecosystem
+to augment the Espressif IDF and Arduino IDE.
 
 ## User group
 The user group kickoff meeting was held on 8/31/2022. Video here: https://youtu.be/zqejgwW3aIo
@@ -33,7 +41,7 @@ Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,hel
 ```
 
 The ```linux_install.sh``` script can be run in multiple ways which I will
-review below. This script has the ability to create and use a config file. This
+review below. This script has the ability to create and use a config file. The
 config file ```.quercusrc``` can be located in either the base of the quarcus
 directory or in your person user directory. The script with find it in either
 place but will favor the quarcus directory. If you want the 
@@ -46,10 +54,26 @@ place but will favor the quarcus directory. If you want the
    $ ./linux_install.sh
    ```
    or
-
    ```bash
    $ ./linux_install.sh -r
    ```
-2. 
+   The generated config filr will always be put in the base of the quarcus
+   repository, if you want it in your user home directory you will need to
+   manually move it there. The ```linux_install.sh``` script willo find it as
+   long as there isn't a config file in the quarcus directory.
+
+2. You can also use a config file with a different name as shown below. This
+   can allow you to have a config for many different physical environments.
+
+   ```bash
+   $ ./linux_install.sh -c my_my.conf
+   ```
+   Just enter the file name full paths will not be found. Once again it will be
+   put into the base of the quarcus repository. It is advisable to move any of
+   your own files to your user directory as it could be acedently be commited
+   to the repository.
+
+
+
 
 ### Windows
