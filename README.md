@@ -3,3 +3,53 @@ Quercus is a standalone system for developing for and using the combination of a
 
 ## User group
 The user group kickoff meeting was held on 8/31/2022. Video here: https://youtu.be/zqejgwW3aIo
+
+## Installation
+
+### Linux
+
+The first thing that should be done is run the script below with it's help
+screen as such:
+
+```bash
+$ ./linux_install.sh --help
+Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,rewrite-config,target,debug]
+    -3 NUM | --c3board NUM              - The version of the que_purple board either 60 | 70, defaults to 70.
+    -c FILE | --config FILE             - Optional config file, defaults to .quercusrc
+    -d DEVICE | --device DEVICE         - Can be one of ESP32 | ESP32C3 | ESP32S2 defaults to ESP32C3.
+    -h | --help                         - This screen.
+    -p PASSWD | --wifi-passwd PASSWD    - The Password for the SSID.
+    -r | --rewrite-config               - Reprompts for entries then rewrites the config file.
+    -s SSID | --wifi-ssid SSID          - The WiFi SSID in the current network.
+    -t TARGET_DIR | --target TARGET_DIR - The directory where the build will reside, defaults to /home/cnobile/.quercus.
+    -D | --debug                        - Turn on DEBUG mode (propagates to the installit.sh script)..
+    -n | --noop                         - The installit.sh script will not run, but the config may still be created.
+
+    I2C pins as follows
+    -------------------
+    ESP32: SDA 18 SCL 19
+    ESP32S2: SDA 1 SCL 0
+    ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)
+```
+
+The ```linux_install.sh``` script can be run in multiple ways which I will
+review below. This script has the ability to create and use a config file. This
+config file ```.quercusrc``` can be located in either the base of the quarcus
+directory or in your person user directory. The script with find it in either
+place but will favor the quarcus directory. If you want the 
+
+1. To create a config file run the script with no arguments on the first
+   run. If you need to rewrite the config file use the ```-r``` or 
+   ```--rewrite-config``` argument.
+
+   ```bash
+   $ ./linux_install.sh
+   ```
+   or
+
+   ```bash
+   $ ./linux_install.sh -r
+   ```
+2. 
+
+### Windows
