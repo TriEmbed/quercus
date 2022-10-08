@@ -41,10 +41,10 @@ Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,hel
 ```
 
 The ```linux_install.sh``` script can be run in multiple ways which will be
-reviewed below. This script has the ability to create and use a config
-file. The config file ```.quercusrc``` can be located in either the base of the
-Quercus directory or in your person user directory. The script will find it in
-either place but will favor the Quercus directory.
+reviewed below. This script has the ability to create and use a config file.
+The config file ```.quercusrc``` can be located in either the base of the
+Quercus directory or in your person user directory. The script will find it
+in either place but will favor the Quercus directory.
 
 1. To create a config file run the script with no arguments on the first
    run. If you need to rewrite the config file use the ```-r``` or 
@@ -57,10 +57,22 @@ either place but will favor the Quercus directory.
    ``` bash
    $ ./linux_install.sh -r
    ```
+   The prompts will look similar to the ones below.
+   ``` console
+   Enter WiFi SSID or if exists Default () [Dd]: My-SSID
+   Enter WiFi passwd or if exists Default () [Dd]: My-SSID-password
+   Enter target device or Default () [Dd]: ESP32
+   Enter target directory or Default () [Dd]: /home/<user>/projects
+   Enter target branch or Default (origin/release/v4.4) [Dd]: d
+   ```
+   Pressing **D** or **d** will use the default value. Use this if there is a
+   default value between the **()**. Entering a space is NOT allowed and will
+   cause the prompt to be displayed again. See 5 below.
+
    The generated config file will always be put in the base of the Quercus
    repository, if you want it in your user home directory you will need to
    manually move it there. The ```linux_install.sh``` script will find it as
-   long as there isn't a config file in the Quercus directory.
+   long as there is not a ```.quercusrc``` file in the Quercus directory.
 
 2. You can also use a config file with a different name as shown below. This
    can allow you to have a config for many different physical environments. You
@@ -72,7 +84,7 @@ either place but will favor the Quercus directory.
    Just enter the filename **not** the full path as it will not be found. Once
    again it will be put into the base of the Quercus repository. It is
    advisable to move any of your own files to your user directory so it cannot
-   be accidentally committed to the repository.
+   be accidentally committed into the repository.
 
 3. In all the cases above the script will run to completion after writing the
    config file. If you just want to write out the config file add a ```-n``` to
@@ -93,6 +105,23 @@ either place but will favor the Quercus directory.
    the variable names and their values if any then exit. If you do not have a
    config file it will prompt for all values that are required and write then
    to the config file.
+
+5. In some cases you may **not** want your WiFi credentials in a config file.
+   To do this just type anything like **invalid** when prompted for both
+   values then be sure to use the command line arguments ```-s <ssid>``` and
+   ```-p <ssid password>``` to override what is in the config file.
+
+   ``` bash
+   $ ./linux_install.sh -r -s <my real SSID> -p <my real SSID password>
+   ```
+   ``` console
+   Enter WiFi SSID or if exists Default () [Dd]: invalid
+   Enter WiFi passwd or if exists Default () [Dd]: invalid
+   ...
+   ```
+   The above command will force a rewrite of the config file then run
+   installation code. The ```-s <my real SSID>``` and ```-p <my real SSID
+   password>``` arguments override the faked SSID and it's password.
 
 All the remaining arguments are used to override what is in the config file and
 will not be saved to the config file. As such you can use them to override any
