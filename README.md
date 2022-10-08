@@ -98,7 +98,4 @@ All the remaining arguments are used to override what is in the config file and
 will not be saved to the config file. As such you can use them to override any
 or all arguments that are in the config file.
 
-
-
-
 ### Windows
