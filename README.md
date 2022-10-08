@@ -19,7 +19,7 @@ The user group kickoff meeting was held on 8/31/2022. Video here: https://youtu.
 The first thing that should be done is run the script below with it's help
 screen as such:
 
-```
+``` console
 $ ./linux_install.sh --help
 Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,rewrite-config,target,debug]
     -3 NUM | --c3board NUM              - The version of the que_purple board either 60 | 70, defaults to 70.
@@ -50,11 +50,11 @@ either place but will favor the Quercus directory.
    run. If you need to rewrite the config file use the ```-r``` or 
    ```--rewrite-config``` argument.
 
-   ```bash
+   ``` bash
    $ ./linux_install.sh
    ```
    or
-   ```bash
+   ``` bash
    $ ./linux_install.sh -r
    ```
    The generated config file will always be put in the base of the Quercus
@@ -66,7 +66,7 @@ either place but will favor the Quercus directory.
    can allow you to have a config for many different physical environments. You
    must add the ```-r``` argument if you already have a ```.quercusrc``` file.
 
-   ```bash
+   ``` bash
    $ ./linux_install.sh -rc my_my.conf
    ```
    Just enter the filename **not** the full path as it will not be found. Once
@@ -78,7 +78,7 @@ either place but will favor the Quercus directory.
    config file. If you just want to write out the config file add a ```-n``` to
    the command line as below.
 
-    ```bash
+    ``` bash
     $ ./linux_install.sh -n
    ```
    This can be used with any other arguments. For example the ```-r``` argument
@@ -86,7 +86,7 @@ either place but will favor the Quercus directory.
 
 4. You can also turn on debugging which can be used with any other arguments.
 
-   ```bash
+   ``` bash
    $ ./linux_install.sh -nD
    ```
    Assuming there is already a config file the above will just print out all
