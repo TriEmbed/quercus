@@ -43,8 +43,8 @@ Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,hel
 The ```linux_install.sh``` script can be run in multiple ways which will be
 reviewed below. This script has the ability to create and use a config file.
 The config file ```.quercusrc``` can be located in either the base of the
-Quercus directory or in your person user directory. The script will find it
-in either place but will favor the Quercus directory.
+Quercus directory or in your user directory. The script will find the config
+file in either place but will favor the Quercus directory.
 
 1. To create a config file run the script with no arguments on the first
    run. If you need to rewrite the config file use the ```-r``` or 
@@ -61,8 +61,8 @@ in either place but will favor the Quercus directory.
    ``` console
    Enter WiFi SSID or if exists Default () [Dd]: My-SSID
    Enter WiFi passwd or if exists Default () [Dd]: My-SSID-password
-   Enter target device or Default () [Dd]: ESP32
-   Enter target directory or Default () [Dd]: /home/<user>/projects
+   Enter target device or Default (ESP32C3) [Dd]: ESP32
+   Enter target directory or Default (/home/<user>/.quercus) [Dd]: /home/<user>/projects
    Enter target branch or Default (origin/release/v4.4) [Dd]: d
    ```
    Pressing **D** or **d** will use the default value. Use this if there is a
@@ -121,7 +121,8 @@ in either place but will favor the Quercus directory.
    ```
    The above command will force a rewrite of the config file then run
    installation code. The ```-s <my real SSID>``` and ```-p <my real SSID
-   password>``` arguments override the faked SSID and it's password.
+   password>``` arguments override the faked SSID and it's password. This must
+   be done every time you rerun the script.
 
 All the remaining arguments are used to override what is in the config file and
 will not be saved to the config file. As such you can use them to override any

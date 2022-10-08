@@ -29,6 +29,7 @@ _ABS_PATH=$(readlink -f "$_CURRENT_DIR")
 _DEF_CONF=".quercusrc"
 _CONF_FULL_PATH=""
 _TARGET_BRANCH="origin/release/v4.4"
+_HAVE_CONFIG=0
 
 # Configurable variables set by the args on the CLI
 ###################################################
@@ -102,7 +103,8 @@ Usage: %s -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,
     -------------------
       ESP32: SDA 18 SCL 19
     ESP32S2: SDA 1  SCL 0
-    ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)\n\n
+    ESP32C3: SDA 18 SCL 19 (m80 60 rev)
+             SDA 1  SCL 0  (m80 70 rev)\n\n
 EOF
 )
     printf "$help" "$name" "${c3[*]:3}" "$_C3BOARD" "$_DEF_CONF" \
@@ -209,6 +211,8 @@ function find_config() {
     if [ "$dflag" = 1 ]; then
         _CONF_FULL_PATH="$path_dir"
     fi
+
+    _HAVE_CONFIG=$dflag
 }
 
 
@@ -239,8 +243,8 @@ function ask_for_args() {
 
     #debug "" "WIFI_SSID" "X_WIFI_SSID" "REWRITE_CONF"
 
-    if [ "$WIFI_SSID" = "" ] && [ "$X_WIFI_SSID" = "" ] || [ $REWRITE_CONF -eq 1 ]
-    then
+    if ([ "$WIFI_SSID" = "" ] && [ "$_HAVE_CONFIG" = 0 ]) \
+           || [ $REWRITE_CONF -eq 1 ]; then
         save_flag=1
 
         while true; do
@@ -256,12 +260,12 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_WIFI_SSID" != "" ]  && [ "$WIFI_SSID" = "" ]; then
+    elif [ "$WIFI_SSID" = "" ]  && [ "$X_WIFI_SSID" != "" ]; then
         WIFI_SSID="$X_WIFI_SSID"
     fi
 
-    if [ "$WIFI_PASSWD" = "" ] && [ "$X_WIFI_PASSWD" = "" ] || [ $REWRITE_CONF -eq 1 ]
-    then
+    if ([ "$WIFI_PASSWD" = "" ] && [ "$_HAVE_CONFIG" = 0 ]) \
+           || [ $REWRITE_CONF -eq 1 ]; then
         save_flag=1
 
         while true; do
@@ -277,12 +281,12 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_WIFI_PASSWD" != "" ] && [ "$WIFI_PASSWD" = "" ]; then
+    elif [ "$WIFI_PASSWD" = "" ] && [ "$X_WIFI_PASSWD" != "" ]; then
         WIFI_PASSWD="$X_WIFI_PASSWD"
     fi
 
-    if [ "$DEVICE" = "" ] && [ "$X_DEVICE" = "" ] || [ $REWRITE_CONF -eq 1 ]
-    then
+    if ([ "$DEVICE" = "" ] && [ "$_HAVE_CONFIG" = 0 ]) \
+           || [ $REWRITE_CONF -eq 1 ]; then
         save_flag=1
 
         while true; do
@@ -301,13 +305,13 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_DEVICE" != "" ] && [ "$DEVICE" = "" ]; then
+    elif [ "$DEVICE" = "" ] && [ "$X_DEVICE" != "" ]; then
         DEVICE="$X_DEVICE"
     fi
 
     if [ "$DEVICE" = "$_DEVICE" ]; then
-        if [ "$C3BOARD" = "" ] && [ "$X_C3BOARD" = "" ] || [ $REWRITE_CONF -eq 1 ]
-        then
+        if ([ "$C3BOARD" = "" ] && [ "$_HAVE_CONFIG" = 0 ]) \
+               || [ $REWRITE_CONF -eq 1 ]; then
         save_flag=1
 
             while true; do
@@ -326,13 +330,13 @@ function ask_for_args() {
                     break
                 fi
             done
-        elif [ "$X_C3BOARD" != "" ] && [ "$C3BOARD" = "" ]; then
+        elif [ "$C3BOARD" = "" ] && [ "$X_C3BOARD" != "" ]; then
             C3BOARD=$X_C3BOARD
         fi
     fi
 
-    if [ "$TARGET_DIR" = "" ] && [ "$X_TARGET_DIR" = "" ] || [ $REWRITE_CONF -eq 1 ]
-    then
+    if ([ "$TARGET_DIR" = "" ] && [ "$_HAVE_CONFIG" = 0 ]) \
+           || [ $REWRITE_CONF -eq 1 ]; then
         save_flag=1
 
         while true; do
@@ -351,12 +355,12 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_TARGET_DIR" != "" ] && [ "$TARGET_DIR" = "" ]; then
+    elif [ "$TARGET_DIR" = "" ] && [ "$X_TARGET_DIR" != "" ]; then
         TARGET_DIR="$X_TARGET_DIR"
     fi
 
-    if [ "$TARGET_BRANCH" = "" ] && [ "$X_TARGET_BRANCH" = "" ] || [ $REWRITE_CONF -eq 1 ]
-    then
+    if ([ "$TARGET_BRANCH" = "" ] && [ "$_HAVE_CONFIG" = 0 ]) \
+           || [ $REWRITE_CONF -eq 1 ]; then
         save_flag=1
 
         while true; do
@@ -375,7 +379,7 @@ function ask_for_args() {
                 break
             fi
         done
-    elif [ "$X_TARGET_BRANCH" != "" ] && [ "$TARGET_BRANCH" = "" ]; then
+    elif [ "$TARGET_BRANCH" = "" ] && [ "$X_TARGET_BRANCH" != "" ]; then
         TARGET_BRANCH=$X_TARGET_BRANCH
     fi
 
@@ -385,10 +389,10 @@ function ask_for_args() {
         printf 'X_WIFI_PASSWD="%s"\n' "$WIFI_PASSWD" >> "$_CONF_FULL_PATH"
         printf 'X_DEVICE="%s"\n' "$DEVICE" >> "$_CONF_FULL_PATH"
         [ "$DEVICE" = "$_DEVICE" ] && \
-            printf 'X_C3BOARD="%s"\n' $C3BOARD >> "$_CONF_FULL_PATH"
+            printf 'X_C3BOARD=%s\n' "$C3BOARD" >> "$_CONF_FULL_PATH"
         printf 'X_TARGET_DIR="%s"\n' "$TARGET_DIR" >> "$_CONF_FULL_PATH"
         printf 'X_TARGET_BRANCH="%s"\n' "$TARGET_BRANCH" >> "$_CONF_FULL_PATH"
-        printf "The config file %s was saved.\n" "$_CONF_FULL_PATH"
+        printf "The config file %s was saved.\n\n" "$_CONF_FULL_PATH"
     fi
 }
 
@@ -429,7 +433,7 @@ read_file
 
 debug "Constants or internal variables" "_DEVICE" "_C3BOARD" "_IDF_DIR" \
       "_INSTALLIT" "_CURRENT_DIR" "_ABS_PATH" "_DEF_CONF" "_CONF_FULL_PATH" \
-      "HOME" "REWRITE_CONF" "NOOP" "OPT_CONF_FILE"
+      "_HAVE_CONFIG" "HOME" "REWRITE_CONF" "NOOP" "OPT_CONF_FILE"
 
 debug "Config default values, or CLI arguments" "X_WIFI_SSID" "X_WIFI_PASSWD" \
       "X_DEVICE" "X_TARGET_DIR" "X_C3BOARD" "X_TARGET_BRANCH"
