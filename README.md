@@ -63,14 +63,15 @@ either place but will favor the Quercus directory.
    long as there isn't a config file in the Quercus directory.
 
 2. You can also use a config file with a different name as shown below. This
-   can allow you to have a config for many different physical environments.
+   can allow you to have a config for many different physical environments. You
+   must add the ```-r``` argument if you already have a ```.quercusrc``` file.
 
    ```bash
-   $ ./linux_install.sh -c my_my.conf
+   $ ./linux_install.sh -rc my_my.conf
    ```
    Just enter the filename **not** the full path as it will not be found. Once
    again it will be put into the base of the Quercus repository. It is
-   advisable to move any of your own files to your user directory as it could
+   advisable to move any of your own files to your user directory so it cannot
    be accidentally committed to the repository.
 
 3. In all the cases above the script will run to completion after writing the
@@ -80,7 +81,8 @@ either place but will favor the Quercus directory.
     ```bash
     $ ./linux_install.sh -n
    ```
-   This can be used with any other arguments.
+   This can be used with any other arguments. For example the ```-r``` argument
+   so you can rewrite the config but not run the rest of the script.
 
 4. You can also turn on debugging which can be used with any other arguments.
 
@@ -89,9 +91,12 @@ either place but will favor the Quercus directory.
    ```
    Assuming there is already a config file the above will just print out all
    the variable names and their values if any then exit. If you do not have a
-   config file it will prompt for all values that are required.
+   config file it will prompt for all values that are required and write then
+   to the config file.
 
-
+All the remaining arguments are used to override what is in the config file and
+will not be saved to the config file. As such you can use them to override any
+or all arguments that are in the config file.
 
 
 

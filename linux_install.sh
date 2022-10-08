@@ -10,6 +10,11 @@
 #
 # For help on this script run with -h or --help.
 #
+# Exit status:
+#   0 -- Normal exit value.
+#   1 -- Exit value after the help screen was called.
+#   2 -- Exit value for an unknown argument.
+#
 
 # Internal variables except for _CONF_FULL_PATH not modified by anything
 ########################################################################
@@ -102,7 +107,6 @@ EOF
 )
     printf "$help" "$name" "${c3[*]:3}" "$_C3BOARD" "$_DEF_CONF" \
            "${devices[*]:3}" "$_DEVICE" "$HOME"
-    exit 1
 }
 
 
@@ -162,7 +166,7 @@ function get_opts() {
                 ;;
             -h|--help)
                 help
-                exit 2
+                exit 1
                 ;;
             --)
                 shift
@@ -170,7 +174,7 @@ function get_opts() {
                 ;;
             *)
                 printf "Unknown argument: %s\n" "$1"
-                exit 1
+                exit 2
                 ;;
         esac
     done
