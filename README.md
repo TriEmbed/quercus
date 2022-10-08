@@ -103,13 +103,14 @@ file in either place but will favor the Quercus directory.
    ```
    Assuming there is already a config file the above will just print out all
    the variable names and their values if any then exit. If you do not have a
-   config file it will prompt for all values that are required and write then
+   config file it will prompt for all values that are required and write them
    to the config file.
 
 5. In some cases you may **not** want your WiFi credentials in a config file.
-   To do this just type anything like **invalid** when prompted for both
-   values then be sure to use the command line arguments ```-s <ssid>``` and
-   ```-p <ssid password>``` to override what is in the config file.
+   To do this just type anything like the word **invalid** when prompted for
+   either or both values then be sure to use the command line arguments ```-s
+   <ssid>``` and ```-p <ssid password>``` to override what is in the config
+   file.
 
    ``` bash
    $ ./linux_install.sh -r -s <my real SSID> -p <my real SSID password>
@@ -119,10 +120,11 @@ file in either place but will favor the Quercus directory.
    Enter WiFi passwd or if exists Default () [Dd]: invalid
    ...
    ```
-   The above command will force a rewrite of the config file then run
+   The above command will force a rewrite of the config file then run the
    installation code. The ```-s <my real SSID>``` and ```-p <my real SSID
-   password>``` arguments override the faked SSID and it's password. This must
-   be done every time you rerun the script.
+   password>``` arguments override the dummy SSID and it's password. This must
+   be done every time you rerun the script if you have put dummy values in your
+   config file.
 
 All the remaining arguments are used to override what is in the config file and
 will not be saved to the config file. As such you can use them to override any
