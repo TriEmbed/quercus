@@ -37,7 +37,8 @@ Usage: linux_install.sh -[3bcdhprstD] --[c3board,target-branch,config,device,hel
     -------------------
       ESP32: SDA 18 SCL 19
     ESP32S2: SDA 1  SCL 0
-    ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)
+    ESP32C3: SDA 18 SCL 19 (m80 60 rev)
+             SDA 1  SCL 0  (m80 70 rev)
 ```
 
 The ```linux_install.sh``` script can be run in multiple ways which will be
