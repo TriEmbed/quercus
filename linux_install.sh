@@ -101,12 +101,13 @@ Usage: %s -[3bcdhprstD] --[c3board,target-branch,config,device,help,wifi-passwd,
     I2C pins as follows
     -------------------
       ESP32: SDA 18 SCL 19
-    ESP32S2: SDA 1 SCL 0
+    ESP32S2: SDA 1  SCL 0
     ESP32C3: SDA 18 SCL 19 (m80 60 rev) SDA 1 SCL 0 (m80 70 rev)\n\n
 EOF
 )
     printf "$help" "$name" "${c3[*]:3}" "$_C3BOARD" "$_DEF_CONF" \
            "${devices[*]:3}" "$_DEVICE" "$HOME"
+    exit 1
 }
 
 
@@ -166,7 +167,6 @@ function get_opts() {
                 ;;
             -h|--help)
                 help
-                exit 1
                 ;;
             --)
                 shift
